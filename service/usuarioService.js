@@ -1,6 +1,25 @@
 const usuarioRepository = require('../repository/usuarioRepository');
 const utils = require('../Utils/utils');
 
+exports.criarSequelize = async(reqBody,callback) => {
+    usuarioRepository.criarSequelize(
+        reqBody.username,reqBody.nome,reqBody.email,reqBody.senha,(err, rows)=>{
+        if(err){
+            if(err.name === "SequelizeValidationError"){
+                callback({
+                    status: 400,
+                    message: err.errors[0].message,
+                    type: err.errors[0].type
+                },null)
+            }
+            callback(err,null);
+        }else{
+            callback(null,rows);
+        }
+    })
+
+}
+
 exports.listar = (callback) => {
     const username= 'teste'
     usuarioRepository.listar((err,rows)=> {

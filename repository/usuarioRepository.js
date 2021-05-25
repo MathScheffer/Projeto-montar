@@ -1,8 +1,21 @@
 const Conexao = require('../config/conexaodb');
 const conexao = Conexao.conexao;
+const sequelize = Conexao.sequelize;
+const Usuario = require('../model/Usuario');
 
-exports.criarSequelize = (callback) => {
-    
+exports.criarSequelize = async(username,nome,email,senha,callback) => {
+    await sequelize.sync({ alter: true });
+    try{
+        const teste = await Usuario.create({
+            username:username,
+            nome:nome,
+            email:email,
+            senha:senha
+        });
+        callback(null,teste);
+    }catch(err){
+        callback(err,null)
+    }
 }
 
 exports.cadastrarUsuario = (callback) => {

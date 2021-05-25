@@ -9,14 +9,14 @@ const Utils = require('../Utils/utils');
 const jwt = require('jsonwebtoken');
 
 exports.criarSequelize = async(req,res) => {
-    await sequelize.sync({ alter: true });
-    const teste = await Usuario.create({
-        username:"test2.test2",
-        nome:"testador2 t",
-        email:"test2@gmail.com",
-        senha:"123"
-    });
-    res.send(teste)
+    usuarioService.criarSequelize(req.body,(err, rows) => {
+        if(err){
+            console.log(err)
+            res.status(err.status).json(err);
+        }else{
+            res.json(rows);
+        }
+    })
 }
 
 exports.getSequelize = async(req,res) => {

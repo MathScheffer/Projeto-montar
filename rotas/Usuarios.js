@@ -2,7 +2,7 @@ const express = require('express');
 const rotas = express.Router();
 const usuariosController = require('../controller/UsuariosController');
 
-rotas.get('/seq/novo',usuariosController.criarSequelize);
+rotas.post('/seq/novo',usuariosController.criarSequelize);
 rotas.get('/seq/get',usuariosController.getSequelize);
 rotas.get('/seq/get/especifico',usuariosController.getSequelizeEspecifico);
 
