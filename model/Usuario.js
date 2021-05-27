@@ -10,21 +10,22 @@ Usuario.init({
     id:{
         type: DataTypes.INTEGER(11),
         autoIncrement:true,
-        primaryKey:true,
-        unique:"unique_username"
+        primaryKey:true
     },
     username:{
         type:DataTypes.STRING(30),
         allowNull:false,
-        unique:"unique_username"
+        unique:"unique_data_users"
     },
     nome:{
         type: DataTypes.STRING(30),
-        allowNull: false
+        allowNull: false,
+        unique:"unique_data_users"
     },
     email:{
         type: DataTypes.STRING(100),
-        allowNull: false 
+        allowNull: false,
+        unique:"unique_data_users" 
     },
     senha:{
         type:DataTypes.STRING(60),

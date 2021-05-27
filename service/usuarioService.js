@@ -1,25 +1,61 @@
 const usuarioRepository = require('../repository/usuarioRepository');
 const utils = require('../Utils/utils');
+const sequelizeErrors = require('../Utils/sequelizeErrors');
+const bcrypt = require('bcrypt');
 
 exports.criarSequelize = async(reqBody,callback) => {
+    const hashSenha = reqBody.senha ?  bcrypt.hashSync(reqBody.senha,10) : null;
+
     usuarioRepository.criarSequelize(
-        reqBody.username,reqBody.nome,reqBody.email,reqBody.senha,(err, rows)=>{
-        if(err){
-            if(err.name === "SequelizeValidationError"){
-                callback({
-                    status: 400,
-                    message: err.errors[0].message,
-                    type: err.errors[0].type
-                },null)
+        reqBody.username,reqBody.nome,reqBody.email,hashSenha,(err, rows)=>{
+
+        const camposFaltantes = retornaCamposFaltantes(reqBody);
+        if(camposFaltantes){
+            callback({
+                status:400,
+                message:`Ha campos faltando na requisicao: ${camposFaltantes}`
+            })
+        }else if(err){
+            const sequelizeError = JSON.parse(JSON.stringify(err));
+
+            if(sequelizeError && sequelizeError.name === "SequelizeUniqueConstraintError"){
+                const errors = sequelizeErrors.uniqueConstraintErrorUsuario(sequelizeError.errors);
+                const error = {
+                    status:400,
+                    message:"Ha campos que devem ser preenchidos!",
+                    camposFaltantes:errors
+                }
+                callback(error,null);
+            }else{
+                const error = {
+                    status:500,
+                    message:"erro interno do servidor",
+                    error:err
+                }
+                callback(error,null);
             }
-            callback(err,null);
         }else{
             callback(null,rows);
         }
     })
-
 }
 
+retornaCamposFaltantes = (reqBody) => {
+    const body =  utils.jsonToMap(reqBody);
+    const camposNecessarios = ["nome","email","senha","username"];
+    const camposFaltantes = [];
+    camposNecessarios.forEach(key => {
+        if(!body.has(key)){
+            camposFaltantes.push(key);
+        }
+    });
+
+    if(camposFaltantes.length > 0){
+        return camposFaltantes.toString();
+    }else{
+        return false;
+    }
+}
 exports.listar = (callback) => {
     const username= 'teste'
     usuarioRepository.listar((err,rows)=> {

@@ -11,7 +11,6 @@ const jwt = require('jsonwebtoken');
 exports.criarSequelize = async(req,res) => {
     usuarioService.criarSequelize(req.body,(err, rows) => {
         if(err){
-            console.log(err)
             res.status(err.status).json(err);
         }else{
             res.json(rows);
@@ -36,7 +35,6 @@ exports.getSequelizeEspecifico = async(req,res) => {
         );
     res.send(teste)
     }catch(err) {
-        console.log('erro: ',err)
         res.send(teste)
     }
     
@@ -64,10 +62,8 @@ exports.usuarioPorNome = async(req,res) => {
 
     usuarioService.getUsuarioPorNome(nomeUsuario, (err, rows) => {
         if(err){
-            console.log(err)
             res.status(err.status).json(err);
         }else{
-            console.log(rows.status)
             res.status(rows.status).json(rows);
         }
     })
@@ -137,9 +133,7 @@ exports.fakeLogin = async(req,res) => {
                     check.then(response => {
                         if(response){
                             var token = jwt.sign({ Nome: body.nome,Senha: rows[0].senha }, 'shhhhh');
-                            console.log(token);
                             var decoded = jwt.verify(token, 'shhhhh');
-                            console.log(decoded)
                             res.status(200).json({"status":"OK", "token":token})
                         }else{
                             res.status(400).json({
@@ -167,13 +161,6 @@ async function checkLogin (userSend,bdSend) {
 }
 
 exports.criar = async(req, res) => {
-
-    try{
-        await sequelize.authenticate();
-        console.log("Conectou! :D")
-    }catch(err){
-        console.log(JSON.parse({"Erro":err}))
-    }
     const sql = "INSERT INTO usuarios(nome, senha) VALUES (?,?)";
 
     let body = req.body;
@@ -222,10 +209,7 @@ exports.atualizar = async(req,res) => {
 
             let value = bodyObj.get(param)
             if(param === "senha"){
-                value = bcrypt.hashSync(param,10);
-                console.log(bodyObj.get(param))
-                console.log(value);
-                console.log(bcrypt.compareSync(bodyObj.get(param),value))
+                value = bcrypt.hashSync(value,10);
             }
             values.push(value);
         }
@@ -325,7 +309,6 @@ async function validaNomeNaBase(arrayQuery,paramName,bodyObj){
 exports.apagar = async(req,res) => {
     const id = req.params.id;
     const select = await fetchUsers("id",id);
-    console.log(select.length)
     if(select.length == 1){
         const sql = "DELETE FROM usuarios WHERE id = ?";
         conexao.query(sql,[id],(error, rows) => {

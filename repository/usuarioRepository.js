@@ -4,7 +4,8 @@ const sequelize = Conexao.sequelize;
 const Usuario = require('../model/Usuario');
 
 exports.criarSequelize = async(username,nome,email,senha,callback) => {
-    await sequelize.sync({ alter: true });
+    await sequelize.sync();
+
     try{
         const teste = await Usuario.create({
             username:username,
