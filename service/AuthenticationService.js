@@ -1,4 +1,5 @@
 const authenticationRepository = require('../repository/AuthenticationRepository');
+const constants = require('../constants/authenticationConstants');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -15,7 +16,7 @@ exports.autenticar = async(nome,senha,callback) => {
             if(bcrypt.compareSync(senha,user.senha)){
                 const token = jwt.sign({
                     username: user.username, senha: user.senha
-                },'s3cr3t',{expiresIn:'1h'});
+                },constants.JWT_SECRET,{expiresIn:'1h'});
 
                 callback(null,{
                     auth:true,
@@ -40,7 +41,7 @@ exports.validarToken = (token,callback) => {
         }
         callback(err, null)
     }else{
-         jwt.verify(token,"s3cr3t",(err,payload) => {
+         jwt.verify(token,constants.JWT_SECRET,(err,payload) => {
             if(err){
                 const error = {
                     status:403,

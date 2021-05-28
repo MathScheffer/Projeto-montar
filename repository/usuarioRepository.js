@@ -3,7 +3,7 @@ const conexao = Conexao.conexao;
 const sequelize = Conexao.sequelize;
 const Usuario = require('../model/Usuario');
 
-exports.criarSequelize = async(username,nome,email,senha,callback) => {
+exports.criar = async(username,nome,email,senha,callback) => {
     await sequelize.sync();
 
     try{
@@ -19,19 +19,27 @@ exports.criarSequelize = async(username,nome,email,senha,callback) => {
     }
 }
 
-exports.cadastrarUsuario = (callback) => {
-    const sql = "INSERT INTO usuarios("
+exports.listar = async(callback) => {
+    try{
+        const listaUsuarios = await Usuario.findAll({attributes:["id","nome","username","email"]});
+        callback(null,listaUsuarios);
+    }catch(err){
+        callback(err,null)
+    }
 }
-exports.listar = (callback) => {
-    const sql = "SELECT * FROM USUARIOS";
 
-    conexao.query(sql, (err, rows) => {
-        if(err){
-            callback(err, null);
-        }else{
-            callback(null,rows);
-        }
-    })
+exports.usuarioPorNome = async(nome,callback) => {
+    try{
+        const usuario = await Usuario.findOne({
+            where:{
+                nome:nome
+            }
+        })
+
+        callback(null,usuario)
+    }catch(err){
+        callback(err,null)
+    }
 }
 
 
@@ -45,4 +53,30 @@ exports.nomeUsuarioPorFiltro = (param,value,callback) => {
             callback(null,rows);
         }
     })
+}
+
+exports.atualizar = async(params,id,callback) => {
+    try{
+        const atualizador = await Usuario.update(params,{
+            where:{
+                id:id
+            }
+        })
+        callback(null,atualizador)
+    }catch(err){
+        callback(err,null)
+    }
+}
+
+exports.apagar = async(id,callback) => {
+    try{
+        const userApagado = await Usuario.destroy({
+            where:{
+                id: id
+            }
+        })
+        callback(null,userApagado)
+    }catch(err){
+        callback(err,null)
+    }
 }

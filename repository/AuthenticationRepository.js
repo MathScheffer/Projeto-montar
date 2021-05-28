@@ -15,7 +15,3 @@ exports.autenticar = async(username, senha, callback) => {
         callback(err,null);
     }
 }
-
-exports.validarToken = async(token) => {
-    
-}
