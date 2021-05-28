@@ -4,7 +4,6 @@
 exports.retornaVariasLinhas = (arrayRows,queryParamName,queryParamValue) =>{
     return arrayRows.filter(obj => {
         obj[queryParamName] === queryParamValue
-        console.log(obj[queryParamName],queryParamValue )
     });
 }
 
