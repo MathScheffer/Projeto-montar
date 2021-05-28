@@ -154,8 +154,6 @@ exports.atualizar = async(params,id,callback) => {
     }
 }
 
-
-
 const fetchUsers = async(params) => {
     let paramsKeys = []
  
