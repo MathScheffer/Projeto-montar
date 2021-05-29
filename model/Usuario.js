@@ -15,17 +15,17 @@ Usuario.init({
     username:{
         type:DataTypes.STRING(30),
         allowNull:false,
-        unique:"unique_data_users"
+        unique:"unique_username"
     },
     nome:{
         type: DataTypes.STRING(30),
         allowNull: false,
-        unique:"unique_data_users"
+        unique:"unique_nome"
     },
     email:{
         type: DataTypes.STRING(100),
         allowNull: false,
-        unique:"unique_data_users" 
+        unique:"unique_email" 
     },
     senha:{
         type:DataTypes.STRING(60),
@@ -34,7 +34,12 @@ Usuario.init({
     permissions:{
         type:DataTypes.INTEGER(1),
         allowNull:false,
-        isIn: [[0, 1]],
+        validate:{
+            isIn:{
+                args:[[0,1]],
+                msg:"permissions  deve ser 0 ou 1!"
+            }
+        }
     }
 },{
     sequelize,

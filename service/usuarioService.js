@@ -7,10 +7,12 @@ const usuarioContants = require('../constants/usuarioConstants');
 
 exports.criar = async(reqBody,callback) => {
     const hashSenha = reqBody.senha ?  bcrypt.hashSync(reqBody.senha,10) : null;
-    const permissions = reqBody.permissions >= 1 ? 1 : 0;
 
-    usuarioRepository.criar(
-        reqBody.username,reqBody.nome,reqBody.email,hashSenha,permissions,(err, rows)=>{
+    usuarioRepository.criar(reqBody.username,
+        reqBody.nome,
+        reqBody.email,
+        hashSenha,
+        reqBody.permissions,(err, rows)=>{
 
         const camposFaltantes = retornaCamposFaltantes(reqBody);
         if(camposFaltantes){
@@ -29,7 +31,14 @@ exports.criar = async(reqBody,callback) => {
                     dados:errors
                 }
                 callback(error,null);
+             }else if(sequelizeError && sequelizeError.name === "SequelizeValidationError"){
+                const error = {
+                    status:400,
+                    message:sequelizeError.errors[0].message,
+                }
+                callback(error,null);
             }else{
+                console.log(sequelizeError.name)
                 const error = {
                     status:500,
                     message:"erro interno do servidor",

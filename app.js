@@ -10,7 +10,7 @@ const authentication = require('./rotas/Authentication');
 app.use('/api/authentication',authentication);
 
 const usuarios = require('./rotas/Usuarios');
-app.use('/api/usuarios',authenticationController.validarToken,usuarios);
+app.use('/api/usuarios',usuarios);
 
 
 
