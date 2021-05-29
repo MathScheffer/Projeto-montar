@@ -2,9 +2,14 @@ const authenticationRepository = require('../repository/AuthenticationRepository
 const constants = require('../constants/authenticationConstants');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const utils = require('../Utils/utils');
+const Usuario = require('../model/Usuario')
 
-exports.autenticar = async(nome,senha,callback) => {
-    authenticationRepository.autenticar(nome,senha, (err,usuario) => {
+exports.autenticar = async(username,senha,callback) => {
+    let permissions = await fetchUsers({"username":username},["permissions"]);
+    permissions = JSON.parse(permissions).permissions >= 1 ? 1 : 0;
+    
+    authenticationRepository.autenticar(username,senha, (err,usuario) => {
         if(err){
             callback({
                 status:500,
@@ -12,10 +17,10 @@ exports.autenticar = async(nome,senha,callback) => {
             },null);
         }else{
             const user = JSON.parse(JSON.stringify(usuario))[0];
-            console.log(user)
             if(bcrypt.compareSync(senha,user.senha)){
+
                 const token = jwt.sign({
-                    username: user.username, senha: user.senha
+                    username: user.username, senha: user.senha,permissions:permissions
                 },constants.JWT_SECRET,{expiresIn:'1h'});
 
                 callback(null,{
@@ -31,6 +36,20 @@ exports.autenticar = async(nome,senha,callback) => {
             }
         }
     })
+}
+
+const fetchUsers = async(params,paramsKeysSuperior = false) => {
+    let paramsKeys = []
+ 
+    utils.jsonToMap(params).forEach((value,key) => {
+        paramsKeys.push(key)
+    });
+
+    const usuario = await Usuario.findOne({
+        attributes:paramsKeysSuperior ? paramsKeysSuperior : paramsKeys,
+        where:params
+    })
+    return JSON.stringify(usuario);
 }
 
 exports.validarToken = (token,callback) => {
@@ -49,8 +68,33 @@ exports.validarToken = (token,callback) => {
                 }
                 callback(error,null)
             }else{
-               callback(null,{status:200,message:"Token validado com sucesso!"})
+               callback(null,{
+                   status:200,
+                   message:"Token validado com sucesso!",
+                   payload:payload
+                })
             }
         })
     }
+}
+
+exports.validarPermissao = (token,permissao,callback) => {
+    permissao = permissao >= 1 ? 1 : 0;
+    this.validarToken(token, (err,sucess) => {
+        if(sucess){
+            console.log(sucess.payload.permissions)
+            console.log(permissao)
+            if(sucess.payload.permissions === permissao){
+                callback(null,{status:200,sucess,"permissaoNecessaria":permissao})
+            }else{
+                const error = {
+                    status:403,
+                    message:"Nao ha permissao para o perfil do usuario."
+                }
+                callback(error,null)
+            }
+        }else{
+            callback({err},null)
+        }
+    })
 }

@@ -8,6 +8,7 @@ const Utils = require('../Utils/utils');
 const jwt = require('jsonwebtoken');
 
 exports.criar = async(req,res) => {
+    await sequelize.sync({ alter: true });
     usuarioService.criar(req.body,(err, rows) => {
         if(err){
             res.status(err.status).json(err);

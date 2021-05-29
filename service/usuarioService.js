@@ -7,9 +7,10 @@ const usuarioContants = require('../constants/usuarioConstants');
 
 exports.criar = async(reqBody,callback) => {
     const hashSenha = reqBody.senha ?  bcrypt.hashSync(reqBody.senha,10) : null;
+    const permissions = reqBody.permissions >= 1 ? 1 : 0;
 
     usuarioRepository.criar(
-        reqBody.username,reqBody.nome,reqBody.email,hashSenha,(err, rows)=>{
+        reqBody.username,reqBody.nome,reqBody.email,hashSenha,permissions,(err, rows)=>{
 
         const camposFaltantes = retornaCamposFaltantes(reqBody);
         if(camposFaltantes){

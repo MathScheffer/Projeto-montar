@@ -3,7 +3,7 @@ const conexao = Conexao.conexao;
 const sequelize = Conexao.sequelize;
 const Usuario = require('../model/Usuario');
 
-exports.criar = async(username,nome,email,senha,callback) => {
+exports.criar = async(username,nome,email,senha,permissions,callback) => {
     await sequelize.sync();
 
     try{
@@ -11,7 +11,8 @@ exports.criar = async(username,nome,email,senha,callback) => {
             username:username,
             nome:nome,
             email:email,
-            senha:senha
+            senha:senha,
+            permissions:permissions
         });
         callback(null,teste);
     }catch(err){
