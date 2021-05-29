@@ -77,23 +77,4 @@ exports.apagar = async(req,res) => {
             res.json(usuarioApagado)
         }
     })
-  /*   const select = await fetchUsers("id",id);
-    if(select.length == 1){
-        const sql = "DELETE FROM usuarios WHERE id = ?";
-        conexao.query(sql,[id],(error, rows) => {
-            if(error){
-                res.status(500).json({
-                    "Erro":error
-                })
-            }else{
-                //const selectNow = await fetchUsers("id",id);
-                fetchUsers("id",id).then(selectNow => {
-                    const resposta = selectNow.length == 0 ? "Usuario deletado com sucesso!" : "Houve um problema ao deletar usuario!";
-                res.status(resposta.match("sucesso") ? 200 : 400 ).json({"Message":resposta});
-                })
-            }
-        })
-    }else{
-        res.status(404).json({"Message":"Usuario nao encontrado!"});
-    } */
-}
+}  
