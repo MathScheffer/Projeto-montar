@@ -30,6 +30,11 @@ Usuario.init({
     senha:{
         type:DataTypes.STRING(60),
         allowNull: false
+    },
+    permissions:{
+        type:DataTypes.INTEGER(1),
+        allowNull:false,
+        isIn: [[0, 1]],
     }
 },{
     sequelize,

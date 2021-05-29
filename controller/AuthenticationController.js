@@ -25,3 +25,14 @@ exports.validarToken = (req,res,next) => {
         }
     })
 }
+
+exports.somenteAdm = (req,res,next) => {
+    const token = req.get('x-auth-token');
+    authenticationService.validarPermissao(token, 2,(err,sucess) => {
+        if(err){
+            res.json(err);
+        }else{
+            next();
+        }
+    })
+}

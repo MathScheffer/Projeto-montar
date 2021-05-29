@@ -1,1 +1,1 @@
-exports.ENTRADAS_VALIDAS = ["nome","username","email","senha"];
+exports.ENTRADAS_VALIDAS = ["nome","username","email","senha","permissions"];
