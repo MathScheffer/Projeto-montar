@@ -28,10 +28,11 @@ exports.validarToken = (req,res,next) => {
 
 exports.somenteAdm = (req,res,next) => {
     const token = req.get('x-auth-token');
-    authenticationService.validarPermissao(token, 2,(err,sucess) => {
+    authenticationService.validarPermissao(token, 1,(err,sucess) => {
         if(err){
-            res.json(err);
+            res.status(err.status).json(err);
         }else{
+            console.log("vai dar next")
             next();
         }
     })

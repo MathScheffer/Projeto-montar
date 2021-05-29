@@ -12,3 +12,5 @@ exports.uniqueConstraintErrorUsuario = (errorsArray) => {
 
     return mensagem;
 }
+
+exports.validationErrors = () =>{}

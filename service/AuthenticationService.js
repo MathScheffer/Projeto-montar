@@ -6,10 +6,7 @@ const utils = require('../Utils/utils');
 const Usuario = require('../model/Usuario')
 
 exports.autenticar = async(username,senha,callback) => {
-    let permissions = await fetchUsers({"username":username},["permissions"]);
-    permissions = JSON.parse(permissions).permissions >= 1 ? 1 : 0;
-    
-    authenticationRepository.autenticar(username,senha, (err,usuario) => {
+    authenticationRepository.autenticar(username, (err,usuario) => {
         if(err){
             callback({
                 status:500,
@@ -20,7 +17,7 @@ exports.autenticar = async(username,senha,callback) => {
             if(bcrypt.compareSync(senha,user.senha)){
 
                 const token = jwt.sign({
-                    username: user.username, senha: user.senha,permissions:permissions
+                    username: user.username, senha: user.senha,permissions:user.permissions
                 },constants.JWT_SECRET,{expiresIn:'1h'});
 
                 callback(null,{
@@ -80,7 +77,32 @@ exports.validarToken = (token,callback) => {
 
 exports.validarPermissao = (token,permissao,callback) => {
     permissao = permissao >= 1 ? 1 : 0;
-    this.validarToken(token, (err,sucess) => {
+    jwt.verify(token,constants.JWT_SECRET,(err,payload) => {
+        if(err){
+            const error = {
+                status:403,
+                message:"Token invalido"
+            }
+            callback(error,null)
+        }else{
+            const permissions = payload.permissions;
+        
+            if(permissions == permissao){
+                callback(null,{
+                    status:200,
+                    message:"Permissao concedida!"
+                 })
+            }else{
+                const error = {
+                    status:401,
+                    message:"Permissao nao concedida!"
+                 }
+                callback(error,null)  
+            }
+        }
+    })
+
+ /*    this.validarToken(token, (err,sucess) => {
         if(sucess){
             console.log(sucess.payload.permissions)
             console.log(permissao)
@@ -96,5 +118,5 @@ exports.validarPermissao = (token,permissao,callback) => {
         }else{
             callback({err},null)
         }
-    })
+    }) */
 }
