@@ -171,7 +171,7 @@ const fetchUsers = async(params) => {
         paramsKeys.push(key)
     });
     const usuario = await Usuario.findOne({
-        attributes:paramsKeys,
+        attributes:[paramsKeys],
         where:params
     })
     return JSON.stringify(usuario);

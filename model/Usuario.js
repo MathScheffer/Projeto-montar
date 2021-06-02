@@ -8,24 +8,24 @@ class Usuario extends Model {
 
 Usuario.init({
     id:{
-        type: DataTypes.INTEGER(11),
+        type: DataTypes.INTEGER,
         autoIncrement:true,
         primaryKey:true
     },
     username:{
         type:DataTypes.STRING(30),
-        allowNull:false,
-        unique:"unique_username"
+        allowNull:false
+        //unique:"unique_username"
     },
     nome:{
         type: DataTypes.STRING(30),
-        allowNull: false,
-        unique:"unique_nome"
+        allowNull: false
+        //unique:"unique_nome"
     },
     email:{
         type: DataTypes.STRING(100),
-        allowNull: false,
-        unique:"unique_email" 
+        allowNull: false
+        //unique:"unique_email" 
     },
     senha:{
         type:DataTypes.STRING(60),
@@ -34,7 +34,7 @@ Usuario.init({
     permissions:{
         type:DataTypes.INTEGER(1),
         allowNull:false,
-        validate:{
+        validate:{     
             isIn:{
                 args:[[0,1]],
                 msg:"permissions  deve ser 0 ou 1!"
