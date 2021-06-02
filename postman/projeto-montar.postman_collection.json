@@ -73,12 +73,12 @@
 						"header": [
 							{
 								"key": "x-auth-token",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RlLjEiLCJzZW5oYSI6IiQyYiQxMCRzaTIvd0xLZmtSdWxDSFZWVURxaWNPU3lXb0EwTnpSdWpqS0Q3TDBQb0dTV2FESlJ0aWZ3SyIsImlhdCI6MTYyMjE1MDYxNCwiZXhwIjoxNjIyMTU0MjE0fQ.XphJZplH4l8CMgntP__lqHMTS3w6YtC6n2FIOk7SkQs",
+								"value": "{{auth_token}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/auth/validation",
+							"raw": "http://localhost:3000/api/authentication/validation/token ",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -86,8 +86,37 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"auth",
-								"validation"
+								"authentication",
+								"validation",
+								"token "
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Permissions Validation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/authentication/validation/permissions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"authentication",
+								"validation",
+								"permissions"
 							]
 						}
 					},
@@ -154,7 +183,7 @@
 					"raw": "{\r\n    \"nome\":\"teste 1\",\r\n    \"senha\":\"1234\"\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:3000/api/usuarios/atualizar/20",
+					"raw": "http://localhost:3000/api/usuarios/atualizar/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -164,7 +193,7 @@
 						"api",
 						"usuarios",
 						"atualizar",
-						"20"
+						"1"
 					]
 				}
 			},
@@ -182,7 +211,7 @@
 					}
 				],
 				"url": {
-					"raw": "http://localhost:3000/api/usuarios/especifico?nome=teste%1",
+					"raw": "http://localhost:3000/api/usuarios/especifico?nome=teste%2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -196,7 +225,7 @@
 					"query": [
 						{
 							"key": "nome",
-							"value": "teste%1"
+							"value": "teste%2"
 						}
 					]
 				}
@@ -216,7 +245,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"teste.2\",\r\n    \"nome\":\"teste 2\",\r\n    \"email\":\"teste$@gmail.com\",\r\n    \"senha\":\"123\"\r\n}",
+					"raw": "{\r\n    \"username\":\"teste.1\",\r\n    \"nome\":\"teste 1\",\r\n    \"email\":\"teste$@gmail.com\",\r\n    \"senha\":\"123\",\r\n    \"permissions\":1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -261,6 +290,27 @@
 						"api",
 						"usuarios",
 						"18"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "testar relacionamento",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/usuarios/teste",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"usuarios",
+						"teste"
 					]
 				}
 			},
