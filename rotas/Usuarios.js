@@ -3,7 +3,6 @@ const rotas = express.Router();
 const usuariosController = require('../controller/UsuariosController');
 const authenticationController = require('../controller/AuthenticationController');
 
-rotas.get('/teste',usuariosController.testarRelacionamento)
 rotas.get('/teste2',usuariosController.teste2Relacionamento)
 
 rotas.post('/novo',usuariosController.criar);

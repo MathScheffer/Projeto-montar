@@ -22,18 +22,22 @@ Processador.init({
         type: DataTypes.STRING(5),
         allowNull: false,
     },
-    potencia:{
+    frequencia:{
         type:DataTypes.DECIMAL,
         allowNull: false
     },
-    consumo:{
-        type:DataTypes.DOUBLE,
+    frequencia_max:{
+        type:DataTypes.DECIMAL,
         allowNull: false
     },
     socket:{
         type:DataTypes.STRING,
         allowNull: false
     },
+    consumo:{
+        type:DataTypes.DOUBLE,
+        allowNull: false
+    }
 },{
     sequelize,
     modelName: "Processador",
