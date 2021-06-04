@@ -47,13 +47,13 @@ Montagem.init({
         references:{
             model:Armazenamento,
             key:'id'
-        },
-        FonteId: {
-            type:DataTypes.INTEGER,
-            references:{
-                model:Fonte,
-                key:'id'
-            }
+        }
+    },
+    FonteId: {
+        type:DataTypes.INTEGER,
+        references:{
+            model:Fonte,
+            key:'id'
         }
     },
     VgaId:{

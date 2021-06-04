@@ -204,7 +204,7 @@ exports.teste2Relacionamento = async(req,res) => {
         RamId:ram.id,
         ArmazenamentoId:armazenamento.id,
         VgaId:vga.id,
-        FonteId : Fonte.id
+        FonteId : fonte.id
     },{
         include:[
             {
