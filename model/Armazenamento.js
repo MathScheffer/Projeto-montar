@@ -34,7 +34,7 @@ Armazenamento.init({
         allowNull:false
     },
     consumo:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.DECIMAL,
         defaultValue:12
     }
 },{

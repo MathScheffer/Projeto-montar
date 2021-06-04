@@ -1,6 +1,5 @@
 const { Sequelize, DataTypes, Model} = require('sequelize');
 const config = require('../config/conexaodb');
-const Montagem = require('./Montagem');
 const sequelize = config.sequelize;
 
 class PlacaMae extends Model {
@@ -34,7 +33,7 @@ PlacaMae.init({
         allowNull:false
     },
     consumo:{
-        type:DataTypes.DOUBLE,
+        type:DataTypes.DECIMAL,
         allowNull:false,
         defaultValue:35
     }

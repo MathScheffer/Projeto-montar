@@ -4,4 +4,5 @@ const PlacaMae = require('./PlacaMae');
 const Montagem = require('./Montagem');
 const Ram = require('./Ram');
 const Armazenamento = require('./Armazenamento');
-module.exports = {Usuario, Processador, PlacaMae, Montagem, Ram, Armazenamento}
+const Vga = require('./Vga')
+module.exports = {Usuario, Processador, PlacaMae, Montagem, Ram, Armazenamento,Vga}

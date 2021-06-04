@@ -11,6 +11,7 @@ const Utils = require('../Utils/utils');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
 const { PlacaMae, Ram } = require('../model');
+const Vga = require('../model/VGA');
 
 exports.criar = async(req,res) => {
     await sequelize.sync({ alter: true });
@@ -105,7 +106,8 @@ exports.teste2Relacionamento = async(req,res) => {
     Montagem.Armazenamento = Montagem.belongsTo(Armazenamento);
 
     //VGA
-
+    Vga.Montagem = Vga.hasOne(Montagem);
+    Montagem.Vga = Montagem.belongsTo(Vga);
     
     //Fonte para Montagem
 
@@ -172,12 +174,23 @@ exports.teste2Relacionamento = async(req,res) => {
         }]
     })
 
+    const vga = await Vga.create({
+        nome:"Radeon 6800XT",
+        capacidade:16,
+        consumo:250
+    },{
+        include:[{
+            association:Vga.Montagem
+        }]
+    })
+
     const mont = await Montagem.create({
         UsuarioId: user.id,
         ProcessadorId:processador.id,
         PlacaMaeId:placaMae.id,
         RamId:ram.id,
-        ArmazenamentoId:armazenamento.id
+        ArmazenamentoId:armazenamento.id,
+        VgaId:vga.id
     },{
         include:[
             {
@@ -191,6 +204,8 @@ exports.teste2Relacionamento = async(req,res) => {
                 association: Montagem.Ram
             },{
                 association: Montagem.Armazenamento
+            },{
+                association: Montagem.Vga
             }
         ] 
     });
@@ -211,6 +226,8 @@ exports.teste2Relacionamento = async(req,res) => {
             model:Ram
         },{
             model:Armazenamento
+        },{
+            model:Vga
         }]
     })
 

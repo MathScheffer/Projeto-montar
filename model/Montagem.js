@@ -3,6 +3,7 @@ const config = require('../config/conexaodb');
 const sequelize = config.sequelize;
 
 const {Usuario, PlacaMae, Processador, Ram, Armazenamento} = require('./index');
+const Vga = require('./VGA');
 class Montagem extends Model {
 
 }
@@ -46,6 +47,13 @@ Montagem.init({
         type:DataTypes.INTEGER,
         references:{
             model:Armazenamento,
+            key:'id'
+        }
+    },
+    VgaId:{
+        type:DataTypes.INTEGER,
+        references:{
+            model:Vga,
             key:'id'
         }
     }
