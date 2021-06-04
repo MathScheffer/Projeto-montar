@@ -2,7 +2,6 @@ const { Sequelize, DataTypes, Model} = require('sequelize');
 const config = require('../config/conexaodb');
 const sequelize = config.sequelize;
 
-const {Usuario, PlacaMae, Processador} = require('./index');
 class Ram extends Model {
 
 }
@@ -36,7 +35,7 @@ Ram.init({
         }
     },
     consumo:{
-        type:DataTypes.INTEGER,
+        type:DataTypes.DECIMAL,
         defaultValue:3
     }
 },{

@@ -18,14 +18,15 @@ Fonte.init({
         type:DataTypes.STRING,
         allowNull: false
     },
-
-    capacidade: DataTypes.INTEGER,
-    allowNull: false
-},
-    { sequelize,
-        modelName: "Fonte",
-        tableName:"fonte"
-    })
+    capacidade: {
+        type:DataTypes.INTEGER,
+        allowNull: false
+    }
+},  { 
+    sequelize,
+    modelName: "Fonte",
+    tableName:"fonte"
+})
     
 
 

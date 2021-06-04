@@ -83,6 +83,10 @@
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="Memoria_ram" row="id" />
 </row>
+<row name="id_armazenamento" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default><relation table="Armazenamento" row="id" />
+</row>
 <row name="id_vga" null="1" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default><relation table="VGA" row="id" />
@@ -121,20 +125,23 @@
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="Nome" null="1" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
 <row name="socket" null="0" autoincrement="0">
 <datatype>VARCHAR(10)</datatype>
 <default>'NULL'</default></row>
-<row name="barramento_min" null="0" autoincrement="0">
-<datatype>DOUBLE</datatype>
-<default>NULL</default><comment>capacidade operacional de uma memória ram; as placas possuem descricao do maximo que conseguem aguentar</comment>
+<row name="frequencia_min" null="0" autoincrement="0">
+<datatype>INT(4)</datatype>
+<default>NULL</default><comment>frequencia da memória</comment>
 </row>
+<row name="frequencia_max" null="1" autoincrement="0">
+<datatype>INTEGER(4)</datatype>
+<default>NULL</default></row>
 <row name="max_ram" null="1" autoincrement="0">
 <datatype>DOUBLE</datatype>
 <default>NULL</default><comment>quantidade total de gigas que a placa mãe aguenta e memória ram</comment>
 </row>
-<row name="barramento_max" null="0" autoincrement="0">
-<datatype>DOUBLE</datatype>
-<default>NULL</default></row>
 <row name="ddr" null="0" autoincrement="0">
 <datatype>INTEGER(1)</datatype>
 <default>NULL</default><comment>geracao da ram: ddr3,ddr4, ddr5</comment>
@@ -150,8 +157,8 @@
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="barramento" null="0" autoincrement="0">
-<datatype>DOUBLE</datatype>
+<row name="frequencia" null="0" autoincrement="0">
+<datatype>INT</datatype>
 <default>NULL</default></row>
 <row name="capacidade" null="0" autoincrement="0">
 <datatype>DOUBLE</datatype>
@@ -171,6 +178,9 @@
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="Nome" null="0" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>'NULL'</default></row>
 <row name="capacidade" null="0" autoincrement="0">
 <datatype>INT</datatype>
 <default>NULL</default></row>
@@ -194,8 +204,32 @@
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="Nome" null="0" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>'NULL'</default></row>
 <row name="capacidade" null="0" autoincrement="0">
 <datatype>DOUBLE</datatype>
+<default>NULL</default></row>
+<key type="PRIMARY" name="">
+<part>id</part>
+</key>
+</table>
+<table x="1270.5555725097656" y="267" name="Armazenamento">
+<row name="id" null="1" autoincrement="1">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Tipo" null="0" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>'NULL'</default><comment>HD ou SSD</comment>
+</row>
+<row name="Nome" null="0" autoincrement="0">
+<datatype>VARCHAR</datatype>
+<default>'NULL'</default></row>
+<row name="Capacidade" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>NULL</default></row>
+<row name="Consumo" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>

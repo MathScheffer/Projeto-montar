@@ -35,7 +35,7 @@ Processador.init({
         allowNull: false
     },
     consumo:{
-        type:DataTypes.DOUBLE,
+        type:DataTypes.DECIMAL,
         allowNull: false
     }
 },{
