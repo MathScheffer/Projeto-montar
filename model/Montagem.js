@@ -2,7 +2,7 @@ const { Sequelize, DataTypes, Model} = require('sequelize');
 const config = require('../config/conexaodb');
 const sequelize = config.sequelize;
 
-const {Usuario, PlacaMae, Processador, Ram, Armazenamento} = require('./index');
+const {Usuario, PlacaMae, Processador, Ram, Armazenamento, Fonte} = require('./index');
 class Montagem extends Model {
 
 }
@@ -47,9 +47,17 @@ Montagem.init({
         references:{
             model:Armazenamento,
             key:'id'
+        },
+        FonteId: {
+            type:DataTypes.INTEGER,
+            references:{
+                model:Fonte,
+                key:'id'
+            }
         }
     }
-},{
+}, {
+
     sequelize,
     modelName: "Montagem",
     tableName:"montagem"

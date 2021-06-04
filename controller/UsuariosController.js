@@ -6,6 +6,7 @@ const Usuario = require('../model/Usuario');
 const Processador = require('../model/Processador');
 const Montagem = require('../model/Montagem');
 const Armazenamento = require('../model/Armazenamento');
+const Fonte = require('../model/Fonte');
 const bcrypt = require('bcrypt');
 const Utils = require('../Utils/utils');
 const jwt = require('jsonwebtoken');
@@ -109,6 +110,9 @@ exports.teste2Relacionamento = async(req,res) => {
     
     //Fonte para Montagem
 
+    Fonte.Montagem = Fonte.hasOne(Montagem);
+    Montagem.Fonte = Montagem.belongsTo(Fonte);
+
 
     await sequelize.sync();
 
@@ -172,12 +176,22 @@ exports.teste2Relacionamento = async(req,res) => {
         }]
     })
 
+    const fonte = await Fonte.create({
+        nome: "FONTE GAMER AZZA 750W 80 PLUS BRONZE",
+        capacidade: 750
+    } ,{
+        include:[{ 
+            association: Fonte.Montagem
+        }]
+    })
+
     const mont = await Montagem.create({
         UsuarioId: user.id,
         ProcessadorId:processador.id,
         PlacaMaeId:placaMae.id,
         RamId:ram.id,
-        ArmazenamentoId:armazenamento.id
+        ArmazenamentoId:armazenamento.id,
+        FonteId : Fonte.id
     },{
         include:[
             {
@@ -191,6 +205,8 @@ exports.teste2Relacionamento = async(req,res) => {
                 association: Montagem.Ram
             },{
                 association: Montagem.Armazenamento
+            },{
+                association: Montagem.Fonte
             }
         ] 
     });
@@ -211,7 +227,10 @@ exports.teste2Relacionamento = async(req,res) => {
             model:Ram
         },{
             model:Armazenamento
-        }]
+        },{
+            model:Fonte
+        }
+    ]
     })
 
     res.send(montagem_all)
