@@ -6,6 +6,7 @@ const Usuario = require('../model/Usuario');
 const Processador = require('../model/Processador');
 const Montagem = require('../model/Montagem');
 const Armazenamento = require('../model/Armazenamento');
+const Fonte = require('../model/Fonte');
 const bcrypt = require('bcrypt');
 const Utils = require('../Utils/utils');
 const jwt = require('jsonwebtoken');
@@ -111,6 +112,9 @@ exports.teste2Relacionamento = async(req,res) => {
     
     //Fonte para Montagem
 
+    Fonte.Montagem = Fonte.hasOne(Montagem);
+    Montagem.Fonte = Montagem.belongsTo(Fonte);
+
 
     await sequelize.sync();
 
@@ -182,6 +186,15 @@ exports.teste2Relacionamento = async(req,res) => {
         include:[{
             association:Vga.Montagem
         }]
+    });
+    
+    const fonte = await Fonte.create({
+        nome: "FONTE GAMER AZZA 750W 80 PLUS BRONZE",
+        capacidade: 750
+    } ,{
+        include:[{ 
+            association: Fonte.Montagem
+        }]
     })
 
     const mont = await Montagem.create({
@@ -190,7 +203,8 @@ exports.teste2Relacionamento = async(req,res) => {
         PlacaMaeId:placaMae.id,
         RamId:ram.id,
         ArmazenamentoId:armazenamento.id,
-        VgaId:vga.id
+        VgaId:vga.id,
+        FonteId : Fonte.id
     },{
         include:[
             {
@@ -206,6 +220,8 @@ exports.teste2Relacionamento = async(req,res) => {
                 association: Montagem.Armazenamento
             },{
                 association: Montagem.Vga
+            },{
+                association: Montagem.Fonte
             }
         ] 
     });
@@ -214,21 +230,24 @@ exports.teste2Relacionamento = async(req,res) => {
         attributes:['id'],
         include:[{
             model:Usuario,
-            where:{
-                nome:"Testador 2"
-            },
-            attributes:["nome"]
-        },{
-            model:Processador
-        },{
-            model:PlacaMae
-        },{
-            model:Ram
-        },{
-            model:Armazenamento
-        },{
-            model:Vga
-        }]
+                where:{
+                    nome:"Testador 2"
+                },
+                attributes:["nome"]
+            },{
+                model:Processador
+            },{
+                model:PlacaMae
+            },{
+                model:Ram
+            },{
+                model:Armazenamento
+            },{
+                model:Vga
+            },{
+                model:Fonte
+            }
+        ]
     })
 
     res.send(montagem_all)
