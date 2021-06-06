@@ -4,7 +4,7 @@ const sequelize = Conexao.sequelize;
 const usuarioService = require("../service/usuarioService");
 const Usuario = require('../model/Usuario');
 const Processador = require('../model/Processador');
-const Montagem = require('../model/Montagem');
+const Computador = require('../model/Computador');
 const Armazenamento = require('../model/Armazenamento');
 const Fonte = require('../model/Fonte');
 const bcrypt = require('bcrypt');
@@ -87,34 +87,33 @@ exports.apagar = async(req,res) => {
 }  
 
 exports.teste2Relacionamento = async(req,res) => {
-    await sequelize.sync({force:true});
-    //usuario e montagem = Um para Muitos
-    Usuario.Montagem = Usuario.hasMany(Montagem);
-    Montagem.Usuario = Montagem.belongsTo(Usuario);
-    //Processador para Montagem Um para Um
-    Processador.Montagem = Processador.hasOne(Montagem);
-    Montagem.Processador = Montagem.belongsTo(Processador);
-    //Placa mae para Montagem Um para Um
-    PlacaMae.Montagem = PlacaMae.hasOne(Montagem);
-    Montagem.PlacaMae = Montagem.belongsTo(PlacaMae);
+    await sequelize.sync({alter:true});
+    //usuario e Computador = Um para Muitos
+    Usuario.Computador = Usuario.hasMany(Computador);
+    Computador.Usuario = Computador.belongsTo(Usuario);
+    //Processador para Computador Um para Um
+    Processador.Computador = Processador.hasOne(Computador);
+    Computador.Processador = Computador.belongsTo(Processador);
+    //Placa mae para Computador Um para Um
+    PlacaMae.Computador = PlacaMae.hasOne(Computador);
+    Computador.PlacaMae = Computador.belongsTo(PlacaMae);
 
-    //Ram para Montagem 
-    Ram.Montagem = Ram.hasOne(Montagem);
-    Montagem.Ram = Montagem.belongsTo(Ram);
+    //Ram para Computador 
+    Ram.Computador = Ram.hasOne(Computador);
+    Computador.Ram = Computador.belongsTo(Ram);
 
-    //Hd/ssd para Montagem
-    Armazenamento.Montagem = Armazenamento.hasOne(Montagem);
-    Montagem.Armazenamento = Montagem.belongsTo(Armazenamento);
+    //Hd/ssd para Computador
+    Armazenamento.Computador = Armazenamento.hasOne(Computador);
+    Computador.Armazenamento = Computador.belongsTo(Armazenamento);
 
     //VGA
-    Vga.Montagem = Vga.hasOne(Montagem);
-    Montagem.Vga = Montagem.belongsTo(Vga);
+    Vga.Computador = Vga.hasOne(Computador);
+    Computador.Vga = Computador.belongsTo(Vga);
     
-    //Fonte para Montagem
+    //Fonte para Computador
 
-    Fonte.Montagem = Fonte.hasOne(Montagem);
-    Montagem.Fonte = Montagem.belongsTo(Fonte);
-
+    //Fonte.Computador = Fonte.hasOne(Computador);
+    //Computador.Fonte = Computador.belongsTo(Fonte);
 
     await sequelize.sync();
 
@@ -127,13 +126,13 @@ exports.teste2Relacionamento = async(req,res) => {
     }
     ,{
         include:[{
-            association:Usuario.Montagem
+            association:Usuario.Computador
         }]
     });
 
     const processador = await Processador.create({
         nome: "INTEL CORE I7-10700KF OCTA-CORE 3.8GHZ (5.1GHZ TURBO)",
-        tipo:"intel",
+        marca:"intel",
         frequencia:3.8,
         frequencia_max:5,
         consumo:95,
@@ -141,7 +140,7 @@ exports.teste2Relacionamento = async(req,res) => {
     }
     ,{
        include:[{
-           association: Processador.Montagem
+           association: Processador.Computador
        }] 
     });
 
@@ -153,7 +152,7 @@ exports.teste2Relacionamento = async(req,res) => {
         ddr:4
     },{
         include:[{
-            association:PlacaMae.Montagem
+            association:PlacaMae.Computador
         }]
     });
 
@@ -164,7 +163,7 @@ exports.teste2Relacionamento = async(req,res) => {
         ddr:4
     },{
         include:[{
-            association:PlacaMae.Montagem
+            association:PlacaMae.Computador
         }]
     });
 
@@ -174,17 +173,18 @@ exports.teste2Relacionamento = async(req,res) => {
         capacidade:1000
     },{
         include:[{
-            association:Armazenamento.Montagem
+            association:Armazenamento.Computador
         }]
     })
 
     const vga = await Vga.create({
         nome:"Radeon 6800XT",
         capacidade:16,
-        consumo:250
+        tdp:250,
+        consumo_max:300
     },{
         include:[{
-            association:Vga.Montagem
+            association:Vga.Computador
         }]
     });
     
@@ -193,11 +193,11 @@ exports.teste2Relacionamento = async(req,res) => {
         capacidade: 750
     } ,{
         include:[{ 
-            association: Fonte.Montagem
+            association: await Fonte.relation(Computador)
         }]
     })
 
-    const mont = await Montagem.create({
+    const mont = await Computador.create({
         UsuarioId: user.id,
         ProcessadorId:processador.id,
         PlacaMaeId:placaMae.id,
@@ -208,25 +208,25 @@ exports.teste2Relacionamento = async(req,res) => {
     },{
         include:[
             {
-                association: Montagem.Usuario
+                association: Computador.Usuario
             },{
-                association: Montagem.Processador
+                association: Computador.Processador
             },{
-                association: Montagem.PlacaMae
+                association: Computador.PlacaMae
             },
             {
-                association: Montagem.Ram
+                association: Computador.Ram
             },{
-                association: Montagem.Armazenamento
+                association: Computador.Armazenamento
             },{
-                association: Montagem.Vga
+                association: Computador.Vga
             },{
-                association: Montagem.Fonte
+                association: await Computador.relation(Fonte)
             }
         ] 
     });
 
-    const montagem_all = await Montagem.findAll({
+    const computador_all = await Computador.findAll({
         attributes:['id'],
         include:[{
             model:Usuario,
@@ -250,6 +250,6 @@ exports.teste2Relacionamento = async(req,res) => {
         ]
     })
 
-    res.send(montagem_all)
+    res.send(computador_all)
 
 }

@@ -2,7 +2,7 @@ const { Sequelize, DataTypes, Model} = require('sequelize');
 const config = require('../config/conexaodb');
 const sequelize = config.sequelize;
 
-const Montagem = require('./Montagem');
+const Computador = require('./Computador');
 
 
 class Armazenamento extends Model {
@@ -43,7 +43,5 @@ Armazenamento.init({
     tableName:"Armazenamento",
     freezeTableName:"Armazenamento"
 })
-
-console.log("aqui",Montagem)
 
 module.exports = Armazenamento

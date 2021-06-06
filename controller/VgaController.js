@@ -1,23 +1,22 @@
-const ramService = require('../service/RamService');
+const vgaService = require('../service/VgaService');
 
 exports.criar = async(req,res) => {
-    const body = req.body;
-
-    ramService.criar(body, (err,ram) => {
+    const reqBody = req.body;
+    vgaService.criar(reqBody,(err,vga) => {
         if(err){
             res.status(err.status).json(err);
         }else{
-            res.json(ram)
+            res.json(vga)
         }
     })
 }
 
 exports.listar = async(req,res) => {
-    ramService.listar((err,rams) => {
+    vgaService.listar((err,vgas) => {
         if(err){
             res.status(err.status).json(err);
         }else{
-            res.json(rams);
+            res.json(vgas);
         }
     })
 }

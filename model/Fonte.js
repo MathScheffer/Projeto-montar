@@ -1,11 +1,13 @@
 const { Sequelize, DataTypes, Model} = require('sequelize');
 const config = require('../config/conexaodb');
 const sequelize = config.sequelize; 
-
+const Computador = require('./Computador');
 
 class Fonte extends Model {
 
-
+    static relation = async(Model) => {
+        return Fonte.hasOne(Model);
+    }
 }
 
 Fonte.init({
@@ -27,7 +29,7 @@ Fonte.init({
     modelName: "Fonte",
     tableName:"fonte"
 })
-    
+
 
 
 module.exports = Fonte;

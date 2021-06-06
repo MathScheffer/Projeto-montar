@@ -1,5 +1,5 @@
 const usuarioRepository = require('../repository/usuarioRepository');
-const utils = require('../Utils/utils');
+const Utils = require('../Utils/utils');
 const sequelizeErrors = require('../Utils/sequelizeErrors');
 const bcrypt = require('bcrypt');
 const Usuario = require('../model/Usuario');
@@ -14,16 +14,16 @@ exports.criar = async(reqBody,callback) => {
         hashSenha,
         reqBody.permissions,(err, rows)=>{
 
-        const camposFaltantes = retornaCamposFaltantes(reqBody);
-        if(camposFaltantes){
-            callback({
-                status:400,
-                message:`Ha campos faltando na requisicao: ${camposFaltantes}`
-            })
-        }else if(err){
+        if(err){
             const sequelizeError = JSON.parse(JSON.stringify(err));
+            const camposFaltantes = Utils.retornaCamposFaltantes(reqBody,usuarioContants.ENTRADAS_VALIDAS)//retornaCamposFaltantes(reqBody);
 
-            if(sequelizeError && sequelizeError.name === "SequelizeUniqueConstraintError"){
+            if(camposFaltantes){
+                callback({
+                    status:400,
+                    message:`Ha campos faltando na requisicao: ${camposFaltantes}`
+                })
+            }else if(sequelizeError && sequelizeError.name === "SequelizeUniqueConstraintError"){
                 const errors = sequelizeErrors.uniqueConstraintErrorUsuario(sequelizeError.errors);
                 const error = {
                     status:400,
@@ -38,7 +38,6 @@ exports.criar = async(reqBody,callback) => {
                 }
                 callback(error,null);
             }else{
-                console.log(sequelizeError.name)
                 const error = {
                     status:500,
                     message:"erro interno do servidor",
@@ -50,23 +49,6 @@ exports.criar = async(reqBody,callback) => {
             callback(null,rows);
         }
     })
-}
-
-retornaCamposFaltantes = (reqBody) => {
-    const body =  utils.jsonToMap(reqBody);
-    const camposNecessarios = usuarioContants.ENTRADAS_VALIDAS;
-    const camposFaltantes = [];
-    camposNecessarios.forEach(key => {
-        if(!body.has(key)){
-            camposFaltantes.push(key);
-        }
-    });
-
-    if(camposFaltantes.length > 0){
-        return camposFaltantes.toString();
-    }else{
-        return false;
-    }
 }
 
 exports.listar = (callback) => {
@@ -110,17 +92,12 @@ exports.usuarioPorNome = async(nome,callback) => {
 
 exports.atualizar = async(params,id,callback) => {
  
-    const bodyObj = utils.jsonToMap(params);
-    const paramsName = usuarioContants.ENTRADAS_VALIDAS;
-    let  entradasInvalidas = [];
+    const bodyObj = Utils.jsonToMap(params);
+    const entradasInvalidas = Utils.validarEntradasInvalidas(bodyObj, usuarioContants.ENTRADAS_VALIDAS);
 
-    bodyObj.forEach((value,key) => {
-        if(paramsName.find(param=>param === key) == undefined){
-            entradasInvalidas.push(key)
-        }else if(key === "senha"){
-            params.senha = bcrypt.hashSync(value,10);
-        }
-    })
+    if(bodyObj.has('senha') && bodyObj.get("senha")){
+        params.senha = bcrypt.hashSync(params.senha,10);
+    }
 
     if(entradasInvalidas.length > 0){
         const error = {
@@ -167,11 +144,12 @@ exports.atualizar = async(params,id,callback) => {
 const fetchUsers = async(params) => {
     let paramsKeys = []
  
-    utils.jsonToMap(params).forEach((value,key) => {
+    Utils.jsonToMap(params).forEach((value,key) => {
         paramsKeys.push(key)
     });
+    
     const usuario = await Usuario.findOne({
-        attributes:[paramsKeys],
+        attributes:paramsKeys,
         where:params
     })
     return JSON.stringify(usuario);

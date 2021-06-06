@@ -1,0 +1,1 @@
+exports.ENTRADAS_VALIDAS = ["nome","marca","frequencia","frequencia_max","socket","consumo"];

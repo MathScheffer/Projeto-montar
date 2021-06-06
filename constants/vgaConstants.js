@@ -1,0 +1,1 @@
+exports.ENTRADAS_VALIDAS = ["nome","capacidade","consumo"];

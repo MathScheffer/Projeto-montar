@@ -2,13 +2,17 @@ const { Sequelize, DataTypes, Model} = require('sequelize');
 const config = require('../config/conexaodb');
 const sequelize = config.sequelize;
 
-const {Usuario, PlacaMae, Processador, Ram, Armazenamento, Fonte,Vga} = require('./index');
-class Montagem extends Model {
+const {Usuario, PlacaMae, Processador, Ram, Armazenamento,Vga,Fonte} = require('./index');
+class Computador extends Model {
+    static relation = async(Model) => {
+        return Computador.belongsTo(Model);
+    }
 
+    static integradorMontagem = [];
 }
 
 
-Montagem.init({
+Computador.init({
     id:{
         type: DataTypes.INTEGER,
         autoIncrement:true,
@@ -66,8 +70,9 @@ Montagem.init({
 }, {
 
     sequelize,
-    modelName: "Montagem",
-    tableName:"montagem"
+    modelName: "Computador",
+    tableName:"computador"
 })
 
-module.exports = Montagem;
+
+module.exports = Computador;

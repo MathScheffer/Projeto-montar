@@ -18,7 +18,7 @@ Processador.init({
         allowNull: false
       //  unique:"unique_nome"
     },
-    tipo:{
+    marca:{
         type: DataTypes.STRING(5),
         allowNull: false,
     },

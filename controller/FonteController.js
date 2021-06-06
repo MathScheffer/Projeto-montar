@@ -1,23 +1,22 @@
-const ramService = require('../service/RamService');
+const fonteService = require('../service/FonteService');
 
 exports.criar = async(req,res) => {
-    const body = req.body;
-
-    ramService.criar(body, (err,ram) => {
+    const reqBody = req.body;
+    fonteService.criar(reqBody, (err, fonte) => {
         if(err){
             res.status(err.status).json(err);
         }else{
-            res.json(ram)
+            res.json(fonte);
         }
     })
 }
 
 exports.listar = async(req,res) => {
-    ramService.listar((err,rams) => {
+    fonteService.listar((err,fontes) => {
         if(err){
             res.status(err.status).json(err);
         }else{
-            res.json(rams);
+            res.json(fontes);
         }
     })
 }

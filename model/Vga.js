@@ -20,7 +20,11 @@ Vga.init({
         type:DataTypes.INTEGER,
         allowNull:false
     },
-    consumo:{
+    tdp:{
+        type:DataTypes.DECIMAL,
+        allowNull:false
+    },
+    consumo_max:{
         type:DataTypes.DECIMAL,
         allowNull:false
     }
