@@ -31,6 +31,9 @@ app.use('/api/vga',vga);
 const fonte = require('./rotas/Fonte');
 app.use('/api/fonte',fonte);
 
+const computador = require('./rotas/Computador');
+app.use('/api/computador',computador);
+
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`)
   })

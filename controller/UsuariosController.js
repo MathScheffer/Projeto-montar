@@ -208,18 +208,17 @@ exports.teste2Relacionamento = async(req,res) => {
     },{
         include:[
             {
-                association: Computador.Usuario
+                association: await Computador.relation(Usuario)
             },{
-                association: Computador.Processador
+                association: await Computador.relation(Processador)
             },{
-                association: Computador.PlacaMae
-            },
-            {
-                association: Computador.Ram
+                association: await Computador.relation(PlacaMae)
             },{
-                association: Computador.Armazenamento
+                association: await Computador.relation(Ram)
             },{
-                association: Computador.Vga
+                association: await Computador.relation(Armazenamento)
+            },{
+                association: await Computador.relation(Vga)
             },{
                 association: await Computador.relation(Fonte)
             }

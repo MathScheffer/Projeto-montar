@@ -1,3 +1,4 @@
+const Computador = require('../model/Computador');
 class Utils{
     
 //Verifica se uma consulta que era para retornar somente um objeto não retornou dois
@@ -55,6 +56,25 @@ class Utils{
         })
 
         return entradasInvalidas;
+    }
+
+    static isErrno1452(err){
+        return err.name === "SequelizeForeignKeyConstraintError"
+        && err.original.errno == 1452
+    }
+
+    static computadorAgora(){
+        let  computador_agora = new Map();
+
+        Computador.integradorMontagem.forEach((value,key) => {
+            computador_agora[key] = JSON.parse(JSON.stringify(value));
+        })
+
+        return computador_agora;
+    }
+
+    static sequelizeModelToJson(sequelizeModel){
+        return sequelizeModel? JSON.parse(JSON.stringify(sequelizeModel)) : false;
     }
 }
 

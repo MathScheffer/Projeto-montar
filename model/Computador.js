@@ -7,8 +7,8 @@ class Computador extends Model {
     static relation = async(Model) => {
         return Computador.belongsTo(Model);
     }
+    static integradorMontagem = new Map();
 
-    static integradorMontagem = [];
 }
 
 

@@ -41,7 +41,7 @@ Processador.init({
 },{
     sequelize,
     modelName: "Processador",
-    tableName:"processadores"
+    tableName:"processador"
 })
 
 module.exports = Processador;
