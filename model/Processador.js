@@ -18,7 +18,7 @@ Processador.init({
         allowNull: false
       //  unique:"unique_nome"
     },
-    tipo:{
+    marca:{
         type: DataTypes.STRING(5),
         allowNull: false,
     },
@@ -34,14 +34,18 @@ Processador.init({
         type:DataTypes.STRING,
         allowNull: false
     },
-    consumo:{
-        type:DataTypes.DOUBLE,
+    tdp:{
+        type:DataTypes.DECIMAL,
+        allowNull: false
+    },
+    consumo_max:{
+        type:DataTypes.DECIMAL,
         allowNull: false
     }
 },{
     sequelize,
     modelName: "Processador",
-    tableName:"processadores"
+    tableName:"processador"
 })
 
 module.exports = Processador;

@@ -1,0 +1,9 @@
+const UsuarioService = require('./UsuarioService');
+const ProcessadorService = require('./ProcessadorService');
+const PlacaMaeService = require('./PlacaMaeService');
+const ComputadorService = require('./ComputadorService');
+const RamService = require('./RamService');
+const ArmazenamentoService = require('./ArmazenamentoService');
+const VgaService = require('./VgaService');
+const FonteService = require('./FonteService')
+module.exports = {UsuarioService, ProcessadorService, PlacaMaeService, ComputadorService, RamService, ArmazenamentoService,VgaService, FonteService}

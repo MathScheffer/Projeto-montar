@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes, Model} = require('sequelize');
 const config = require('../config/conexaodb');
-const sequelize = config.sequelize;
+const sequelize = config.sequelize; // copiar para a vga
 
 class Usuario extends Model {
 
@@ -44,7 +44,7 @@ Usuario.init({
 },{
     sequelize,
     modelName: "Usuario",
-    tableName:"usuarios"
+    tableName:"usuario"
 })
 
 module.exports = Usuario;
