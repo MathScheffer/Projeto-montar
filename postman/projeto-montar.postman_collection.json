@@ -125,175 +125,701 @@
 			]
 		},
 		{
-			"name": "Get all usuarios",
-			"event": [
+			"name": "Usuario",
+			"item": [
 				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"console.log(pm.environment.get(\"auth_token\"))"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-auth-token",
-						"value": "{{auth_token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:3000/api/usuarios/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"usuarios",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Atualizar",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					},
-					{
-						"key": "x-auth-token",
-						"value": "{{auth_token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"nome\":\"teste 1\",\r\n    \"senha\":\"1234\"\r\n}"
-				},
-				"url": {
-					"raw": "http://localhost:3000/api/usuarios/atualizar/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"usuarios",
-						"atualizar",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Usuario por nome",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "x-auth-token",
-						"value": "{{auth_token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:3000/api/usuarios/especifico?nome=teste%2",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"usuarios",
-						"especifico"
-					],
-					"query": [
+					"name": "Get all usuarios",
+					"event": [
 						{
-							"key": "nome",
-							"value": "teste%2"
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(pm.environment.get(\"auth_token\"))"
+								],
+								"type": "text/javascript"
+							}
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Novo",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "x-auth-token",
-						"value": "{{auth_token}}",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"teste.1\",\r\n    \"nome\":\"teste 1\",\r\n    \"email\":\"teste$@gmail.com\",\r\n    \"senha\":\"123\",\r\n    \"permissions\":1\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								""
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "http://localhost:3000/api/usuarios/novo",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"usuarios",
-						"novo"
-					]
+				{
+					"name": "Atualizar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"teste 1\",\r\n    \"senha\":\"1123\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/atualizar/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								"atualizar",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario por nome",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/especifico?nome=teste%1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								"especifico"
+							],
+							"query": [
+								{
+									"key": "nome",
+									"value": "teste%1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Novo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"teste.1\",\r\n    \"nome\":\"teste 1\",\r\n    \"email\":\"teste$@gmail.com\",\r\n    \"senha\":\"123\",\r\n    \"permissions\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/novo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								"novo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "apagar",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/usuarios/18",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"usuarios",
+								"18"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "apagar",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "x-auth-token",
-						"value": "{{auth_token}}",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:3000/api/usuarios/18",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"api",
-						"usuarios",
-						"18"
-					]
+			"name": "Ram",
+			"item": [
+				{
+					"name": "Adicionar Ram",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"TEAM GROUP T-FORCE RGB 8GB\",\r\n    \"frequencia\":3600,\r\n    \"capacidade\":8,\r\n    \"ddr\":4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/ram/novo",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"ram",
+								"novo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Memórias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/ram/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"ram",
+								""
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "Processador",
+			"item": [
+				{
+					"name": "Cadastrar Processador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"INTEL CORE I7-10700KF\",\r\n    \"marca\":\"Intel\",\r\n    \"frequencia\":3.8,\r\n    \"frequencia_max\":5.1,\r\n    \"socket\":\"LGA1200\",\r\n    \"tdp\":95\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/processador/novo",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"processador",
+								"novo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Processadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Placa Mae",
+			"item": [
+				{
+					"name": "Adicionar Placa Mae",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"Asus TUF Gaming Z490-Plus\",\r\n    \"socket\":\"LGA1200\",\r\n    \"frequencia_max_ram\":4800,\r\n    \"max_ram\":128,\r\n    \"ddr\":4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/placa-mae/novo",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"placa-mae",
+								"novo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Placas Mae",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/placa-mae",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"placa-mae"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Armazenamento",
+			"item": [
+				{
+					"name": "Adicionar meio de armazenamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tipo\":\"SSD\",\r\n    \"nome\":\"WD GREEN SN350\",\r\n    \"capacidade\":280\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/armazenamento/novo",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"armazenamento",
+								"novo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Armazenamentos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/armazenamento",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"armazenamento"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vga",
+			"item": [
+				{
+					"name": "Adicionar Vga",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"AMD Radeon RX 6800 XT\",\r\n    \"capacidade\":16,\r\n    \"tdp\":300\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/vga/novo",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"vga",
+								"novo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Vgas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/vga",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"vga"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fonte",
+			"item": [
+				{
+					"name": "Adicionar Fonte",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"fonte b\",\r\n    \"capacidade\":750\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/fonte/novo",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"fonte",
+								"novo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Fontes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{server}}/fonte/",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"fonte",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Computador",
+			"item": [
+				{
+					"name": "Adicionar Computador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UsuarioId\":1,\r\n    \"ProcessadorId\":1,\r\n    \"PlacaMaeId\":1,\r\n    \"RamId\":1,\r\n    \"ArmazenamentoId\":1,\r\n    \"VgaId\":1,\r\n    \"FonteId\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/computador/novo",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"computador",
+								"novo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Adicionar ao computador",
+			"item": [
+				{
+					"name": "Adicionar Processador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/computador/adicionar/processador",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"computador",
+								"adicionar",
+								"processador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Placa Mae",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/computador/adicionar/placa-mae",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"computador",
+								"adicionar",
+								"placa-mae"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Memória Ram",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/computador/adicionar/ram",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"computador",
+								"adicionar",
+								"ram"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Armazenamento",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/computador/adicionar/armazenamento",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"computador",
+								"adicionar",
+								"armazenamento"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Vga",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/computador/adicionar/vga",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"computador",
+								"adicionar",
+								"vga"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Fonte",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/computador/adicionar/fonte",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"computador",
+								"adicionar",
+								"fonte"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Computador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{server}}/computador/adicionar/computador",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"computador",
+								"adicionar",
+								"computador"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		},
 		{
 			"name": "testar relacionamento",
@@ -301,7 +827,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/api/usuarios/teste",
+					"raw": "http://localhost:3000/api/usuarios/teste2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -310,7 +836,7 @@
 					"path": [
 						"api",
 						"usuarios",
-						"teste"
+						"teste2"
 					]
 				}
 			},

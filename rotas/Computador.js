@@ -7,4 +7,9 @@ rotas.post('/novo',computadorController.criar);
 
 rotas.post('/adicionar/processador',computadorController.adicionarProcessador);
 rotas.post('/adicionar/placa-mae',computadorController.adicionarPlacaMae);
+rotas.post('/adicionar/ram',computadorController.adicionarRam);
+rotas.post('/adicionar/armazenamento',computadorController.adicionarArmazenamento);
+rotas.post('/adicionar/vga',computadorController.adicionarVga);
+rotas.post('/adicionar/computador',computadorController.adicionarComputador);
+rotas.post('/adicionar/fonte',computadorController.adicionarFonte);
 module.exports = rotas;

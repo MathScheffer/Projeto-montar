@@ -135,7 +135,8 @@ exports.teste2Relacionamento = async(req,res) => {
         marca:"intel",
         frequencia:3.8,
         frequencia_max:5,
-        consumo:95,
+        tdp:95,
+        consumo_max: 130,
         socket:'LGA 1200'
     }
     ,{

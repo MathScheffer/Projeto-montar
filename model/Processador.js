@@ -34,7 +34,11 @@ Processador.init({
         type:DataTypes.STRING,
         allowNull: false
     },
-    consumo:{
+    tdp:{
+        type:DataTypes.DECIMAL,
+        allowNull: false
+    },
+    consumo_max:{
         type:DataTypes.DECIMAL,
         allowNull: false
     }

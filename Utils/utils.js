@@ -73,8 +73,29 @@ class Utils{
         return computador_agora;
     }
 
+    static computadorAgoraMap(){
+        let  computador_agora_map = new Map();
+        Computador.integradorMontagem.forEach((value,key) => {
+            computador_agora_map.set(key, JSON.parse(JSON.stringify(value)));
+        })
+        return computador_agora_map;
+    }
+
     static sequelizeModelToJson(sequelizeModel){
         return sequelizeModel? JSON.parse(JSON.stringify(sequelizeModel)) : false;
+    }
+
+    static retornaConsumo(){
+        let soma = 0;
+         Computador.integradorMontagem.forEach((value,key) => {
+             const entidade = value.dataValues;
+             let consumo = entidade.consumo | entidade.consumo_max;
+             if(consumo){
+                 console.log(`${key}: ${consumo}`)
+                 soma = soma + parseInt(consumo);
+             }
+         })
+        return soma;
     }
 }
 

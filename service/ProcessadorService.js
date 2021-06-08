@@ -3,14 +3,15 @@ const processadorConstants = require('../constants/processadorConstantes');
 const Utils = require('../Utils/utils');
 
 exports.criar = async(reqBody,callback) => {
-
+    const consumo_max = reqBody.tdp ? reqBody.tdp * 1.5 : reqBody.tdp;
     processadorRepository.criar(
         reqBody.nome,
         reqBody.marca,
         reqBody.frequencia,
         reqBody.frequencia_max,
         reqBody.socket,
-        reqBody.consumo,(err,processador) => {
+        reqBody.tdp,
+        consumo_max,(err,processador) => {
 
         if(err){
             const camposFaltantes = Utils.retornaCamposFaltantes(reqBody,processadorConstants.ENTRADAS_VALIDAS);

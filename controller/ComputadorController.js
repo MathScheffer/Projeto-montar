@@ -32,3 +32,58 @@ exports.adicionarPlacaMae = (req,res) => {
         }
     })  
 }
+
+exports.adicionarRam = (req,res) => {
+    const id = req.body.id;
+    ComputadorService.adicionarRam(id,(err,ram) => {
+        if(err){
+            res.status(err.status).json(err);
+        }else{
+            res.status(ram.status).json(ram);
+        }
+    })
+}
+
+exports.adicionarArmazenamento = (req,res) => {
+    const id = req.body.id;
+    ComputadorService.adicionarArmazenamento(id,(err,armazenamento) => {
+        if(err){
+            res.status(err.status).json(err);
+        }else{
+            res.status(armazenamento.status).json(armazenamento);
+        }
+    })
+}
+
+exports.adicionarVga = (req,res) => {
+    const id = req.body.id;
+    ComputadorService.adicionarVga(id,(err,vga) => {
+        if(err){
+            res.status(err.status).json(err);
+        }else{
+            res.status(vga.status).json(vga);
+        }
+    })
+}
+
+exports.adicionarFonte = (req,res) => {
+    const id = req.body.id;
+    ComputadorService.adicionarFonte(id,(err,fonte) => {
+        if(err){
+            res.status(err.status).json(err);
+        }else{
+            res.status(fonte.status).json(fonte);
+        }
+    })
+}
+
+exports.adicionarComputador = (req,res) => {
+    const id = req.body.id;
+    ComputadorService.adicionarComputador(id,(err,computador) => {
+        if(err){
+            res.status(err.status).json(err);
+        }else{
+            res.status(computador.status).json(computador);
+        }
+    })
+}
