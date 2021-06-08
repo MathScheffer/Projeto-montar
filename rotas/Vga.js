@@ -3,7 +3,9 @@ const rotas = express.Router();
 
 const vgaController = require('../controller/VgaController');
 
-rotas.post('/novo',vgaController.criar);
+const authenticationController = require('../controller/AuthenticationController');
+
+rotas.post('/novo',authenticationController.somenteAdm,vgaController.criar);
 
 rotas.get('/',vgaController.listar);
 

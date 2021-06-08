@@ -3,7 +3,9 @@ const rotas = express.Router();
 
 const armazenamentoController = require('../controller/ArmazenamentoController');
 
-rotas.post('/novo',armazenamentoController.criar);
+const authenticationController = require('../controller/AuthenticationController');
+
+rotas.post('/novo',authenticationController.somenteAdm,armazenamentoController.criar);
 
 rotas.get('/',armazenamentoController.listar);
 
