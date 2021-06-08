@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"teste.1\",\r\n    \"senha\":\"1234\"\r\n}",
+							"raw": "{\r\n    \"username\":\"teste.2\",\r\n    \"senha\":\"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -307,7 +307,13 @@
 					"name": "Adicionar Ram",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"nome\":\"TEAM GROUP T-FORCE RGB 8GB\",\r\n    \"frequencia\":3600,\r\n    \"capacidade\":8,\r\n    \"ddr\":4\r\n}",
@@ -334,7 +340,13 @@
 					"name": "Listar Memórias",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{server}}/ram/",
 							"host": [
@@ -357,7 +369,13 @@
 					"name": "Cadastrar Processador",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"nome\":\"INTEL CORE I7-10700KF\",\r\n    \"marca\":\"Intel\",\r\n    \"frequencia\":3.8,\r\n    \"frequencia_max\":5.1,\r\n    \"socket\":\"LGA1200\",\r\n    \"tdp\":95\r\n}",
@@ -385,7 +403,22 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"url": null
+						"url": {
+							"raw": "{{server}}/processador/?x-auth-token={{auth_token}}",
+							"host": [
+								"{{server}}"
+							],
+							"path": [
+								"processador",
+								""
+							],
+							"query": [
+								{
+									"key": "x-auth-token",
+									"value": "{{auth_token}}"
+								}
+							]
+						}
 					},
 					"response": []
 				}
@@ -398,7 +431,13 @@
 					"name": "Adicionar Placa Mae",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"nome\":\"Asus TUF Gaming Z490-Plus\",\r\n    \"socket\":\"LGA1200\",\r\n    \"frequencia_max_ram\":4800,\r\n    \"max_ram\":128,\r\n    \"ddr\":4\r\n}",
@@ -425,7 +464,13 @@
 					"name": "Listar Placas Mae",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{server}}/placa-mae",
 							"host": [
@@ -447,7 +492,13 @@
 					"name": "Adicionar meio de armazenamento",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"tipo\":\"SSD\",\r\n    \"nome\":\"WD GREEN SN350\",\r\n    \"capacidade\":280\r\n}",
@@ -474,7 +525,13 @@
 					"name": "Listar Armazenamentos",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "{{server}}/armazenamento",
 							"host": [
@@ -496,7 +553,13 @@
 					"name": "Adicionar Vga",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"nome\":\"AMD Radeon RX 6800 XT\",\r\n    \"capacidade\":16,\r\n    \"tdp\":300\r\n}",
@@ -525,12 +588,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}/vga",
+							"raw": "{{server}}/vga?x-auth-token={{auth_token}}",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"vga"
+							],
+							"query": [
+								{
+									"key": "x-auth-token",
+									"value": "{{auth_token}}"
+								}
 							]
 						}
 					},
@@ -545,7 +614,13 @@
 					"name": "Adicionar Fonte",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"nome\":\"fonte b\",\r\n    \"capacidade\":750\r\n}",
@@ -574,13 +649,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{server}}/fonte/",
+							"raw": "{{server}}/fonte/?x-auth-token={{auth_token}}",
 							"host": [
 								"{{server}}"
 							],
 							"path": [
 								"fonte",
 								""
+							],
+							"query": [
+								{
+									"key": "x-auth-token",
+									"value": "{{auth_token}}"
+								}
 							]
 						}
 					},
@@ -592,10 +673,259 @@
 			"name": "Computador",
 			"item": [
 				{
+					"name": "Adicionar ao computador",
+					"item": [
+						{
+							"name": "Adicionar Processador",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/computador/adicionar/processador",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"computador",
+										"adicionar",
+										"processador"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adicionar Placa Mae",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/computador/adicionar/placa-mae",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"computador",
+										"adicionar",
+										"placa-mae"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adicionar Memória Ram",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{server}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":2\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/computador/adicionar/ram",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"computador",
+										"adicionar",
+										"ram"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adicionar Armazenamento",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{server}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/computador/adicionar/armazenamento",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"computador",
+										"adicionar",
+										"armazenamento"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adicionar Vga",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/computador/adicionar/vga",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"computador",
+										"adicionar",
+										"vga"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adicionar Fonte",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{server}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/computador/adicionar/fonte",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"computador",
+										"adicionar",
+										"fonte"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Adicionar Computador",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "{{auth_token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\":1\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{server}}/computador/adicionar/computador",
+									"host": [
+										"{{server}}"
+									],
+									"path": [
+										"computador",
+										"adicionar",
+										"computador"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "Adicionar Computador",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{auth_token}}",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"UsuarioId\":1,\r\n    \"ProcessadorId\":1,\r\n    \"PlacaMaeId\":1,\r\n    \"RamId\":1,\r\n    \"ArmazenamentoId\":1,\r\n    \"VgaId\":1,\r\n    \"FonteId\":1\r\n}",
@@ -613,207 +943,6 @@
 							"path": [
 								"computador",
 								"novo"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Adicionar ao computador",
-			"item": [
-				{
-					"name": "Adicionar Processador",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/computador/adicionar/processador",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"computador",
-								"adicionar",
-								"processador"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar Placa Mae",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/computador/adicionar/placa-mae",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"computador",
-								"adicionar",
-								"placa-mae"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar Memória Ram",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":2\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/computador/adicionar/ram",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"computador",
-								"adicionar",
-								"ram"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar Armazenamento",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/computador/adicionar/armazenamento",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"computador",
-								"adicionar",
-								"armazenamento"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar Vga",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/computador/adicionar/vga",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"computador",
-								"adicionar",
-								"vga"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar Fonte",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/computador/adicionar/fonte",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"computador",
-								"adicionar",
-								"fonte"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Adicionar Computador",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"id\":1\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{server}}/computador/adicionar/computador",
-							"host": [
-								"{{server}}"
-							],
-							"path": [
-								"computador",
-								"adicionar",
-								"computador"
 							]
 						}
 					},

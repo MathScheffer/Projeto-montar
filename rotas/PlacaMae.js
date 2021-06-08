@@ -3,7 +3,8 @@ const rotas = express.Router();
 
 const placaMaeController = require('../controller/PlacaMaeController');
 
-rotas.post('/novo',placaMaeController.criar);
+const authenticationController = require('../controller/AuthenticationController');
+rotas.post('/novo',authenticationController.somenteAdm,placaMaeController.criar);
 
 rotas.get('/',placaMaeController.listar);
 
