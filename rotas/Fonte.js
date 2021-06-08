@@ -3,7 +3,9 @@ const rotas = express.Router();
 
 const fonteController = require('../controller/FonteController');
 
-rotas.post('/novo',fonteController.criar);
+const authenticationController = require('../controller/AuthenticationController');
+
+rotas.post('/novo',authenticationController.somenteAdm,fonteController.criar);
 
 rotas.get('/',fonteController.listar);
 
