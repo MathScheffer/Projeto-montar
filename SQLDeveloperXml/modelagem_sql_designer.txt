@@ -104,24 +104,30 @@
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
-<row name="tipo" null="0" autoincrement="0">
-<datatype>VARCHAR(5)</datatype>
+<row name="nome" null="0" autoincrement="0">
+<datatype>VARCHAR</datatype>
 <default>'NULL'</default><comment>AMD ou INTEL</comment>
 </row>
-<row name="geracao" null="0" autoincrement="0">
-<datatype>INTEGER(1)</datatype>
+<row name="marca" null="0" autoincrement="0">
+<datatype>VARCHAR(5)</datatype>
+<default>'NULL'</default></row>
+<row name="frequencia" null="0" autoincrement="0">
+<datatype>DECIMAL</datatype>
 <default>NULL</default></row>
-<row name="potencia" null="0" autoincrement="0">
-<datatype>DOUBLE</datatype>
-<default>NULL</default></row>
-<row name="consumo_energetico" null="1" autoincrement="0">
-<datatype>DOUBLE</datatype>
+<row name="frequencia_max" null="1" autoincrement="0">
+<datatype>DECIMAL</datatype>
 <default>NULL</default></row>
 <row name="socket" null="0" autoincrement="0">
 <datatype>VARCHAR(10)</datatype>
 <default>'NULL'</default></row>
+<row name="tdp" null="1" autoincrement="0">
+<datatype>DECIMAL</datatype>
+<default>NULL</default></row>
+<row name="consumo_max" null="1" autoincrement="0">
+<datatype>DECIMAL</datatype>
+<default>NULL</default></row>
 </table>
-<table x="1100" y="106" name="Placa mae">
+<table x="975" y="134" name="Placa mae">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -131,11 +137,7 @@
 <row name="socket" null="0" autoincrement="0">
 <datatype>VARCHAR(10)</datatype>
 <default>'NULL'</default></row>
-<row name="frequencia_min" null="0" autoincrement="0">
-<datatype>INT(4)</datatype>
-<default>NULL</default><comment>frequencia da memória</comment>
-</row>
-<row name="frequencia_max" null="1" autoincrement="0">
+<row name="frequencia_max_ram" null="1" autoincrement="0">
 <datatype>INTEGER(4)</datatype>
 <default>NULL</default></row>
 <row name="max_ram" null="1" autoincrement="0">
@@ -146,14 +148,14 @@
 <datatype>INTEGER(1)</datatype>
 <default>NULL</default><comment>geracao da ram: ddr3,ddr4, ddr5</comment>
 </row>
-<row name="consumo_energia" null="0" autoincrement="0">
-<datatype>DOUBLE</datatype>
+<row name="consumo" null="0" autoincrement="0">
+<datatype>DECIMAL</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="1011" y="313" name="Memoria_ram">
+<table x="956" y="356" name="Memoria_ram">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -167,7 +169,7 @@
 <datatype>INTEGER(1)</datatype>
 <default>NULL</default><comment>ddr3, ddr4,ddr5: aceita 3,4 ou 5</comment>
 </row>
-<row name="consumo de energia" null="0" autoincrement="0">
+<row name="consumo" null="0" autoincrement="0">
 <datatype>DOUBLE</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
@@ -184,21 +186,16 @@
 <row name="capacidade" null="0" autoincrement="0">
 <datatype>INT</datatype>
 <default>NULL</default></row>
-<row name="consumo_energia" null="0" autoincrement="0">
-<datatype>DOUBLE</datatype>
+<row name="tdp" null="0" autoincrement="0">
+<datatype>DECIMAL</datatype>
+<default>NULL</default></row>
+<row name="consumo_max" null="1" autoincrement="0">
+<datatype>DECIMAL</datatype>
 <default>NULL</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 <comment>É A PLACA DE VÍDEO</comment>
-</table>
-<table x="436" y="684" name="new table">
-<row name="id" null="1" autoincrement="1">
-<datatype>INTEGER</datatype>
-<default>NULL</default></row>
-<key type="PRIMARY" name="">
-<part>id</part>
-</key>
 </table>
 <table x="754" y="494" name="Fonte">
 <row name="id" null="0" autoincrement="1">
@@ -214,7 +211,7 @@
 <part>id</part>
 </key>
 </table>
-<table x="1270.5555725097656" y="267" name="Armazenamento">
+<table x="1158" y="325" name="Armazenamento">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>

@@ -44,7 +44,7 @@ Usuario.init({
 },{
     sequelize,
     modelName: "Usuario",
-    tableName:"usuarios"
+    tableName:"usuario"
 })
 
 module.exports = Usuario;
