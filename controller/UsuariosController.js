@@ -26,6 +26,8 @@ exports.criar = async(req,res) => {
 }
 
 exports.listar = (req, res) => {
+    //#swagger.tags = ['Usuario','User']
+    //#swagger.description = 'Endpoint para obter todos os usuarios.'
     usuarioService.listar((err, rows) => {
         if(err){
             res.status(err.status).json({

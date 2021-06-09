@@ -1,6 +1,25 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const options = {
+  definition: {
+    projeto: '0.0.1',
+    info: {
+      title: 'Hello World',
+      version: '0.0.1',
+    },
+  },
+  apis: ['./rotas/*.js'] // files containing annotations as above
+};
+const swaggerSpec = swaggerJsdoc(options)
+app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec));
+
+const swaggerFile = require('./swagger_output.json');
+app.use('/api-docs-autogen',swaggerUi.serve,swaggerUi.setup(swaggerFile));
+
 const authenticationController = require('./controller/AuthenticationController')
 
 app.use(express.json());
