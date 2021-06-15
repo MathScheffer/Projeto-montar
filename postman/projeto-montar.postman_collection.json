@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"teste.2\",\r\n    \"senha\":\"123\"\r\n}",
+							"raw": "{\r\n    \"username\":\"teste.1\",\r\n    \"senha\":\"1123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -916,7 +916,7 @@
 					]
 				},
 				{
-					"name": "Adicionar Computador",
+					"name": "Adicionar Computador com Ids dos Hardwares",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -928,7 +928,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"UsuarioId\":1,\r\n    \"ProcessadorId\":1,\r\n    \"PlacaMaeId\":1,\r\n    \"RamId\":1,\r\n    \"ArmazenamentoId\":1,\r\n    \"VgaId\":1,\r\n    \"FonteId\":1\r\n}",
+							"raw": "{\r\n    \"ProcessadorId\":1,\r\n    \"PlacaMaeId\":0,\r\n    \"RamId\":1,\r\n    \"ArmazenamentoId\":1,\r\n    \"VgaId\":1,\r\n    \"FonteId\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
