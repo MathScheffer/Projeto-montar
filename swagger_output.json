@@ -9,8 +9,40 @@
   "basePath": "/",
   "tags": [
     {
-      "name": "User",
-      "description": "Endpoints"
+      "name": "Autenticacao",
+      "description": "Metodos para trabalhar autenticacao e validacao de token"
+    },
+    {
+      "name": "Usuario",
+      "description": "Metodos para gerenciar Usuario"
+    },
+    {
+      "name": "Processador",
+      "description": "Metodos para gerenciar Processador"
+    },
+    {
+      "name": "PlacaMae",
+      "description": "Metodos para gerenciar Placa Mãe"
+    },
+    {
+      "name": "Ram",
+      "description": "Metodos para gerenciar Memória Ram"
+    },
+    {
+      "name": "Armazenamento",
+      "description": "Metodos para gerenciar Armazenamento"
+    },
+    {
+      "name": "Vga",
+      "description": "Metodos para gerenciar Vga"
+    },
+    {
+      "name": "Fonte",
+      "description": "Metodos para Fonte"
+    },
+    {
+      "name": "Computador",
+      "description": "Metodos para adicionar Hardwares a montagem do Computador"
     }
   ],
   "schemes": [
@@ -42,400 +74,1318 @@
   "paths": {
     "/api/authentication/": {
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
+        "tags": [
+          "Autenticacao"
+        ],
+        "description": "Realizar autenticacao",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#definitions/Autenticacao"
+            }
+          }
+        ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Tentativa de autenticar sem um campo",
+            "schema": {
+              "$ref": "#definitions/Autenticacao400CampoFaltando"
+            }
+          },
           "403": {
-            "description": "Forbidden"
+            "description": "Usuario ou Senha invalido",
+            "schema": {
+              "$ref": "#definitions/Autenticacao403"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
           }
         }
-      }
-    },
-    "/api/authentication/validation/token": {
-      "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
-      }
-    },
-    "/api/authentication/validation/permissions": {
-      "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
       }
     },
     "/api/usuarios/": {
       "get": {
         "tags": [
-          "Usuario",
-          "User"
+          "Usuario"
         ],
         "description": "Endpoint para obter todos os usuarios.",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Usuarios"
+            },
+            "description": "Listagem de usuarios"
+          }
+        }
       }
     },
     "/api/usuarios/novo": {
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "tags": [
+          "Usuario"
+        ],
+        "description": "Endpoint para criar um usuario.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/CadastroUsuario"
+            },
+            "required": true,
+            "description": "Body do Usuario"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/CadastroUsuarioResponse"
+            },
+            "description": "Listagem de usuarios"
+          }
+        }
       }
     },
     "/api/usuarios/especifico": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Usuario"
+        ],
+        "description": "Endpoint para obter um usuario por nome.",
         "parameters": [
           {
             "name": "nome",
             "in": "query",
-            "type": "string"
+            "schema": {
+              "$ref": "#/models/schemas/nome"
+            },
+            "required": true,
+            "description": "A single todo id"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/UsuarioPorNome"
+            },
+            "description": "Usuário encontrado."
+          }
+        }
       }
     },
     "/api/usuarios/atualizar/{id}": {
       "put": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Usuario"
+        ],
+        "description": "Atualizar um usuario",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "schema": {
+              "$ref": "#/models/schemas/id"
+            },
+            "description": "Id do usuario desejado"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/models/schemas/Usuario"
+            },
+            "required": true,
+            "description": "Body do Usuario"
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "description": "Usuario atualizado!",
+            "schema": {
+              "$ref": "#/models/schemas/Usuario"
+            }
+          }
+        }
       }
     },
     "/api/usuarios/{id}": {
       "delete": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Usuario"
+        ],
+        "description": "Endpoint para deletar um usuario por nome.",
         "parameters": [
           {
             "name": "id",
-            "in": "path",
+            "in": "query",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "schema": {
+              "$ref": "#/models/schemas/id"
+            },
+            "description": "Id do usuario a ser deletado."
           }
         ],
-        "responses": {}
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/UsuarioDeletado"
+            },
+            "description": "Usuario deletado!"
+          }
+        }
       }
     },
     "/api/processador/novo": {
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "tags": [
+          "Processador"
+        ],
+        "description": "Adicionar um processador",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#definitions/CadastroProcessador"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#models/schemas/Processador"
+            },
+            "description": "retorno do processador adicionado!"
+          }
+        }
       }
     },
     "/api/processador/": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Processador"
+        ],
+        "description": "Listar todos os processadores",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#definitions/ListarProcessador"
+            },
+            "description": "Array de objetos, onde cada objeto é um processador"
+          }
+        }
       }
     },
     "/api/placa-mae/novo": {
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "tags": [
+          "PlacaMae"
+        ],
+        "description": "cadastrar uma placa mãe",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#definitions/CadastroPlacaMae"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#models/schemas/PlacaMae"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/placa-mae/": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "PlacaMae"
+        ],
+        "description": "Listar Placas Mãe",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#definitions/ListarPlacaMae"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/ram/novo": {
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "tags": [
+          "Ram"
+        ],
+        "description": "Adicionar Memoria Ram",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#definitions/CadastroRam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#models/schemas/Ram"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/ram/": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Ram"
+        ],
+        "description": "Listar Memórias",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#definitions/ListarRam"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/armazenamento/novo": {
       "post": {
-        "tags": [],
+        "tags": [
+          "Armazenamento"
+        ],
         "description": "",
-        "parameters": [],
-        "responses": {}
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#definitions/CadastroArmazenamento"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#models/schemas/Armazenamento"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/armazenamento/": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Armazenamento"
+        ],
+        "description": "Listar Armazenamento",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#definitions/ListarVga"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/vga/novo": {
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "tags": [
+          "Vga"
+        ],
+        "description": "Cadastrar Vga",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#definitions/CadastroVga"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#models/schemas/Vga"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/vga/": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Vga"
+        ],
+        "description": "Listar Vga",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#definitions/ListarVga"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/fonte/novo": {
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "tags": [
+          "Fonte"
+        ],
+        "description": "Cadastrar Fonte",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#definitions/CadastroFonte"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#models/schemas/Fonte"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/fonte/": {
       "get": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Fonte"
+        ],
+        "description": "Listar Fontes",
         "parameters": [],
-        "responses": {}
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#definitions/ListarFontes"
+            },
+            "description": "OK"
+          }
+        }
       }
     },
     "/api/computador/novo": {
       "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {}
+        "tags": [
+          "Computador"
+        ],
+        "description": "Adicionar computador com os IDs dos hardwares",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#definitions/AdicionarComputadorComIdsDosHardwares"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#definitions/AdicionarComputadorComIdsDosHardwares201"
+            },
+            "description": "Created"
+          },
+          "400": {
+            "description": "Tentativa de adicionar um computador com campo faltando",
+            "schema": {
+              "$ref": "#definitions/AdicionarComputadorComIdsDosHardwares400IdHardwareFaltando"
+            }
+          },
+          "422": {
+            "description": "Tentativa de adicionar um computador sem um Id de Hardware ou Usuario valido",
+            "schema": {
+              "$ref": "#definitions/AdicionarComputadorComIdsDosHardwares422ProblemaAoAdicionarHardware"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/AdicionarComputadorComIdsDosHardwares400IdHardwareFaltando"
+            },
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/api/computador/adicionar/processador": {
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Computador"
+        ],
+        "description": "Adicionar Processador ao Computador",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#definitions/IdHardware"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#definitions/AdicionarProcessadorResponse201"
+            },
+            "description": "Created"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#definitions/AdicionarProcessadorResponse422ProcessadorIndisponivel"
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/api/computador/adicionar/placa-mae": {
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Computador"
+        ],
+        "description": "Adicionar Placa Mae ao Computador",
         "parameters": [
           {
-            "name": "obj",
+            "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#definitions/IdHardware"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#definitions/AdicionarPlacaMaeResponse201"
+            },
+            "description": "Created"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#definitions/AdicionarPlacaMaeResponse422SocketIncompativel"
+            },
+            "description": "Unprocessable Entity"
+          }
+        }
       }
     },
     "/api/computador/adicionar/ram": {
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Computador"
+        ],
+        "description": "Adicionar Memoria Ram ao Computador",
         "parameters": [
           {
-            "name": "obj",
+            "name": "",
             "in": "body",
+            "parameters": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#definitions/IdHardware"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#definitions/AdicionarRamResponse201"
+            },
+            "description": "Created"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#definitions/AdicionarRamResponse422FaltaPlacaMae"
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/api/computador/adicionar/armazenamento": {
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Computador"
+        ],
+        "description": "Adicionar Meio de armazenamento ",
         "parameters": [
           {
-            "name": "obj",
+            "name": "",
             "in": "body",
+            "parameters": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#definitions/IdHardware"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#definitions/AdicionarArmazenamento201"
+            },
+            "description": "Created"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#definitions/AdicionarArmazenamento422ArmazenamentoIndisponivel"
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/api/computador/adicionar/vga": {
       "post": {
-        "tags": [],
+        "tags": [
+          "Computador"
+        ],
         "description": "",
         "parameters": [
           {
-            "name": "obj",
+            "name": "",
             "in": "body",
+            "body": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#definitions/IdHardware"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#definitions/AdicionarVga201"
+            },
+            "description": "Created"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#definitions/AdicionarVga422VgaIndisponivel"
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/api/computador/adicionar/computador": {
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Computador"
+        ],
+        "description": "Adicionar Computador ao Cliente",
         "parameters": [
           {
-            "name": "obj",
+            "name": "",
             "in": "body",
+            "nome": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#definitions/IdHardware"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#definitions/AdicionarComputador201"
+            },
+            "description": "Created"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#definitions/AdicionarComputador422ComponentesFaltando"
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
+          }
+        }
       }
     },
     "/api/computador/adicionar/fonte": {
       "post": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Computador"
+        ],
+        "description": "Adicionar Fonte ao Computador",
         "parameters": [
           {
-            "name": "obj",
+            "name": "",
             "in": "body",
+            "body": "body",
             "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "example": "any"
-                }
-              }
+              "$ref": "#definitions/IdHardware"
             }
           }
         ],
-        "responses": {}
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#definitions/AdicionarFonte201"
+            },
+            "description": "Created"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#definitions/AdicionarFonte422CapacidadeExcedida"
+            },
+            "description": "Unprocessable Entity"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
+          }
+        }
       }
     }
   },
   "definitions": {
-    "User": {
+    "ErroInterno": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string",
-          "example": "Jhon Doe"
-        },
-        "age": {
+        "status": {
           "type": "number",
-          "example": 29
+          "example": 500
         },
-        "parents": {
-          "type": "object",
-          "properties": {
-            "father": {
-              "type": "string",
-              "example": "Simon Doe"
-            },
-            "mother": {
-              "type": "string",
-              "example": "Marie Doe"
-            }
-          }
+        "message": {
+          "type": "string",
+          "example": "Erro interno no servidor!"
+        }
+      }
+    },
+    "Autenticacao": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "jose.silva"
         },
-        "diplomas": {
+        "senha": {
+          "type": "string",
+          "example": "123"
+        }
+      }
+    },
+    "Autenticacao403": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 403
+        },
+        "message": {
+          "type": "string",
+          "example": "Usuario ou senha incorreto!"
+        }
+      }
+    },
+    "Autenticacao400CampoFaltando": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Ha campos faltando na requisicao: senha"
+        }
+      }
+    },
+    "CadastroUsuario": {
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string",
+          "example": "jose.silva"
+        },
+        "nome": {
+          "type": "string",
+          "example": "Jose Silva"
+        },
+        "email": {
+          "type": "string",
+          "example": "jose$@gmail.com"
+        },
+        "senha": {
+          "type": "string",
+          "example": "123"
+        },
+        "permissions": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "CadastroUsuarioResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "username": {
+          "type": "string",
+          "example": "jose.silva"
+        },
+        "nome": {
+          "type": "string",
+          "example": "Jose Silva"
+        },
+        "email": {
+          "type": "string",
+          "example": "jose$@gmail.com"
+        },
+        "senha": {
+          "type": "string",
+          "example": "$2b$10$suDSbebTCmuHl.YpTJ1Bj.IcKWyEBx2DzMD49NhbC.8330ZXOjOJe"
+        },
+        "permissions": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "Usuarios": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 200
+        },
+        "usuarios": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "school": {
-                "type": "string",
-                "example": "XYZ University"
-              },
-              "year": {
+              "id": {
                 "type": "number",
-                "example": 2020
+                "example": 2
               },
-              "completed": {
-                "type": "boolean",
-                "example": true
+              "nome": {
+                "type": "string",
+                "example": "teste 2"
               },
-              "internship": {
-                "type": "object",
-                "properties": {
-                  "hours": {
-                    "type": "number",
-                    "example": 290
-                  },
-                  "location": {
-                    "type": "string",
-                    "example": "XYZ Company"
-                  }
+              "username": {
+                "type": "string",
+                "example": "teste.2"
+              },
+              "email": {
+                "type": "string",
+                "example": "teste$@gmail.com"
+              }
+            }
+          }
+        }
+      }
+    },
+    "CadastroProcessador": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "INTEL CORE I7-10700KF"
+        },
+        "marca": {
+          "type": "string",
+          "example": "Intel"
+        },
+        "frequencia": {
+          "type": "number",
+          "example": 3.8
+        },
+        "frequencia_max": {
+          "type": "number",
+          "example": 5.1
+        },
+        "socket": {
+          "type": "string",
+          "example": "LGA1200"
+        },
+        "tdp": {
+          "type": "number",
+          "example": 95
+        }
+      }
+    },
+    "ListarProcessador": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 2
+          },
+          "nome": {
+            "type": "string",
+            "example": "INTEL CORE I7-10700KF"
+          },
+          "marca": {
+            "type": "string",
+            "example": "Intel"
+          },
+          "frequencia": {
+            "type": "string",
+            "example": "4"
+          },
+          "frequencia_max": {
+            "type": "string",
+            "example": "5"
+          },
+          "socket": {
+            "type": "string",
+            "example": "LGA1200"
+          },
+          "tdp": {
+            "type": "string",
+            "example": "95"
+          },
+          "consumo_max": {
+            "type": "string",
+            "example": "143"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2021-06-08T15:19:11.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2021-06-08T15:19:11.000Z"
+          }
+        }
+      }
+    },
+    "CadastroPlacaMae": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "Asus TUF Gaming Z490-Plus"
+        },
+        "socket": {
+          "type": "string",
+          "example": "LGA1200"
+        },
+        "frequencia_max_ram": {
+          "type": "number",
+          "example": 4800
+        },
+        "max_ram": {
+          "type": "number",
+          "example": 128
+        },
+        "ddr": {
+          "type": "number",
+          "example": 4
+        }
+      }
+    },
+    "ListarPlacaMae": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "nome": {
+            "type": "string",
+            "example": "Asus TUF Gaming Z490-Plus"
+          },
+          "socket": {
+            "type": "string",
+            "example": "LGA1200"
+          },
+          "frequencia_max_ram": {
+            "type": "string",
+            "example": "4800"
+          },
+          "max_ram": {
+            "type": "number",
+            "example": 128
+          },
+          "ddr": {
+            "type": "number",
+            "example": 4
+          },
+          "consumo": {
+            "type": "string",
+            "example": "35"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2021-06-08T01:03:48.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2021-06-08T01:03:48.000Z"
+          }
+        }
+      }
+    },
+    "CadastroRam": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "TEAM GROUP T-FORCE RGB 8GB"
+        },
+        "frequencia": {
+          "type": "number",
+          "example": 3600
+        },
+        "capacidade": {
+          "type": "number",
+          "example": 8
+        },
+        "ddr": {
+          "type": "number",
+          "example": 4
+        }
+      }
+    },
+    "ListarRam": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "TEAM GROUP T-FORCE RGB 8GB"
+          },
+          "frequencia": {
+            "type": "number",
+            "example": 3600
+          },
+          "capacidade": {
+            "type": "number",
+            "example": 8
+          },
+          "ddr": {
+            "type": "number",
+            "example": 4
+          },
+          "consumo": {
+            "type": "string",
+            "example": "3"
+          }
+        }
+      }
+    },
+    "CadastroArmazenamento": {
+      "type": "object",
+      "properties": {
+        "tipo": {
+          "type": "string",
+          "example": "SSD"
+        },
+        "nome": {
+          "type": "string",
+          "example": "WD GREEN SN350"
+        },
+        "capacidade": {
+          "type": "number",
+          "example": 280
+        }
+      }
+    },
+    "ListarArmazenamento": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 2
+          },
+          "tipo": {
+            "type": "string",
+            "example": "SSD"
+          },
+          "nome": {
+            "type": "string",
+            "example": "WD GREEN SN350"
+          },
+          "capacidade": {
+            "type": "number",
+            "example": 280
+          },
+          "consumo": {
+            "type": "string",
+            "example": "12"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2021-06-08T15:23:19.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2021-06-08T15:23:19.000Z"
+          }
+        }
+      }
+    },
+    "CadastroVga": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "AMD Radeon RX 6800 XT"
+        },
+        "capacidade": {
+          "type": "number",
+          "example": 16
+        },
+        "tdp": {
+          "type": "number",
+          "example": 300
+        }
+      }
+    },
+    "ListarVga": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 2
+          },
+          "nome": {
+            "type": "string",
+            "example": "AMD Radeon RX 6800 XT"
+          },
+          "capacidade": {
+            "type": "number",
+            "example": 16
+          },
+          "tdp": {
+            "type": "string",
+            "example": "300"
+          },
+          "consumo_max": {
+            "type": "string",
+            "example": "450"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2021-06-08T01:04:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2021-06-08T01:04:00.000Z"
+          }
+        }
+      }
+    },
+    "CadastroFonte": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "fonte b"
+        },
+        "capacidade": {
+          "type": "number",
+          "example": 750
+        }
+      }
+    },
+    "ListarFontes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 2
+          },
+          "nome": {
+            "type": "string",
+            "example": "fonte b"
+          },
+          "capacidade": {
+            "type": "number",
+            "example": 750
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2021-06-13T14:48:33.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2021-06-13T14:48:33.000Z"
+          }
+        }
+      }
+    },
+    "IdHardware": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "AdicionarProcessadorResponse201": {
+      "type": "object",
+      "properties": {
+        "processador": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 1
+            },
+            "nome": {
+              "type": "string",
+              "example": "INTEL CORE I7-10700KF"
+            },
+            "marca": {
+              "type": "string",
+              "example": "Intel"
+            },
+            "frequencia": {
+              "type": "string",
+              "example": "4"
+            },
+            "frequencia_max": {
+              "type": "string",
+              "example": "5"
+            },
+            "socket": {
+              "type": "string",
+              "example": "LGA1200"
+            },
+            "tdp": {
+              "type": "string",
+              "example": "95"
+            },
+            "consumo_max": {
+              "type": "string",
+              "example": "143"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2021-06-08T01:03:11.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2021-06-08T01:03:11.000Z"
+            }
+          }
+        },
+        "computador_agora": {
+          "type": "object",
+          "properties": {
+            "Processador": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "INTEL CORE I7-10700KF"
+                },
+                "marca": {
+                  "type": "string",
+                  "example": "Intel"
+                },
+                "frequencia": {
+                  "type": "string",
+                  "example": "4"
+                },
+                "frequencia_max": {
+                  "type": "string",
+                  "example": "5"
+                },
+                "socket": {
+                  "type": "string",
+                  "example": "LGA1200"
+                },
+                "tdp": {
+                  "type": "string",
+                  "example": "95"
+                },
+                "consumo_max": {
+                  "type": "string",
+                  "example": "143"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:11.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:11.000Z"
                 }
               }
             }
@@ -443,26 +1393,1404 @@
         }
       }
     },
-    "AddUser": {
+    "AdicionarProcessadorResponse422ProcessadorIndisponivel": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string",
-          "example": "Jhon Doe"
-        },
-        "age": {
+        "status": {
           "type": "number",
-          "example": 29
+          "example": 422
         },
-        "about": {
+        "message": {
           "type": "string",
-          "example": ""
+          "example": "Processador indisponivel!"
+        }
+      }
+    },
+    "AdicionarProcessadorResponse422PlacaMaeNaoCompativel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Placa mae nao compativel com este processador!"
+        }
+      }
+    },
+    "AdicionarPlacaMaeResponse201": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 201
+        },
+        "placa_mae": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 1
+            },
+            "nome": {
+              "type": "string",
+              "example": "Asus TUF Gaming Z490-Plus"
+            },
+            "socket": {
+              "type": "string",
+              "example": "LGA1200"
+            },
+            "frequencia_max_ram": {
+              "type": "number",
+              "example": 4800
+            },
+            "max_ram": {
+              "type": "number",
+              "example": 128
+            },
+            "ddr": {
+              "type": "number",
+              "example": 4
+            },
+            "consumo": {
+              "type": "string",
+              "example": "35"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2021-06-08T01:03:48.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2021-06-08T01:03:48.000Z"
+            }
+          }
+        },
+        "computador_agora": {
+          "type": "object",
+          "properties": {
+            "Processador": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "INTEL CORE I7-10700KF"
+                },
+                "marca": {
+                  "type": "string",
+                  "example": "Intel"
+                },
+                "frequencia": {
+                  "type": "string",
+                  "example": "4"
+                },
+                "frequencia_max": {
+                  "type": "string",
+                  "example": "5"
+                },
+                "socket": {
+                  "type": "string",
+                  "example": "LGA1200"
+                },
+                "tdp": {
+                  "type": "string",
+                  "example": "95"
+                },
+                "consumo_max": {
+                  "type": "string",
+                  "example": "143"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:11.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:11.000Z"
+                }
+              }
+            },
+            "PlacaMae": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Asus TUF Gaming Z490-Plus"
+                },
+                "socket": {
+                  "type": "string",
+                  "example": "LGA1200"
+                },
+                "frequencia_max_ram": {
+                  "type": "number",
+                  "example": 4800
+                },
+                "max_ram": {
+                  "type": "number",
+                  "example": 128
+                },
+                "ddr": {
+                  "type": "number",
+                  "example": 4
+                },
+                "consumo": {
+                  "type": "string",
+                  "example": "35"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:48.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:48.000Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "AdicionarPlacaMaeResponse422PlacaMaeIndisponivel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Placa Mae indisponivel!"
+        }
+      }
+    },
+    "AdicionarPlacaMaeResponse422FaltaProcessador": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Necessario selecionar um processador!"
+        }
+      }
+    },
+    "AdicionarPlacaMaeResponse422SocketIncompativel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Socket da Placa Mae(LGA1200) incompativel com o socket do Processador(AM4)!"
+        }
+      }
+    },
+    "AdicionarRamResponse201": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 201
+        },
+        "message": {
+          "type": "string",
+          "example": "Memoria Ram adicionada!"
+        },
+        "ram": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 2
+            },
+            "nome": {
+              "type": "string",
+              "example": "TEAM GROUP T-FORCE RGB 8GB"
+            },
+            "frequencia": {
+              "type": "number",
+              "example": 3600
+            },
+            "capacidade": {
+              "type": "number",
+              "example": 8
+            },
+            "ddr": {
+              "type": "number",
+              "example": 4
+            },
+            "consumo": {
+              "type": "string",
+              "example": "3"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2021-06-08T01:16:19.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2021-06-08T01:16:19.000Z"
+            }
+          }
+        },
+        "computador_agora": {
+          "type": "object",
+          "properties": {
+            "Processador": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "INTEL CORE I7-10700KF"
+                },
+                "marca": {
+                  "type": "string",
+                  "example": "Intel"
+                },
+                "frequencia": {
+                  "type": "string",
+                  "example": "4"
+                },
+                "frequencia_max": {
+                  "type": "string",
+                  "example": "5"
+                },
+                "socket": {
+                  "type": "string",
+                  "example": "LGA1200"
+                },
+                "tdp": {
+                  "type": "string",
+                  "example": "95"
+                },
+                "consumo_max": {
+                  "type": "string",
+                  "example": "143"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:11.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:11.000Z"
+                }
+              }
+            },
+            "PlacaMae": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Asus TUF Gaming Z490-Plus"
+                },
+                "socket": {
+                  "type": "string",
+                  "example": "LGA1200"
+                },
+                "frequencia_max_ram": {
+                  "type": "number",
+                  "example": 4800
+                },
+                "max_ram": {
+                  "type": "number",
+                  "example": 128
+                },
+                "ddr": {
+                  "type": "number",
+                  "example": 4
+                },
+                "consumo": {
+                  "type": "string",
+                  "example": "35"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:48.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:48.000Z"
+                }
+              }
+            },
+            "Ram": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 2
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "TEAM GROUP T-FORCE RGB 8GB"
+                },
+                "frequencia": {
+                  "type": "number",
+                  "example": 3600
+                },
+                "capacidade": {
+                  "type": "number",
+                  "example": 8
+                },
+                "ddr": {
+                  "type": "number",
+                  "example": 4
+                },
+                "consumo": {
+                  "type": "string",
+                  "example": "3"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:16:19.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:16:19.000Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "AdicionarRamResponse422MemoriaIndisponivel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Memoria Ram indisponivel."
+        }
+      }
+    },
+    "AdicionarRamResponse422FrequenciaIncompativel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Frequencia da Memoria Ram(5000) incompativel com a frequencia suportada pela Placa Mae(4800)!"
+        }
+      }
+    },
+    "AdicionarRamResponse422CapacidadeIncompativel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Capacidade da Memoria Ram(32) incompativel com a capacidade maxima de ram da Placa Mae(16)!"
+        }
+      }
+    },
+    "AdicionarRamResponse422FaltaPlacaMae": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Necessario selecionar uma Placa Mae!!"
+        }
+      }
+    },
+    "AdicionarArmazenamento201": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 201
+        },
+        "message": {
+          "type": "string",
+          "example": "Meio de armazenamento adicionado com sucesso!"
+        },
+        "armazenamento": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 1
+            },
+            "tipo": {
+              "type": "string",
+              "example": "SSD"
+            },
+            "nome": {
+              "type": "string",
+              "example": "WD GREEN SN350"
+            },
+            "capacidade": {
+              "type": "number",
+              "example": 280
+            },
+            "consumo": {
+              "type": "string",
+              "example": "12"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2021-06-08T01:03:55.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2021-06-08T01:03:55.000Z"
+            }
+          }
+        },
+        "computador_agora": {
+          "type": "object",
+          "properties": {
+            "Armazenamento": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "tipo": {
+                  "type": "string",
+                  "example": "SSD"
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "WD GREEN SN350"
+                },
+                "capacidade": {
+                  "type": "number",
+                  "example": 280
+                },
+                "consumo": {
+                  "type": "string",
+                  "example": "12"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:55.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:55.000Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "AdicionarArmazenamento422ArmazenamentoIndisponivel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Meio de Armazenamento indisponivel!"
+        }
+      }
+    },
+    "AdicionarVga201": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 201
+        },
+        "message": {
+          "type": "string",
+          "example": "Vga adicionada com sucesso!"
+        },
+        "vga": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 1
+            },
+            "nome": {
+              "type": "string",
+              "example": "AMD Radeon RX 6800 XT"
+            },
+            "capacidade": {
+              "type": "number",
+              "example": 16
+            },
+            "tdp": {
+              "type": "string",
+              "example": "300"
+            },
+            "consumo_max": {
+              "type": "string",
+              "example": "450"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2021-06-08T01:04:00.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2021-06-08T01:04:00.000Z"
+            }
+          }
+        },
+        "computador_agora": {
+          "type": "object",
+          "properties": {
+            "Armazenamento": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "tipo": {
+                  "type": "string",
+                  "example": "SSD"
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "WD GREEN SN350"
+                },
+                "capacidade": {
+                  "type": "number",
+                  "example": 280
+                },
+                "consumo": {
+                  "type": "string",
+                  "example": "12"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:55.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:55.000Z"
+                }
+              }
+            },
+            "Vga": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "AMD Radeon RX 6800 XT"
+                },
+                "capacidade": {
+                  "type": "number",
+                  "example": 16
+                },
+                "tdp": {
+                  "type": "string",
+                  "example": "300"
+                },
+                "consumo_max": {
+                  "type": "string",
+                  "example": "450"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:04:00.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:04:00.000Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "AdicionarVga422VgaIndisponivel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Vga indisponivel!"
+        }
+      }
+    },
+    "AdicionarFonte201": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 201
+        },
+        "message": {
+          "type": "string",
+          "example": "Fonte adicionada!"
+        },
+        "fonte": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 1
+            },
+            "nome": {
+              "type": "string",
+              "example": "fonte b"
+            },
+            "capacidade": {
+              "type": "number",
+              "example": 750
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2021-06-08T01:04:06.000Z"
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2021-06-08T01:04:06.000Z"
+            }
+          }
+        }
+      }
+    },
+    "AdicionarFonte422FonteIndisponivel": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Fonte nao disponivel!"
+        }
+      }
+    },
+    "AdicionarFonte422CapacidadeExcedida": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "O consumo exigido (950) excede a capacidade da fonte(850)!"
+        }
+      }
+    },
+    "AdicionarComputador201": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 201
+        },
+        "computador": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number",
+              "example": 6
+            },
+            "UsuarioId": {
+              "type": "number",
+              "example": 1
+            },
+            "ProcessadorId": {
+              "type": "number",
+              "example": 1
+            },
+            "PlacaMaeId": {
+              "type": "number",
+              "example": 1
+            },
+            "RamId": {
+              "type": "number",
+              "example": 2
+            },
+            "ArmazenamentoId": {
+              "type": "number",
+              "example": 1
+            },
+            "VgaId": {
+              "type": "number",
+              "example": 1
+            },
+            "FonteId": {
+              "type": "number",
+              "example": 1
+            },
+            "updatedAt": {
+              "type": "string",
+              "example": "2021-06-13T20:51:15.544Z"
+            },
+            "createdAt": {
+              "type": "string",
+              "example": "2021-06-13T20:51:15.544Z"
+            }
+          }
+        },
+        "computador_montado": {
+          "type": "object",
+          "properties": {
+            "Processador": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "INTEL CORE I7-10700KF"
+                },
+                "marca": {
+                  "type": "string",
+                  "example": "Intel"
+                },
+                "frequencia": {
+                  "type": "string",
+                  "example": "4"
+                },
+                "frequencia_max": {
+                  "type": "string",
+                  "example": "5"
+                },
+                "socket": {
+                  "type": "string",
+                  "example": "LGA1200"
+                },
+                "tdp": {
+                  "type": "string",
+                  "example": "95"
+                },
+                "consumo_max": {
+                  "type": "string",
+                  "example": "143"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:11.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:11.000Z"
+                }
+              }
+            },
+            "PlacaMae": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "Asus TUF Gaming Z490-Plus"
+                },
+                "socket": {
+                  "type": "string",
+                  "example": "LGA1200"
+                },
+                "frequencia_max_ram": {
+                  "type": "number",
+                  "example": 4800
+                },
+                "max_ram": {
+                  "type": "number",
+                  "example": 128
+                },
+                "ddr": {
+                  "type": "number",
+                  "example": 4
+                },
+                "consumo": {
+                  "type": "string",
+                  "example": "35"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:48.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:48.000Z"
+                }
+              }
+            },
+            "Ram": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 2
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "TEAM GROUP T-FORCE RGB 8GB"
+                },
+                "frequencia": {
+                  "type": "number",
+                  "example": 3600
+                },
+                "capacidade": {
+                  "type": "number",
+                  "example": 8
+                },
+                "ddr": {
+                  "type": "number",
+                  "example": 4
+                },
+                "consumo": {
+                  "type": "string",
+                  "example": "3"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:16:19.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:16:19.000Z"
+                }
+              }
+            },
+            "Armazenamento": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "tipo": {
+                  "type": "string",
+                  "example": "SSD"
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "WD GREEN SN350"
+                },
+                "capacidade": {
+                  "type": "number",
+                  "example": 280
+                },
+                "consumo": {
+                  "type": "string",
+                  "example": "12"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:55.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:03:55.000Z"
+                }
+              }
+            },
+            "Vga": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "AMD Radeon RX 6800 XT"
+                },
+                "capacidade": {
+                  "type": "number",
+                  "example": 16
+                },
+                "tdp": {
+                  "type": "string",
+                  "example": "300"
+                },
+                "consumo_max": {
+                  "type": "string",
+                  "example": "450"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:04:00.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:04:00.000Z"
+                }
+              }
+            },
+            "Fonte": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "number",
+                  "example": 1
+                },
+                "nome": {
+                  "type": "string",
+                  "example": "fonte b"
+                },
+                "capacidade": {
+                  "type": "number",
+                  "example": 750
+                },
+                "createdAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:04:06.000Z"
+                },
+                "updatedAt": {
+                  "type": "string",
+                  "example": "2021-06-08T01:04:06.000Z"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "AdicionarComputador422ComponentesFaltando": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Ha componentes nao adicionados!"
+        }
+      }
+    },
+    "AdicionarComputadorComIdsDosHardwares": {
+      "type": "object",
+      "properties": {
+        "UsuarioId": {
+          "type": "number",
+          "example": 1
+        },
+        "ProcessadorId": {
+          "type": "number",
+          "example": 1
+        },
+        "PlacaMaeId": {
+          "type": "number",
+          "example": 1
+        },
+        "RamId": {
+          "type": "number",
+          "example": 1
+        },
+        "ArmazenamentoId": {
+          "type": "number",
+          "example": 1
+        },
+        "VgaId": {
+          "type": "number",
+          "example": 1
+        },
+        "FonteId": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "AdicionarComputadorComIdsDosHardwares201": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number",
+          "example": 1
+        },
+        "UsuarioId": {
+          "type": "number",
+          "example": 1
+        },
+        "ProcessadorId": {
+          "type": "number",
+          "example": 1
+        },
+        "PlacaMaeId": {
+          "type": "number",
+          "example": 1
+        },
+        "RamId": {
+          "type": "number",
+          "example": 1
+        },
+        "ArmazenamentoId": {
+          "type": "number",
+          "example": 1
+        },
+        "VgaId": {
+          "type": "number",
+          "example": 1
+        },
+        "FonteId": {
+          "type": "number",
+          "example": 1
+        },
+        "updatedAt": {
+          "type": "string",
+          "example": "2021-06-15T00:15:49.667Z"
+        },
+        "createdAt": {
+          "type": "string",
+          "example": "2021-06-15T00:15:49.667Z"
+        }
+      }
+    },
+    "AdicionarComputadorComIdsDosHardwares422ProblemaAoAdicionarHardware": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 422
+        },
+        "message": {
+          "type": "string",
+          "example": "Nao foi possivel adicionar hardware ao computador!"
+        },
+        "error": {
+          "type": "string",
+          "example": "Usuario nao cadastrado!"
+        }
+      }
+    },
+    "AdicionarComputadorComIdsDosHardwares400IdHardwareFaltando": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Ha campos faltando na requisicao: UsuarioId"
+        }
+      }
+    }
+  },
+  "models": {
+    "schemas": {
+      "nome": {
+        "type": "string",
+        "description": "Nome e sobrenome do usuario separados por um '%'",
+        "example": "?nome=josa%silva"
+      },
+      "id": {
+        "type": "Int",
+        "description": "Nome e sobrenome do usuario separados por um '%'",
+        "example": "1"
+      },
+      "Usuario": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id do usuario",
+            "example": "1"
+          },
+          "username": {
+            "type": "string",
+            "description": "Username do usuario",
+            "example": "jose.silva"
+          },
+          "nome": {
+            "type": "string",
+            "description": "Nome do usuario",
+            "example": "Jose Silva"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuario",
+            "example": "Jose@gmail.com"
+          },
+          "senha": {
+            "type": "string",
+            "description": "Senha do usuario encriptada",
+            "example": "$2b$10$aJoUZq.P8ny12q8lY09KmuOxO6ZjuimHJEh6aNyvD7GvLGqGfP1M2"
+          }
         }
       },
-      "required": [
-        "name",
-        "age"
-      ]
+      "UsuarioPorNome": {
+        "Status": 200,
+        "Usuario": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "description": "Id do usuario",
+              "example": "1"
+            },
+            "username": {
+              "type": "string",
+              "description": "Username do usuario",
+              "example": "jose.silva"
+            },
+            "nome": {
+              "type": "string",
+              "description": "Nome do usuario",
+              "example": "Jose Silva"
+            },
+            "email": {
+              "type": "string",
+              "description": "Email do usuario",
+              "example": "Jose@gmail.com"
+            },
+            "senha": {
+              "type": "string",
+              "description": "Senha do usuario encriptada",
+              "example": "$2b$10$aJoUZq.P8ny12q8lY09KmuOxO6ZjuimHJEh6aNyvD7GvLGqGfP1M2"
+            },
+            "completed": {
+              "type": "boolean",
+              "description": "The status of the todo",
+              "example": false
+            }
+          }
+        }
+      },
+      "Processador": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id do processador",
+            "example": 1
+          },
+          "nome": {
+            "type": "string",
+            "description": "nome do processador",
+            "example": "INTEL CORE I7-10700KF"
+          },
+          "marca": {
+            "type": "string",
+            "description": "marca do processador",
+            "example": "intel"
+          },
+          "frequencia": {
+            "type": "number",
+            "description": "frequencia de trabalho do processador",
+            "example": 3.8
+          },
+          "frequencia_max": {
+            "type": "number",
+            "description": "frequencia maxima de trabalho do processador",
+            "example": 5.1
+          },
+          "socket": {
+            "type": "string",
+            "description": "socket do processador",
+            "example": "LGA1200"
+          },
+          "tdp": {
+            "type": "integer",
+            "description": "Tdp do processador em wats",
+            "example": 95
+          },
+          "consumo_max": {
+            "type": "number",
+            "description": "Consumo maximo do processador, calculado com uma taxa de 50% acima do tdp",
+            "example": 145
+          }
+        }
+      },
+      "PlacaMae": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id da Placa Mae",
+            "example": 1
+          },
+          "nome": {
+            "type": "string",
+            "description": "nome da placa mae",
+            "example": "Asus TUF Gaming Z490-Plus"
+          },
+          "socket": {
+            "type": "string",
+            "description": "Tipo de socket de processador que é compatível com a placa mae",
+            "example": "LGA1200"
+          },
+          "frequencia_max_ram": {
+            "type": "integer",
+            "description": "Frequencia maxima de memória ram suportada",
+            "example": 4800
+          },
+          "max_ram": {
+            "type": "integer",
+            "description": "Quantidade máxima suportada de Ram em GB",
+            "example": 128
+          },
+          "ddr": {
+            "type": "integer",
+            "description": "Representa a geração do tipo de memória, devendo ser ou 3, ou 4",
+            "example": 4
+          },
+          "consumo": {
+            "type": "number",
+            "description": "Consumo da placa, sendo fixo o valor 35.",
+            "example": 35
+          }
+        }
+      },
+      "Ram": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id da Memória Ram",
+            "example": 1
+          },
+          "nome": {
+            "type": "string",
+            "description": "nome da Memória Ram",
+            "example": "TEAM GROUP T-FORCE RGB 8GB"
+          },
+          "frequencia": {
+            "type": "integer",
+            "description": "Frequencia de trabalho do pente",
+            "example": 3600
+          },
+          "capacidade": {
+            "type": "integer",
+            "description": "Quanto de Ram a memória posssui em GB",
+            "example": 8
+          },
+          "ddr": {
+            "type": "integer",
+            "description": "Representa a geração do tipo de memória, devendo ser ou 3, ou 4",
+            "example": 4
+          },
+          "consumo": {
+            "type": "number",
+            "description": "Quanto a memória consome de energia em watt. Por padrão, 3",
+            "example": "5"
+          }
+        }
+      },
+      "Armazenamento": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id do Armazenamento",
+            "example": 1
+          },
+          "nome": {
+            "type": "string",
+            "description": "nome do Armazenamento",
+            "example": "SSD Pichau Gaming"
+          },
+          "capacidade": {
+            "type": "integer",
+            "description": "Capacidade que o HD/SSD possui de armazenmento",
+            "example": 280
+          },
+          "consumo": {
+            "type": "integer",
+            "description": "Consumo de energia do armazenamento, sendo 12 por padrão.",
+            "example": 12
+          }
+        }
+      },
+      "Vga": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id da Placa de Video",
+            "example": 1
+          },
+          "nome": {
+            "type": "string",
+            "description": "nome da Placa de Video",
+            "example": "AMD Radeon RX 6800 XT"
+          },
+          "capacidade": {
+            "type": "integer",
+            "description": "Capacidade que a Placa de Video processa em GB de Vram",
+            "example": 280
+          },
+          "tdp": {
+            "type": "number",
+            "description": "Consumo de energia da Placa de Video",
+            "example": 300
+          },
+          "consumo_max": {
+            "type": "number",
+            "description": "Consumo maximo de energia da placa de vídeo, calculado acrescendo 50% sobre o tdp",
+            "example": 450
+          }
+        }
+      },
+      "Fonte": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "id da Fonte",
+            "example": 1
+          },
+          "nome": {
+            "type": "string",
+            "description": "nome da Fonte",
+            "example": "CoolerMaster V850 GOLD"
+          },
+          "capacidade": {
+            "type": "integer",
+            "description": "Capacidade que o HD/SSD possui de armazenmento",
+            "example": 850
+          }
+        }
+      },
+      "Computador": {}
     }
   }
 }

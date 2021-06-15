@@ -15,35 +15,77 @@ const { PlacaMae, Ram } = require('../model');
 const Vga = require('../model/VGA');
 
 exports.criar = async(req,res) => {
+    //#swagger.tags = ['Usuario']
+    //#swagger.description = 'Endpoint para criar um usuario.'
+
+
     await sequelize.sync({ alter: true });
+    /* #swagger.parameters[] = {
+        in: "body", 
+        name:"body",
+        schema: {
+          $ref: "#/definitions/CadastroUsuario", 
+        },
+        required: true, 
+        description: "Body do Usuario", 
+        } */
     usuarioService.criar(req.body,(err, rows) => {
+
         if(err){
             res.status(err.status).json(err);
         }else{
+                /* #swagger.responses[200] = {
+        schema: {
+            $ref: "#/definitions/CadastroUsuarioResponse"
+        },
+        description:"Listagem de usuarios"
+    } */
             res.json(rows);
         }
     })
 }
 
 exports.listar = (req, res) => {
-    //#swagger.tags = ['Usuario','User']
+    //#swagger.tags = ['Usuario']
     //#swagger.description = 'Endpoint para obter todos os usuarios.'
+
     usuarioService.listar((err, rows) => {
         if(err){
             res.status(err.status).json({
                 Erro: err.message
             })
         }else{
+    /* #swagger.responses[200] = {
+        schema: {
+            $ref: "#/definitions/Usuarios"
+        },
+        description:"Listagem de usuarios"
+    } */
             res.json(rows)
         }
     });
 }
 
 exports.usuarioPorNome = async(req,res) => {
+    //#swagger.tags = ['Usuario']
+    //#swagger.description = 'Endpoint para obter um usuario por nome.'
+    /* #swagger.parameters['nome'] = {
+        in: "query", 
+        schema: {
+          $ref: "#/models/schemas/nome", 
+        },
+        required: true, 
+        description: "A single todo id", 
+        } */
     const nomeUsuario = req.query.nome;
 
     usuarioService.usuarioPorNome(nomeUsuario, (err, usuario) => {
         if(err){
+            /* 
+                #swagger.responses[200] = { 
+               schema: { $ref: "#/definitions/UsuarioPorNome" },
+               description: 'Usuário encontrado.' 
+        } */
             res.status(err.status).json(err);
         }else{
             res.status(usuario.status).json(usuario);
@@ -66,10 +108,36 @@ const fetchUsers = async(param,value) => {
 }
 
 exports.atualizar = async(req,res) => {
+    //#swagger.tags=["Usuario"]
+    //#swagger.description = 'Atualizar um usuario'
     const body = req.body;
+        /* #swagger.parameters['id'] = {
+        in: "query", 
+        schema: {
+          $ref: "#/models/schemas/id", 
+        },
+        required: true, 
+        description: "Id do usuario desejado", 
+        } */
     const id = req.params.id;
+            /* #swagger.parameters = {
+        in: "body", 
+        name:"body",
+        schema: {
+          $ref: "#/models/schemas/Usuario", 
+        },
+        required: true, 
+        description: "Body do Usuario", 
+        } */
     usuarioService.atualizar(body,id,(err,usuarioAtualizado) => {
         if(err){
+/*             #swagger.responses[200]= {
+                    description: "Usuario atualizado!", 
+                    schema: {
+                        $ref: "#/models/schemas/Usuario", 
+                    },
+                }
+            } */
             res.status(err.status).json(err);
         }else{
             res.json(usuarioAtualizado)
@@ -78,11 +146,27 @@ exports.atualizar = async(req,res) => {
 }
 
 exports.apagar = async(req,res) => {
+     //#swagger.tags = ['Usuario']
+    //#swagger.description = 'Endpoint para deletar um usuario por nome.'
+    /* #swagger.parameters['id'] = {
+        in: "query", 
+        schema: {
+          $ref: "#/models/schemas/id", 
+        },
+        required: true, 
+        description: "Id do usuario a ser deletado.", 
+        } */
     const id = req.params.id;
     usuarioService.apagar(id, (err,usuarioApagado) => {
         if(err){
             res.status(err.status).json(err)
         }else{
+            /*#swagger.responses[200] = {
+                schema: {
+                    $ref: "#/definitions/UsuarioDeletado"
+                },
+                description:"Usuario deletado!"
+            }*/ 
             res.json(usuarioApagado)
         }
     })

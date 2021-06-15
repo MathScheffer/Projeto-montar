@@ -12,6 +12,6 @@ const authenticationController = require('../controller/AuthenticationController
  *         description: Returns a mysterious string.
  */
 rotas.post('/',authenticationController.autenticar);
-rotas.post('/validation/token',authenticationController.validarToken)
-rotas.post('/validation/permissions',authenticationController.somenteAdm)
+/* rotas.post('/validation/token',authenticationController.validarToken)
+rotas.post('/validation/permissions',authenticationController.somenteAdm) */
  module.exports = rotas;
