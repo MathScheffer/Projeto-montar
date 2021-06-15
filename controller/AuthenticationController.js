@@ -1,16 +1,39 @@
 const authenticationService = require('../service/AuthenticationService');
 
 exports.autenticar = (req,res) => {
+    //#swagger.tags = ["Autenticacao"] 
+    //#swagger.description = "Realizar autenticacao"
+    /*#swagger.parameters[] = {
+        in: "body",
+        name: "body",
+        schema: {
+            $ref: "#definitions/Autenticacao"
+        }
+    } */
     const body = req.body;
-    authenticationService.autenticar(body.username,body.senha,(err,usuario) => {
+    /*#swagger.responses[200] */
+    /*#swagger.responses[403] = {
+        description: "Usuario ou Senha invalido",
+        schema: {
+            $ref: "#definitions/Autenticacao403"
+        }
+    } */
+    /*#swagger.responses[400] = {
+        description: "Tentativa de autenticar sem um campo",
+        schema: {
+            $ref: "#definitions/Autenticacao400CampoFaltando"
+        }
+    } */
+    /*#swagger.responses[500] = {
+        schema: {
+            $ref: "#definitions/ErroInterno"
+        }
+    } */
+    authenticationService.autenticar(body,(err,usuario) => {
         if(err){
             res.status(err.status).json(err);
         }else{
-            if(usuario.auth){
-                res.json(usuario);
-            }else{
-                res.status(403).json(usuario);
-            }
+            res.status(usuario.status).json(usuario);
         }
     })
 }

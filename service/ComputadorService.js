@@ -23,6 +23,7 @@ exports.criar = (reqBody,callback) => {
         if(err){
             const camposFaltantes = Utils.retornaCamposFaltantes(reqBody,computadorConstants.ENTRADAS_VALIDAS);
             const sequelizeError = JSON.parse(JSON.stringify(err));
+
             if(camposFaltantes){
                 const error = {
                     status:400,
@@ -61,18 +62,23 @@ exports.adicionarProcessador = async(id,callback) => {
         })
 
         if(processador){            
-            Computador.integradorMontagem.set("Processador",processador);
-            const proc =  Utils.sequelizeModelToJson(Computador.integradorMontagem.get("Processador"));
             const placasMae = await PlacaMae.findAll({
                 where:{
-                    socket:proc.socket
+                    socket:processador.socket
                 }
             })
-
-            finalMessage = {
-                processador: processador,
-                computador_agora:Utils.computadorAgora(),
-                placas_mae_disponiveis:placasMae
+            if(placasMae){
+                Computador.integradorMontagem.set("Processador",processador);
+                finalMessage = {
+                    status:201,
+                    processador: processador,
+                    computador_agora:Utils.computadorAgora()
+                }
+            }else{
+                finalMessage = {
+                    status:422,
+                    message:"Placa mae nao compativel com este processador!"
+                }
             }
         }else{
             finalMessage = {
@@ -80,12 +86,11 @@ exports.adicionarProcessador = async(id,callback) => {
                 message:`Processador indisponivel!`
             }
         }
-        callback(null,finalMessage);
+        finalMessage.status == 201 ? callback(null,finalMessage) : callback(finalMessage,null);
     }catch(err){
         const error = {
             status:500,
-            message:"Erro interno no servidor!",
-            err:err
+            message:"Erro interno no servidor!"
         }
         callback(error,null);
     }
@@ -124,14 +129,13 @@ exports.adicionarPlacaMae = async(id,callback) => {
                     message:`Necessario selecionar um processador!`
                 }
             }
-            
         }else{
             finalMessage = {
                 status:422,
                 message:`Placa Mae indisponivel!`
             }
         }
-        callback(null,finalMessage);
+        finalMessage == 201 ? callback(null,finalMessage) : callback(finalMessage,null);
     }catch(err){
         const error = {
             status:500,
@@ -188,7 +192,11 @@ exports.adicionarRam = async(id,callback) => {
 
         finalMessage.status == 201 ? callback(null,finalMessage) :callback(finalMessage,null) ;
     }catch(err){
-        callback(err,null);
+        const error = {
+            status:500,
+            message:"Erro interno no servidor!"
+        }
+        callback(error,null);
     }
 }
 
@@ -216,7 +224,11 @@ exports.adicionarArmazenamento = async(id,callback) => {
         }
         finalMessage.status == 201 ? callback(null,finalMessage) : callback(finalMessage,null);
     }catch(err){
-        callback(err,null);
+        const error = {
+            status:500,
+            message:"Erro interno no servidor!"
+        }
+        callback(error,null);
     }
 }
 
@@ -244,7 +256,11 @@ exports.adicionarVga = async(id,callback) => {
         }
         finalMessage.status == 201 ? callback(null,finalMessage) : callback(finalMessage,null);
     }catch(err){
-        callback(err,null);
+        const error = {
+            status:500,
+            message:"Erro interno no servidor!"
+        }
+        callback(error,null);
     }
 }
 

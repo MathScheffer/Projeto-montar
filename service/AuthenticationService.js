@@ -1,37 +1,51 @@
 const authenticationRepository = require('../repository/AuthenticationRepository');
-const constants = require('../constants/authenticationConstants');
+const {JWT_SECRET, ENTRADAS_VALIDAS } = require('../constants/authenticationConstants');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const utils = require('../Utils/utils');
-const Usuario = require('../model/Usuario')
+const Usuario = require('../model/Usuario');
+const Utils = require('../Utils/utils');
 
-exports.autenticar = async(username,senha,callback) => {
+exports.autenticar = async(reqBody,callback) => {
+    const username = reqBody.username;
+    const senha = reqBody.senha;
+
     authenticationRepository.autenticar(username, (err,usuario) => {
+        let finalMessage = {};
         if(err){
-            callback({
-                status:500,
-                message:"erro interno do servidor!"
-            },null);
+            const camposFaltantes = Utils.retornaCamposFaltantes(reqBody,ENTRADAS_VALIDAS)//retornaCamposFaltantes(reqBody);
+
+            if(camposFaltantes){
+                finalMessage = {
+                    status:400,
+                    message:`Ha campos faltando na requisicao: ${camposFaltantes}`
+                }
+            }else{
+                finalMessage = {
+                    status:500,
+                    message:"erro interno do servidor!"
+                }
+            }
         }else{
             const user = JSON.parse(JSON.stringify(usuario))[0];
             if(bcrypt.compareSync(senha,user.senha)){
 
                 const token = jwt.sign({
                     username: user.username, senha: user.senha,permissions:user.permissions
-                },constants.JWT_SECRET,{expiresIn:'1h'});
-
-                callback(null,{
-                    auth:true,
+                },JWT_SECRET,{expiresIn:'1h'});
+                finalMessage = {
+                    status:200,
                     usuario:user.username,
                     token: token
-                });
+                }
             }else{
-                callback(null,{
-                    auth:false,
+                finalMessage = {
+                    status:400,
                     message:"Usuario ou senha incorreto!"
-                });
+                }
             }
         }
+        finalMessage.status == 200 ? callback(null,finalMessage) : callback(finalMessage,null);
     })
 }
 
@@ -57,7 +71,7 @@ exports.validarToken = (token,callback) => {
         }
         callback(err, null)
     }else{
-         jwt.verify(token,constants.JWT_SECRET,(err,payload) => {
+         jwt.verify(token,JWT_SECRET,(err,payload) => {
             if(err){
                 const error = {
                     status:403,
@@ -77,7 +91,7 @@ exports.validarToken = (token,callback) => {
 
 exports.validarPermissao = (token,permissao,callback) => {
     permissao = permissao >= 1 ? 1 : 0;
-    jwt.verify(token,constants.JWT_SECRET,(err,payload) => {
+    jwt.verify(token,JWT_SECRET,(err,payload) => {
         if(err){
             const error = {
                 status:403,

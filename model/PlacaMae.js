@@ -21,7 +21,7 @@ PlacaMae.init({
         allowNull:false
     },
     frequencia_max_ram:{
-        type:DataTypes.DECIMAL,
+        type:DataTypes.INTEGER,
         allowNull:false
     },
     max_ram:{
