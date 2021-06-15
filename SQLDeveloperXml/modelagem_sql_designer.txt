@@ -100,7 +100,7 @@
 </key>
 <comment>Tabela contendo os produtos (Processador, placa mãe, memória RAm, placa de Vídeo(VGA), SSD/HD, gabinete e Fonte</comment>
 </table>
-<table x="881" y="16" name="Processador">
+<table x="793" y="18" name="Processador">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -126,8 +126,11 @@
 <row name="consumo_max" null="1" autoincrement="0">
 <datatype>DECIMAL</datatype>
 <default>NULL</default></row>
+<row name="quantidade" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>0</default></row>
 </table>
-<table x="975" y="134" name="Placa mae">
+<table x="1107" y="10" name="Placa mae">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -151,11 +154,14 @@
 <row name="consumo" null="0" autoincrement="0">
 <datatype>DECIMAL</datatype>
 <default>NULL</default></row>
+<row name="quantidade" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>0</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="956" y="356" name="Memoria_ram">
+<table x="940" y="188" name="Memoria_ram">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -172,11 +178,14 @@
 <row name="consumo" null="0" autoincrement="0">
 <datatype>DOUBLE</datatype>
 <default>NULL</default></row>
+<row name="quantidade" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>0</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="970" y="503" name="VGA">
+<table x="976" y="378" name="VGA">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -192,12 +201,15 @@
 <row name="consumo_max" null="1" autoincrement="0">
 <datatype>DECIMAL</datatype>
 <default>NULL</default></row>
+<row name="quantidade" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>0</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 <comment>É A PLACA DE VÍDEO</comment>
 </table>
-<table x="754" y="494" name="Fonte">
+<table x="826" y="426" name="Fonte">
 <row name="id" null="0" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -207,11 +219,14 @@
 <row name="capacidade" null="0" autoincrement="0">
 <datatype>DOUBLE</datatype>
 <default>NULL</default></row>
+<row name="quantidade" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>0</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
 </table>
-<table x="1158" y="325" name="Armazenamento">
+<table x="1098" y="273" name="Armazenamento">
 <row name="id" null="1" autoincrement="1">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
@@ -228,6 +243,9 @@
 <row name="Consumo" null="0" autoincrement="0">
 <datatype>INTEGER</datatype>
 <default>NULL</default></row>
+<row name="quantidade" null="0" autoincrement="0">
+<datatype>INTEGER</datatype>
+<default>0</default></row>
 <key type="PRIMARY" name="">
 <part>id</part>
 </key>
