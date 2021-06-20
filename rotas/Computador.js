@@ -2,6 +2,7 @@ const express = require('express');
 const rotas = express.Router();
 
 const computadorController = require('../controller/ComputadorController');
+const computadorArmazenamentoController = require('../controller/ComputadorArmazenamentoController')
 
 rotas.post('/novo',computadorController.criar);
 
@@ -12,4 +13,5 @@ rotas.post('/adicionar/armazenamento',computadorController.adicionarArmazenament
 rotas.post('/adicionar/vga',computadorController.adicionarVga);
 rotas.post('/adicionar/computador',computadorController.adicionarComputador);
 rotas.post('/adicionar/fonte',computadorController.adicionarFonte);
+rotas.post('/adicionar/armazenamento/teste', computadorArmazenamentoController.criar);
 module.exports = rotas;

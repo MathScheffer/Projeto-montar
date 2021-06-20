@@ -12,7 +12,8 @@ Fonte} = require('../model');
 const Computador = require('../model/Computador')
 
 exports.criar = (reqBody,callback) => {
-    computadorRepository.criar(reqBody.UsuarioId,
+    computadorRepository.criar(
+        reqBody.UsuarioId,
         reqBody.ProcessadorId,
         reqBody.PlacaMaeId,
         reqBody.RamId,
@@ -90,7 +91,8 @@ exports.adicionarProcessador = async(id,callback) => {
     }catch(err){
         const error = {
             status:500,
-            message:"Erro interno no servidor!"
+            message:"Erro interno no servidor!",
+            error:err
         }
         callback(error,null);
     }
@@ -320,8 +322,8 @@ exports.adicionarComputador = async(userId,callback) => {
         placaMae.id,
         ram.id,
         armazenamento.id,
-        vga.id
-        ,fonte.id,(err,computador) =>{
+        vga.id,
+        fonte.id,(err,computador) =>{
         
         if(err){
             if(arrComponentes.find(obj => obj === undefined)){
@@ -333,7 +335,8 @@ exports.adicionarComputador = async(userId,callback) => {
             }else{
                 const error = {
                     status:500,
-                    message:"Erro interno no servidor!"
+                    message:"Erro interno no servidor!",
+                    error:err
                 };
                 callback(error,null);
             }

@@ -1,6 +1,8 @@
-const { DataTypes, Model } = require('sequelize');
+/* const { DataTypes, Model } = require('sequelize');
 const config = require('../config/conexaodb');
-const { Computador, Ram } = require('.');
+//const { Computador, Ram } = require('./index');
+const Computador = require('./Computador');
+const Ram  = require('./Ram');
 const sequelize = config.sequelize;
 
 class ComputadorRam extends Model {
@@ -18,7 +20,7 @@ ComputadorRam.init({
     ComputadorId:{
         type: DataTypes.INTEGER,
         references:{
-            model:Computador,
+            model:"Computador",
             key:'id'
         }
     },
@@ -34,3 +36,5 @@ ComputadorRam.init({
     modelName: "ComputadorRam",
     tableName: "ComputadorRam"
 })
+
+module.exports = ComputadorRam; */

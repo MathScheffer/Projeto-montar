@@ -32,7 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
 const authentication = require('./rotas/Authentication');
-app.use('/api/authentication',authentication);
+//app.use('/api/authentication',authentication);
 // Routes
 
 const usuarios = require('./rotas/Usuarios');

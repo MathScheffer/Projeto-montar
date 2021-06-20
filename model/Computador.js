@@ -47,14 +47,14 @@ Computador.init({
             model:Ram,
             key:'id'
         }
-    },
+    }, 
     ArmazenamentoId:{
         type:DataTypes.INTEGER,
         references:{
             model:Armazenamento,
             key:'id'
         }
-    },
+    }, 
     FonteId: {
         type:DataTypes.INTEGER,
         references:{

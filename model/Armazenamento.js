@@ -42,8 +42,7 @@ Armazenamento.init({
 },{
     sequelize,
     modelName:"Armazenamento",
-    tableName:"Armazenamento",
-    freezeTableName:"Armazenamento"
+    tableName:"Armazenamento"
 })
 
 module.exports = Armazenamento
