@@ -17,6 +17,7 @@ exports.criar = async(reqBody, callback) => {
                     status:400,
                     message:`Ha campos faltando na requisicao: ${camposFaltantes}`
                 }
+                callback(error,null);
             }else if(sequelizeError && sequelizeError.name == "SequelizeValidationError"){
                 const error = {
                     status:400,

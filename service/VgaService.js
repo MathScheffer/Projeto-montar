@@ -13,7 +13,7 @@ exports.criar = async(reqBody,callback) => {
                     status:400,
                     message:`Ha campos faltando na requisicao: ${camposFaltantes}`
                 }
-                callback(error,null);ç
+                callback(error,null);
             }else{
                 const error = {
                     status: 500,

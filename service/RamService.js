@@ -1,5 +1,6 @@
 const ramRepository = require('../repository/RamRepository');
 const ramConstants = require('../constants/ramContants');
+const Utils = require('../Utils/utils');
 
 exports.criar = async(reqBody, callback) => {
     ramRepository.criar(reqBody.nome,

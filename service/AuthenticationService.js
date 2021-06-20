@@ -20,6 +20,11 @@ exports.autenticar = async(reqBody,callback) => {
                     status:400,
                     message:`Ha campos faltando na requisicao: ${camposFaltantes}`
                 }
+            }else if(err.status == 404){
+                finalMessage = {
+                    status:400,
+                    message:"Usuario ou senha incorreto!"
+                }
             }else{
                 finalMessage = {
                     status:500,
@@ -27,7 +32,7 @@ exports.autenticar = async(reqBody,callback) => {
                 }
             }
         }else{
-            const user = JSON.parse(JSON.stringify(usuario))[0];
+            const user = JSON.parse(JSON.stringify(usuario));
             if(bcrypt.compareSync(senha,user.senha)){
 
                 const token = jwt.sign({

@@ -40,8 +40,7 @@ exports.listar = async(callback) => {
         if(err){
             const error = {
                 status:500,
-                message:"Erro interno no servidor!",
-                error:err
+                message:"Erro interno no servidor!"
             }
             callback(error,null);
         }else{
