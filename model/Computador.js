@@ -9,8 +9,10 @@ class Computador extends Model {
     }
     static integradorMontagem = new Map();
 
+    static relationHasMany = async(Model) => {
+        return Computador.hasMany(Model);
+    }
 }
-
 
 Computador.init({
     id:{

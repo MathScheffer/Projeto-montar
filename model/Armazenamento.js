@@ -6,7 +6,9 @@ const Computador = require('./Computador');
 
 
 class Armazenamento extends Model {
-
+    static relationHasMany = async(Model) => {
+        return Armazenamento.hasMany(Model);
+    }
 }
 
 Armazenamento.init({

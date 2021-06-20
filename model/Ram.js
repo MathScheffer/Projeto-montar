@@ -3,7 +3,9 @@ const config = require('../config/conexaodb');
 const sequelize = config.sequelize;
 
 class Ram extends Model {
-
+    static relationHasMany = async(Model) => {
+        return Ram.hasMany(Model);
+    }
 }
 
 Ram.init({

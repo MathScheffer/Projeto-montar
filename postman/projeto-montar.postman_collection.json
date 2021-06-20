@@ -316,7 +316,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"TEAM GROUP T-FORCE RGB 8GB\",\r\n    \"frequencia\":3600,\r\n    \"capacidade\":8,\r\n    \"ddr\":4\r\n}",
+							"raw": "{\r\n  \"nome\": \"TEAM GROUP T-FORCE RGB 8GB\",\r\n  \"frequencia\": 3600,\r\n  \"capacidade\": 8,\r\n  \"ddr\": 8\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

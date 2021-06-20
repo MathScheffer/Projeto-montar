@@ -70,6 +70,9 @@ const doc = module.exports = {
           }
       }
   },
+  security:{
+    api_key:[]
+  },
   models:{
       schemas:{
           nome: {
@@ -368,6 +371,13 @@ const doc = module.exports = {
       "status": 400,
       "message": "Ha campos faltando na requisicao: senha"
     },
+    CadastroUsuario422CamposUnicos: {
+      "status": 400,
+      "message": "Dado(s) já cadastrado(s) em outro(s) usuario(s)!",
+      "dados": [
+          "username"
+      ]
+    },
     CadastroUsuario:{
         "username":"jose.silva",
         "nome":"Jose Silva",
@@ -382,6 +392,14 @@ const doc = module.exports = {
       "email": "jose$@gmail.com",
       "senha": "$2b$10$suDSbebTCmuHl.YpTJ1Bj.IcKWyEBx2DzMD49NhbC.8330ZXOjOJe",
       "permissions": 1
+    },
+    CadastroUsuario400CamposFaltando:{
+      "status": 400,
+      "message": "Ha campos faltando na requisicao: senha,permissions"
+    },
+    CadastroUsuario400PermisionsInvalida:{
+      "status": 400,
+      "message": "permissions  deve ser 0 ou 1!"
     },
     Usuarios:{
       "status": 200,
@@ -400,6 +418,40 @@ const doc = module.exports = {
           }
       ]
     },
+    UsuarioPorNome404: {
+      "status": 404,
+      "message": "Nao ha usuario com este nome!"
+    },
+    AtualizarUsuario400EntradasInvalidas: {
+      "nome":"teste 1",
+      "teste":"1123",
+      "aniversario":"27/08/1978"
+    },
+    AtualizarUsuario500ProblemasNaAtualizacao: {
+      status:500,
+      message:"A atualizacao feita nao confere com a desejada!",
+      atualizacaoDesejada:{
+          "message": "Dados atualizados com sucesso!",
+          "dados": {
+              "nome": "Jose Silva Alberto"
+          }
+      },
+      atualizacaoFeita: {
+          "message": "Dados atualizados com sucesso!",
+          "dados": {
+              "nome": "Jose Silva"
+          }
+      }
+    },
+    ApagarUsuario200:{
+      "status": 200,
+      "message": "Usuario deletado com sucesso!",
+      "response": 1
+    },
+    ApagarUsuario404UsuarioNaoExiste:{
+      "status": 404,
+      "message": "Usuario inexistente!"
+    },
     CadastroProcessador: {
       "nome":"INTEL CORE I7-10700KF",
       "marca":"Intel",
@@ -407,6 +459,10 @@ const doc = module.exports = {
       "frequencia_max":5.1,
       "socket":"LGA1200",
       "tdp":95
+    },
+    CadastroProcessador400CamposFaltantes:{
+      "status": 400,
+      "message": "Ha campos faltantes na requisicao: socket,tdp"
     },
     ListarProcessador: 
       [
@@ -442,6 +498,10 @@ const doc = module.exports = {
       "max_ram":128,
       "ddr":4
     },
+    CadastroPlacaMae400CamposFaltantes: {
+      "status": 400,
+      "message": "Ha campos faltantes na requisicao max_ram,ddr"
+    },
     ListarPlacaMae: [
       {
           "id": 1,
@@ -460,6 +520,14 @@ const doc = module.exports = {
       "frequencia":3600,
       "capacidade":8,
       "ddr":4
+    },
+    CadastroRam400CamposFaltantes: {
+      "status": 400,
+      "message": "Ha campos faltando na requisicao: capacidade,ddr"
+    },
+    CadastroRam400DdrInvalido: {
+      "status": 400,
+      "message": "Tipo de DDR da memoria 3 ou 4!"
     },
     ListarRam : [
       {
@@ -481,6 +549,14 @@ const doc = module.exports = {
       "tipo":"SSD",
       "nome":"WD GREEN SN350",
       "capacidade":280
+    },
+    CadastroArmazenamento400CamposFaltantes: {
+      "status": 400,
+      "message": "Ha campos faltando na requisicao: nome,capacidade"
+    },
+    CadastroArmazenamento400TipoInvalido: {
+      "status": 400,
+      "message": "Tipo de armazenamento deve ser 'HD ou SSD'!"
     },
     ListarArmazenamento: [
       {
@@ -506,6 +582,10 @@ const doc = module.exports = {
       "nome":"AMD Radeon RX 6800 XT",
       "capacidade":16,
       "tdp":300
+    },
+    CadastroVga400CamposFaltantes:{
+      "status": 400,
+      "message": "Ha campos faltando na requisicao: capacidade,consumo"
     },
     ListarVga: [
       {

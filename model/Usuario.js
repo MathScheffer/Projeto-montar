@@ -14,18 +14,18 @@ Usuario.init({
     },
     username:{
         type:DataTypes.STRING(30),
-        allowNull:false
-        //unique:"unique_username"
+        allowNull:false,
+        unique:"unique_username"
     },
     nome:{
         type: DataTypes.STRING(30),
-        allowNull: false
-        //unique:"unique_nome"
+        allowNull: false,
+        unique:"unique_nome"
     },
     email:{
         type: DataTypes.STRING(100),
-        allowNull: false
-        //unique:"unique_email" 
+        allowNull: false,
+        unique:"unique_email" 
     },
     senha:{
         type:DataTypes.STRING(60),

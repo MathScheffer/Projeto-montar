@@ -26,7 +26,7 @@ exports.criar = async(reqBody,callback) => {
             }else if(sequelizeError && sequelizeError.name === "SequelizeUniqueConstraintError"){
                 const errors = sequelizeErrors.uniqueConstraintErrorUsuario(sequelizeError.errors);
                 const error = {
-                    status:400,
+                    status:422,
                     message:"Dado(s) já cadastrado(s) em outro(s) usuario(s)!",
                     dados:errors
                 }
@@ -72,15 +72,17 @@ exports.usuarioPorNome = async(nome,callback) => {
     const nomeFormatado = nome.replace("%"," ");
     usuarioRepository.usuarioPorNome(nomeFormatado,(err,usuario)=>{
         if(err){
-            callback({
-                status:500,
-                message:"Erro interno no servidor!"
-            })
-        }else if(usuario.length == 0){
-            callback({
-                status:404,
-                message:"Nao ha usuario com este nome!"
-            })
+            if(err.status == 404){
+                callback({
+                    status:404,
+                    message:"Nao ha usuario com este nome!"
+                })
+            }else{
+                callback({
+                    status:500,
+                    message:"Erro interno no servidor!"
+                });
+            }
         }else{
             callback({
                 status:200,
@@ -164,8 +166,8 @@ exports.apagar = async(id, callback) => {
 
     if(usuario === "null"){
         const error = {
-            status: 403,
-            message:"Usuario ja deletado!"
+            status: 404,
+            message:"Usuario inexistente!"
         }
         callback(JSON.parse(JSON.stringify(error)), null)
     }else{
