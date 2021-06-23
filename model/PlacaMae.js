@@ -14,7 +14,8 @@ PlacaMae.init({
     },
     nome:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique:"nome_placa"
     },
     socket:{
         type:DataTypes.STRING,
@@ -36,6 +37,10 @@ PlacaMae.init({
         type:DataTypes.DECIMAL,
         allowNull:false,
         defaultValue:35
+    },
+    quantidade:{
+        type:DataTypes.INTEGER,
+        allowNull:false
     }
 },{
     sequelize,

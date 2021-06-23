@@ -53,6 +53,9 @@ exports.criar = (reqBody,callback) => {
     })
 };
 
+/**
+ * Fazer diminuir 1 na quantidade
+ */
 exports.adicionarProcessador = async(id,callback) => {
     try{
         let finalMessage = {};
@@ -62,7 +65,7 @@ exports.adicionarProcessador = async(id,callback) => {
             }
         })
 
-        if(processador){            
+        if(processador && processador.quantidade > 0){            
             const placasMae = await PlacaMae.findAll({
                 where:{
                     socket:processador.socket

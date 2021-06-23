@@ -31,3 +31,7 @@ const retornaOValor = async(valb) => {
     console.log(val)
 }
 retornaOValor(10)
+
+const processador = require('./service/ProcessadorService');
+
+processador.atualizarQuantidade(3,1)

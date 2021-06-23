@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const cors = require('cors')
 const port = 3000;
 
 const swaggerUi = require('swagger-ui-express');
@@ -26,13 +27,14 @@ const swaggerSpec = swaggerJsdoc(options)
 const swaggerFile = require('./swagger_output.json');
 app.use('/api-docs-autogen',swaggerUi.serve,swaggerUi.setup(swaggerFile));
 
+app.use(cors())
 const authenticationController = require('./controller/AuthenticationController')
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 
 const authentication = require('./rotas/Authentication');
-//app.use('/api/authentication',authentication);
+app.use('/api/authentication',authentication);
 // Routes
 
 const usuarios = require('./rotas/Usuarios');

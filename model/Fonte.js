@@ -18,11 +18,16 @@ Fonte.init({
     },
     nome: {
         type:DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: "nome_fonte"
     },
     capacidade: {
         type:DataTypes.INTEGER,
         allowNull: false
+    },
+    quantidade:{
+        type:DataTypes.INTEGER,
+        allowNull:false
     }
 },  { 
     sequelize,

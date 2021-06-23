@@ -10,9 +10,70 @@ exports.uniqueConstraintErrorUsuario = (errorsArray) => {
             mensagem.push("email");
     })
 
+    return mensagem.toString();
+}
+
+exports.uniqueConstraintErrorRam = (errorsArray) => {
+    let mensagem = [];
+
+    errorsArray.forEach(obj => {
+        if (obj.message.startsWith("nome") && obj.message.endsWith("must be unique")) 
+            mensagem.push("nome");
+    })
+
     return mensagem;
 }
 
+exports.uniqueConstraintErrorProcessador = (errorsArray) => {
+    let mensagem = [];
+
+    errorsArray.forEach(obj => {
+        if (obj.message.startsWith("nome") && obj.message.endsWith("must be unique")) 
+            mensagem.push("nome");
+    })
+
+    return mensagem;
+}
+exports.uniqueConstraintErrorPlacaMae = (errorsArray) => {
+    let mensagem = [];
+
+    errorsArray.forEach(obj => {
+        if (obj.message.startsWith("nome") && obj.message.endsWith("must be unique")) 
+            mensagem.push("nome");
+    })
+
+    return mensagem;
+}
+exports.uniqueConstraintErrorArmazenamento = (errorsArray) => {
+    let mensagem = [];
+
+    errorsArray.forEach(obj => {
+        if (obj.message.startsWith("nome") && obj.message.endsWith("must be unique")) 
+            mensagem.push("nome");
+    })
+
+    return mensagem;
+}
+exports.uniqueConstraintErrorVga = (errorsArray) => {
+    let mensagem = [];
+
+    errorsArray.forEach(obj => {
+        if (obj.message.startsWith("nome") && obj.message.endsWith("must be unique")) 
+            mensagem.push("nome");
+    })
+
+    return mensagem;
+}
+exports.uniqueConstraintErrorFonte = (errorsArray) => {
+    let mensagem = [];
+
+    errorsArray.forEach(obj => {
+        if (obj.message.startsWith("nome") && obj.message.endsWith("must be unique")) 
+            mensagem.push("nome");
+    })
+
+    return mensagem;
+}
 exports.errno1452Computador = (err) => {
     const tableError = err.table;
     let errorMessage;
