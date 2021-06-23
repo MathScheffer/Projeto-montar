@@ -8,7 +8,8 @@ class Computador extends Model {
         return Computador.belongsTo(Model);
     }
     static integradorMontagem = new Map();
-
+    static integradorRequisicaoQuantidades = new Map();
+    static integradorHardwareFaltante = new Map();
     static relationHasMany = async(Model) => {
         return Computador.hasMany(Model);
     }

@@ -3,13 +3,15 @@ const computadorRepository = require('../repository/Computador');
 const computadorConstants = require('../constants/computadorContants');
 const Utils = require('../Utils/utils');
 const sequelizeErrors = require('../Utils/sequelizeErrors');
+
 const { Processador,/* , Computador */ 
 PlacaMae,
 Ram,
 Armazenamento,
 Vga,
 Fonte} = require('../model');
-const Computador = require('../model/Computador')
+const Computador = require('../model/Computador');
+const { ProcessadorService } = require('.');
 
 exports.criar = (reqBody,callback) => {
     computadorRepository.criar(
@@ -73,10 +75,19 @@ exports.adicionarProcessador = async(id,callback) => {
             })
             if(placasMae){
                 Computador.integradorMontagem.set("Processador",processador);
-                finalMessage = {
-                    status:201,
-                    processador: processador,
-                    computador_agora:Utils.computadorAgora()
+                const quantidadeAtual = await ProcessadorService.fetchProcessador({"id":id},["quantidade"]);
+                if(quantidadeAtual > 0){
+                    Computador.integradorRequisicaoQuantidades.set("Processador",1);
+                    finalMessage = {
+                        status:201,
+                        processador: processador,
+                        computador_agora:Utils.computadorAgora()
+                    }
+                }else{
+                    finalMessage = {
+                        status:500,
+                        message: "Nao ha processador no estoque!"
+                    }
                 }
             }else{
                 finalMessage = {
@@ -344,6 +355,11 @@ exports.adicionarComputador = async(userId,callback) => {
                 callback(error,null);
             }
         }else{
+            const quantidadeDesejada = Computador.integradorRequisicaoQuantidades.get("Processador");
+            processador.quantidade >= quantidadeDesejada ? 
+                ProcessadorService.atualizarQuantidade((processador.quantidade - quantidadeDesejada),processador.id) : 
+                    Computador.integradorHardwareFaltante.set("Processador",
+                        {"quantidade":processador.quantidade,"quantidadeDesejada":quantidadeDesejada});
             callback(null,{
                 status:201,
                 computador:computador,

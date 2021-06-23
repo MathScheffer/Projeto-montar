@@ -184,7 +184,7 @@ exports.atualizarQuantidade = async(qtd,id) => {
 
 }
 
-const fetchProcessador = async(params,specificationOfReturn) => {
+exports.fetchProcessador = async(params,specificationOfReturn) => {
     if(specificationOfReturn){
         const processador = await Processador.findOne({
             attributes:specificationOfReturn,
@@ -207,4 +207,3 @@ const fetchProcessador = async(params,specificationOfReturn) => {
     }
 }
 
-exports.criar();
