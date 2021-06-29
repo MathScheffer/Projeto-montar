@@ -29,7 +29,8 @@ Armazenamento.init({
     },
     nome:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique: "nome_armazenamento"
     },
     capacidade:{
         type:DataTypes.INTEGER,
@@ -38,12 +39,15 @@ Armazenamento.init({
     consumo:{
         type:DataTypes.DECIMAL,
         defaultValue:12
+    },
+    quantidade:{
+        type:DataTypes.INTEGER,
+        allowNull: false
     }
 },{
     sequelize,
     modelName:"Armazenamento",
-    tableName:"Armazenamento",
-    freezeTableName:"Armazenamento"
+    tableName:"Armazenamento"
 })
 
 module.exports = Armazenamento

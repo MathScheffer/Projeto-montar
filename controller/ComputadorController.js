@@ -302,6 +302,7 @@ exports.adicionarComputador = (req,res) => {
             $ref: "#definitions/IdHardware"
         }
     }*/
+    console.log(req.body.id)
     const id = req.body.id;
     /*#swagger.responses[201] ={
         schema: {

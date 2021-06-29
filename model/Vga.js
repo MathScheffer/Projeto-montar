@@ -14,7 +14,8 @@ Vga.init({
     },
     nome:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique: "nome_vga"
     },
     capacidade:{
         type:DataTypes.INTEGER,
@@ -26,6 +27,10 @@ Vga.init({
     },
     consumo_max:{
         type:DataTypes.DECIMAL,
+        allowNull:false
+    },
+    quantidade:{
+        type:DataTypes.INTEGER,
         allowNull:false
     }
 },{

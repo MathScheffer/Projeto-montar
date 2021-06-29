@@ -1,8 +1,11 @@
-const { DataTypes, Model } = require('sequelize');
+/* const { DataTypes, Model } = require('sequelize');
 const config = require('../config/conexaodb');
-const { Computador, Armazenamento } = require('.');
 const sequelize = config.sequelize;
 
+
+const Computador  = require('./Computador');
+const Armazenamento = require('./Armazenamento');
+//const { Computador, Armazenamento } = require('./index');
 class ComputadorArmazenamento extends Model {
     static relation = async(Model) => {
         return ComputadorArmazenamento.belongsTo(Model);
@@ -18,7 +21,7 @@ ComputadorArmazenamento.init({
     ComputadorId:{
         type: DataTypes.INTEGER,
         references:{
-            model:Computador,
+            model:"Computador",
             key:'id'
         }
     },
@@ -34,3 +37,5 @@ ComputadorArmazenamento.init({
     modelName: "ComputadorArmazenamento",
     tableName: "ComputadorArmazenamento"
 })
+
+module.exports = ComputadorArmazenamento; */

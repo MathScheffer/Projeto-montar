@@ -15,8 +15,8 @@ Processador.init({
     },
     nome:{
         type: DataTypes.STRING(30),
-        allowNull: false
-      //  unique:"unique_nome"
+        allowNull: false,
+        unique:"nome_processador"
     },
     marca:{
         type: DataTypes.STRING(5),
@@ -41,6 +41,10 @@ Processador.init({
     consumo_max:{
         type:DataTypes.DECIMAL,
         allowNull: false
+    },
+    quantidade:{
+        type:DataTypes.INTEGER,
+        allowNull:false
     }
 },{
     sequelize,

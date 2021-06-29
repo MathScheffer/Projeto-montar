@@ -16,7 +16,8 @@ Ram.init({
     },
     nome:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique: "nome_ram"
     },
     frequencia:{
         type:DataTypes.INTEGER,
@@ -39,6 +40,10 @@ Ram.init({
     consumo:{
         type:DataTypes.DECIMAL,
         defaultValue:3
+    },
+    quantidade:{
+        type:DataTypes.INTEGER,
+        allowNull: false
     }
 },{
     sequelize,

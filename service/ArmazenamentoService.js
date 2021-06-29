@@ -1,12 +1,14 @@
 const armazenamentoRepository = require('../repository/ArmazenamentoRepository');
 const Utils = require('../Utils/utils');
+const sequelizeErrors = require('../Utils/sequelizeErrors');
 const armazenamentoConstants = require('../constants/armazenamentoConstants');
 
 exports.criar = async(reqBody, callback) => {
     armazenamentoRepository.criar(
         reqBody.tipo,
         reqBody.nome,
-        reqBody.capacidade,(err,armazenamento) => {
+        reqBody.capacidade,
+        reqBody.quantidade,(err,armazenamento) => {
         
         if(err){
             const camposFaltantes = Utils.retornaCamposFaltantes(reqBody,armazenamentoConstants.ENTRADAS_VALIDAS);
@@ -18,7 +20,15 @@ exports.criar = async(reqBody, callback) => {
                     message:`Ha campos faltando na requisicao: ${camposFaltantes}`
                 }
                 callback(error,null);
-            }else if(sequelizeError && sequelizeError.name == "SequelizeValidationError"){
+            }else if(sequelizeError && sequelizeError.name === "SequelizeUniqueConstraintError"){
+                const errors = sequelizeErrors.uniqueConstraintErrorRam(sequelizeError.errors);
+                const error = {
+                    status:422,
+                    message:"Dado já cadastrado em outro meio de Armazenamento!",
+                    dado:errors.toString()
+                }
+                callback(error,null);
+             }else if(sequelizeError && sequelizeError.name == "SequelizeValidationError"){
                 const error = {
                     status:400,
                     message:sequelizeError.errors[0].message,
