@@ -1048,6 +1048,14 @@
           }
         }
       }
+    },
+    "/api/computador/adicionar/armazenamento/teste": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
     }
   },
   "definitions": {

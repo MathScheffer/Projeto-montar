@@ -1,4 +1,5 @@
-const processadorService = require('../service/ProcessadorService');
+const ProcessadorService = require('../service/ProcessadorService');
+processadorService = new ProcessadorService();
 
 exports.criar = async(req,res) => {
     //#swagger.tags = ['Processador']
