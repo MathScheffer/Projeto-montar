@@ -3,14 +3,13 @@ const sequelize = conexao.sequelize;
 
 const Fonte = require('../model/Fonte');
 
-exports.criar = async(nome, capacidade, quantidade, callback)  => {
+exports.criar = async(nome, capacidade, callback)  => {
     await sequelize.sync({alter:true});
 
     try{
         const fonte = await Fonte.create({
             nome:nome,
-            capacidade:capacidade,
-            quantidade:quantidade
+            capacidade:capacidade
         })
         callback(null,fonte);
     }catch(err){    

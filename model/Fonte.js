@@ -24,10 +24,6 @@ Fonte.init({
     capacidade: {
         type:DataTypes.INTEGER,
         allowNull: false
-    },
-    quantidade:{
-        type:DataTypes.INTEGER,
-        allowNull:false
     }
 },  { 
     sequelize,

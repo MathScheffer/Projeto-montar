@@ -40,10 +40,6 @@ Ram.init({
     consumo:{
         type:DataTypes.DECIMAL,
         defaultValue:3
-    },
-    quantidade:{
-        type:DataTypes.INTEGER,
-        allowNull: false
     }
 },{
     sequelize,

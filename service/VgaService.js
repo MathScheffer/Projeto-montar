@@ -6,7 +6,7 @@ const vgaConstantes = require('../constants/vgaConstants');
 exports.criar = async(reqBody,callback) => {
     const tdp = reqBody.tdp;
     const consumo_max = tdp ? parseInt(tdp) * 1.5 : tdp;
-    vgaRepository.criar(reqBody.nome,reqBody.capacidade,tdp,consumo_max,reqBody.quantidade,(err,vga) => {
+    vgaRepository.criar(reqBody.nome,reqBody.capacidade,tdp,consumo_max,(err,vga) => {
         if(err){
             const sequelizeError = JSON.parse(JSON.stringify(err));
             const camposFaltantes = Utils.retornaCamposFaltantes(reqBody,vgaConstantes.ENTRADAS_VALIDAS);

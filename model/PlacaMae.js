@@ -37,10 +37,6 @@ PlacaMae.init({
         type:DataTypes.DECIMAL,
         allowNull:false,
         defaultValue:35
-    },
-    quantidade:{
-        type:DataTypes.INTEGER,
-        allowNull:false
     }
 },{
     sequelize,

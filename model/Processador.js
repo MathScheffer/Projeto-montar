@@ -41,10 +41,6 @@ Processador.init({
     consumo_max:{
         type:DataTypes.DECIMAL,
         allowNull: false
-    },
-    quantidade:{
-        type:DataTypes.INTEGER,
-        allowNull:false
     }
 },{
     sequelize,

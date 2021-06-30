@@ -39,10 +39,6 @@ Armazenamento.init({
     consumo:{
         type:DataTypes.DECIMAL,
         defaultValue:12
-    },
-    quantidade:{
-        type:DataTypes.INTEGER,
-        allowNull: false
     }
 },{
     sequelize,

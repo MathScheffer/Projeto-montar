@@ -8,8 +8,7 @@ exports.criar = async(reqBody, callback) => {
         reqBody.frequencia,
         reqBody.capacidade,
         reqBody.ddr,
-        reqBody.consumo,
-        reqBody.quantidade,(err,ram)=>{
+        reqBody.consumo,(err,ram)=>{
 
         if(err){
             const sequelizeError = JSON.parse(JSON.stringify(err));
