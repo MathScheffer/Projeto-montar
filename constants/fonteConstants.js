@@ -1,1 +1,1 @@
-exports.ENTRADAS_VALIDAS = ["nome","capacidade"];
+exports.ENTRADAS_VALIDAS = ["nome","capacidade","img"];

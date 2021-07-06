@@ -9,7 +9,8 @@ exports.criar = async(reqBody,callback) => {
         reqBody.socket,
         reqBody.frequencia_max_ram,
         reqBody.max_ram,
-        reqBody.ddr,(err,placa) =>{
+        reqBody.ddr,
+        reqBody.img,(err,placa) =>{
         
         if(err){
             const bodyMap = Utils.jsonToMap(reqBody);

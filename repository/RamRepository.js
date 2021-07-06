@@ -4,7 +4,7 @@ const sequelize = Conexao.sequelize;
 
 const Ram = require('../model/Ram');
 
-exports.criar = async(nome,frequencia,capacidade,ddr,consumo,callback) => {
+exports.criar = async(nome,frequencia,capacidade,ddr,consumo,img,callback) => {
     await sequelize.sync({alter:true});
 
     try{
@@ -13,7 +13,8 @@ exports.criar = async(nome,frequencia,capacidade,ddr,consumo,callback) => {
             frequencia:frequencia,
             capacidade:capacidade,
             ddr:ddr,
-            consumo:consumo
+            consumo:consumo,
+            img:img
         });
         callback(null,ram);
     }catch(err){
@@ -25,10 +26,7 @@ exports.listar = async(callback) => {
     await sequelize.sync();
 
     try{
-        const ramMemos = await Ram.findAll({
-            attributes:["nome","frequencia","capacidade","ddr","consumo"]
-        })
-
+        const ramMemos = await Ram.findAll()
         callback(null,ramMemos);
     }catch(err){
         callback(err,null);

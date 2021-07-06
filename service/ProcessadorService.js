@@ -13,7 +13,8 @@ exports.criar = async(reqBody,callback) => {
         reqBody.frequencia_max,
         reqBody.socket,
         reqBody.tdp,
-        consumo_max,(err,processador) => {
+        consumo_max,
+        reqBody.img,(err,processador) => {
 
         if(err){
             const sequelizeError = JSON.parse(JSON.stringify(err));

@@ -4,7 +4,7 @@ const sequelizeErrors = require('../Utils/sequelizeErrors');
 const Utils  = require('../Utils/utils');
 
 exports.criar = async(reqBody,callback) => {
-    fonteRepository.criar(reqBody.nome, reqBody.capacidade, (err,fonte) => {
+    fonteRepository.criar(reqBody.nome, reqBody.capacidade, reqBody.img, (err,fonte) => {
         if(err){
             const sequelizeError = JSON.parse(JSON.stringify(err));
             const camposFaltantes = Utils.retornaCamposFaltantes(reqBody,fonteConstants.ENTRADAS_VALIDAS);

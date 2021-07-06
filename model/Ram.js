@@ -37,6 +37,10 @@ Ram.init({
             }
         }
     },
+    img:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
     consumo:{
         type:DataTypes.DECIMAL,
         defaultValue:3

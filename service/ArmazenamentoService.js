@@ -7,7 +7,8 @@ exports.criar = async(reqBody, callback) => {
     armazenamentoRepository.criar(
         reqBody.tipo,
         reqBody.nome,
-        reqBody.capacidade,(err,armazenamento) => {
+        reqBody.capacidade,
+        reqBody.img,(err,armazenamento) => {
         
         if(err){
             const camposFaltantes = Utils.retornaCamposFaltantes(reqBody,armazenamentoConstants.ENTRADAS_VALIDAS);

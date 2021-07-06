@@ -22,6 +22,7 @@ exports.criar = async(username,nome,email,senha,permissions,callback) => {
 }
 
 exports.listar = async(callback) => {
+    sequelize.sync({alter:true})
     try{
         const listaUsuarios = await Usuario.findAll({attributes:["id","nome","username","email"]});
         callback(null,listaUsuarios);

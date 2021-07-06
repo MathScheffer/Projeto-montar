@@ -36,6 +36,10 @@ Armazenamento.init({
         type:DataTypes.INTEGER,
         allowNull:false
     },
+    img:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
     consumo:{
         type:DataTypes.DECIMAL,
         defaultValue:12

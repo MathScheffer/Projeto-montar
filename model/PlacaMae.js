@@ -33,6 +33,10 @@ PlacaMae.init({
         type:DataTypes.INTEGER(4),
         allowNull:false
     },
+    img:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
     consumo:{
         type:DataTypes.DECIMAL,
         allowNull:false,

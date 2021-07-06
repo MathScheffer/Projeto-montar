@@ -21,6 +21,10 @@ Fonte.init({
         allowNull: false,
         unique: "nome_fonte"
     },
+    img:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
     capacidade: {
         type:DataTypes.INTEGER,
         allowNull: false

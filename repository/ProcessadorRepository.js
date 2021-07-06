@@ -3,7 +3,7 @@ const sequelize = conexao.sequelize;
 
 const Processador = require('../model/Processador');
 
-exports.criar = async(nome,marca,frequencia,frequencia_max,socket,tdp,consumo_max,callback) => {
+exports.criar = async(nome,marca,frequencia,frequencia_max,socket,tdp,consumo_max,img, callback) => {
     await sequelize.sync({alter:true});
     
     try{
@@ -14,7 +14,8 @@ exports.criar = async(nome,marca,frequencia,frequencia_max,socket,tdp,consumo_ma
             frequencia_max:frequencia_max,
             socket:socket,
             tdp:tdp,
-            consumo_max:consumo_max
+            consumo_max:consumo_max,
+            img:img
         })
 
         callback(null,processador)

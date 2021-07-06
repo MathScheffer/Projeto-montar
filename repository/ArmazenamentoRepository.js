@@ -3,14 +3,15 @@ const sequelize = conexao.sequelize;
 
 const Armazenamento = require('../model/Armazenamento');
 
-exports.criar = async(tipo, nome, capacidade, callback) => {
+exports.criar = async(tipo, nome, capacidade, img, callback) => {
     await sequelize.sync({alter:true});
 
     try{
         const arm = await Armazenamento.create({
             tipo:tipo,
             nome:nome,
-            capacidade:capacidade
+            capacidade:capacidade,
+            img:img
         });
         callback(null,arm);
     }catch(err){

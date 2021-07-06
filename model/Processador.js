@@ -38,6 +38,10 @@ Processador.init({
         type:DataTypes.DECIMAL,
         allowNull: false
     },
+    img:{
+        type:DataTypes.STRING,
+        allowNull:false
+    },
     consumo_max:{
         type:DataTypes.DECIMAL,
         allowNull: false

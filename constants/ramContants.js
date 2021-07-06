@@ -1,1 +1,1 @@
-exports.ENTRADAS_VALIDAS = ["nome","frequencia","capacidade","ddr"]
+exports.ENTRADAS_VALIDAS = ["nome","frequencia","capacidade","ddr","img"]
