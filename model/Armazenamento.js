@@ -6,7 +6,9 @@ const Computador = require('./Computador');
 
 
 class Armazenamento extends Model {
-
+    static relationHasMany = async(Model) => {
+        return Armazenamento.hasMany(Model);
+    }
 }
 
 Armazenamento.init({
@@ -27,10 +29,15 @@ Armazenamento.init({
     },
     nome:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique: "nome_armazenamento"
     },
     capacidade:{
         type:DataTypes.INTEGER,
+        allowNull:false
+    },
+    img:{
+        type:DataTypes.STRING,
         allowNull:false
     },
     consumo:{
@@ -40,8 +47,7 @@ Armazenamento.init({
 },{
     sequelize,
     modelName:"Armazenamento",
-    tableName:"Armazenamento",
-    freezeTableName:"Armazenamento"
+    tableName:"Armazenamento"
 })
 
 module.exports = Armazenamento

@@ -1,1 +1,2 @@
 exports.ENTRADAS_VALIDAS = ["UsuarioId","ProcessadorId","PlacaMaeId","RamId","ArmazenamentoId","VgaId","FonteId"];
+//exports.ENTRADAS_VALIDAS = ["UsuarioId","ProcessadorId","PlacaMaeId","VgaId","FonteId"];

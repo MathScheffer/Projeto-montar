@@ -118,13 +118,24 @@
           "Usuario"
         ],
         "description": "Endpoint para obter todos os usuarios.",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "schema": {
               "$ref": "#/definitions/Usuarios"
             },
             "description": "Listagem de usuarios"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       }
@@ -144,6 +155,13 @@
             },
             "required": true,
             "description": "Body do Usuario"
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -151,7 +169,25 @@
             "schema": {
               "$ref": "#/definitions/CadastroUsuarioResponse"
             },
-            "description": "Listagem de usuarios"
+            "description": "Cadastro de usuarios"
+          },
+          "400": {
+            "description": "Ao tentar cadastrar usuario com o campo permission invalido, é retornado um erro informando como o campo deve ser enviado",
+            "schema": {
+              "$ref": "#definitions/CadastroUsuario400PermisionsInvalida"
+            }
+          },
+          "422": {
+            "schema": {
+              "$ref": "#definitions/CadastroUsuario422CamposUnicos"
+            },
+            "description": "Ao tentar cadastrar um usuario com um nome, username ou email já existentes, lança o erro, mostrando o primeiro campo inserido que deveria ser único"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
           }
         }
       }
@@ -163,6 +199,13 @@
         ],
         "description": "Endpoint para obter um usuario por nome.",
         "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          },
           {
             "name": "nome",
             "in": "query",
@@ -179,6 +222,18 @@
               "$ref": "#/definitions/UsuarioPorNome"
             },
             "description": "Usuário encontrado."
+          },
+          "404": {
+            "schema": {
+              "$ref": "#definitions/UsuarioPorNome404"
+            },
+            "description": "Not Found"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
           }
         }
       }
@@ -208,6 +263,13 @@
             },
             "required": true,
             "description": "Body do Usuario"
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -215,6 +277,18 @@
             "description": "Usuario atualizado!",
             "schema": {
               "$ref": "#/models/schemas/Usuario"
+            }
+          },
+          "400": {
+            "description": "Enviar entradas que não são validas retorna um erro informando as mesmas",
+            "schema": {
+              "$ref": "#definitions/AtualizarUsuario400EntradasInvalidas"
+            }
+          },
+          "500": {
+            "description": "Quando ocorre algum problema na atualização dos dados",
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
             }
           }
         }
@@ -236,14 +310,33 @@
               "$ref": "#/models/schemas/id"
             },
             "description": "Id do usuario a ser deletado."
+          },
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "schema": {
-              "$ref": "#/definitions/UsuarioDeletado"
+              "$ref": "#/definitions/ApagarUsuario200"
             },
             "description": "Usuario deletado!"
+          },
+          "404": {
+            "description": "Ocorre ao tentar deletar um usuario inexistente!",
+            "schema": {
+              "$ref": "#definitions/ApagarUsuario404UsuarioNaoExiste"
+            }
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
           }
         }
       }
@@ -255,6 +348,13 @@
         ],
         "description": "Adicionar um processador",
         "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -269,6 +369,16 @@
               "$ref": "#models/schemas/Processador"
             },
             "description": "retorno do processador adicionado!"
+          },
+          "400": {
+            "definitions": "Ao tentar cadastrar processador com falta de campos, lança o erro, mostrando os campos faltantes na mensagem",
+            "schema": {
+              "$ref": "#definitions/CadastroProcessador400CamposFaltantes"
+            },
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -279,13 +389,27 @@
           "Processador"
         ],
         "description": "Listar todos os processadores",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "schema": {
               "$ref": "#definitions/ListarProcessador"
             },
             "description": "Array de objetos, onde cada objeto é um processador"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
           }
         }
       }
@@ -297,6 +421,13 @@
         ],
         "description": "cadastrar uma placa mãe",
         "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -311,6 +442,13 @@
               "$ref": "#models/schemas/PlacaMae"
             },
             "description": "OK"
+          },
+          "400": {
+            "definitions": "Ao tentar cadastrar uma PLaca Mae com campos faltantes, retornará um erro informando os mesmos",
+            "schema": {
+              "$ref": "#definitions/CadastroPlacaMae400CamposFaltantes"
+            },
+            "description": "Bad Request"
           }
         }
       }
@@ -321,13 +459,27 @@
           "PlacaMae"
         ],
         "description": "Listar Placas Mãe",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "schema": {
               "$ref": "#definitions/ListarPlacaMae"
             },
             "description": "OK"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
           }
         }
       }
@@ -339,6 +491,13 @@
         ],
         "description": "Adicionar Memoria Ram",
         "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -353,6 +512,19 @@
               "$ref": "#models/schemas/Ram"
             },
             "description": "OK"
+          },
+          "400": {
+            "definitions": "Ao tentar inserir um valor inválido para o campo 'ddr', será lançado o erro informado os valores válidos",
+            "schema": {
+              "$ref": "#definitions/CadastroRam400DdrInvalido"
+            },
+            "description": "Bad Request"
+          },
+          "500": {
+            "schema": {
+              "$ref": "definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
           }
         }
       }
@@ -363,13 +535,27 @@
           "Ram"
         ],
         "description": "Listar Memórias",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "schema": {
               "$ref": "#definitions/ListarRam"
             },
             "description": "OK"
+          },
+          "500": {
+            "schema": {
+              "$ref": "#definitions/ErroInterno"
+            },
+            "description": "Internal Server Error"
           }
         }
       }
@@ -381,6 +567,13 @@
         ],
         "description": "",
         "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -395,6 +588,16 @@
               "$ref": "#models/schemas/Armazenamento"
             },
             "description": "OK"
+          },
+          "400": {
+            "definitions": "Ao tentar cadastrar meio de Armazenamento com o campo 'tipo' inválido, lança o erro, mostrando os valores permitidos na mensagem",
+            "schema": {
+              "$ref": "#definitions/CadastroArmazenamento400TipoInvalido"
+            },
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -405,13 +608,24 @@
           "Armazenamento"
         ],
         "description": "Listar Armazenamento",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "schema": {
               "$ref": "#definitions/ListarVga"
             },
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -427,7 +641,7 @@
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#definitions/CadastroVga"
+              "$ref": "#definitions/CadastroProcessador"
             }
           }
         ],
@@ -437,6 +651,16 @@
               "$ref": "#models/schemas/Vga"
             },
             "description": "OK"
+          },
+          "400": {
+            "definitions": "Ao tentar cadastrar Vga com falta de campos, lança o erro, mostrando os campos faltantes na mensagem",
+            "schema": {
+              "$ref": "#definitions/CadastroVga400CamposFaltantes"
+            },
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -454,6 +678,9 @@
               "$ref": "#definitions/ListarVga"
             },
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -465,6 +692,13 @@
         ],
         "description": "Cadastrar Fonte",
         "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          },
           {
             "name": "body",
             "in": "body",
@@ -479,6 +713,9 @@
               "$ref": "#models/schemas/Fonte"
             },
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -489,13 +726,24 @@
           "Fonte"
         ],
         "description": "Listar Fontes",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "in": "header",
+            "required": true,
+            "definitions": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "schema": {
               "$ref": "#definitions/ListarFontes"
             },
             "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
@@ -800,6 +1048,14 @@
           }
         }
       }
+    },
+    "/api/computador/adicionar/armazenamento/teste": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
     }
   },
   "definitions": {
@@ -852,6 +1108,28 @@
         "message": {
           "type": "string",
           "example": "Ha campos faltando na requisicao: senha"
+        }
+      }
+    },
+    "CadastroUsuario422CamposUnicos": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Dado(s) já cadastrado(s) em outro(s) usuario(s)!"
+        },
+        "dados": {
+          "type": "array",
+          "example": [
+            "username"
+          ],
+          "items": {
+            "type": "string"
+          }
         }
       }
     },
@@ -909,6 +1187,32 @@
         }
       }
     },
+    "CadastroUsuario400CamposFaltando": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Ha campos faltando na requisicao: senha,permissions"
+        }
+      }
+    },
+    "CadastroUsuario400PermisionsInvalida": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "permissions  deve ser 0 ou 1!"
+        }
+      }
+    },
     "Usuarios": {
       "type": "object",
       "properties": {
@@ -942,6 +1246,115 @@
         }
       }
     },
+    "UsuarioPorNome404": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 404
+        },
+        "message": {
+          "type": "string",
+          "example": "Nao ha usuario com este nome!"
+        }
+      }
+    },
+    "AtualizarUsuario400EntradasInvalidas": {
+      "type": "object",
+      "properties": {
+        "nome": {
+          "type": "string",
+          "example": "teste 1"
+        },
+        "teste": {
+          "type": "string",
+          "example": "1123"
+        },
+        "aniversario": {
+          "type": "string",
+          "example": "27/08/1978"
+        }
+      }
+    },
+    "AtualizarUsuario500ProblemasNaAtualizacao": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 500
+        },
+        "message": {
+          "type": "string",
+          "example": "A atualizacao feita nao confere com a desejada!"
+        },
+        "atualizacaoDesejada": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Dados atualizados com sucesso!"
+            },
+            "dados": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Jose Silva Alberto"
+                }
+              }
+            }
+          }
+        },
+        "atualizacaoFeita": {
+          "type": "object",
+          "properties": {
+            "message": {
+              "type": "string",
+              "example": "Dados atualizados com sucesso!"
+            },
+            "dados": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Jose Silva"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "ApagarUsuario200": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 200
+        },
+        "message": {
+          "type": "string",
+          "example": "Usuario deletado com sucesso!"
+        },
+        "response": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    },
+    "ApagarUsuario404UsuarioNaoExiste": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 404
+        },
+        "message": {
+          "type": "string",
+          "example": "Usuario inexistente!"
+        }
+      }
+    },
     "CadastroProcessador": {
       "type": "object",
       "properties": {
@@ -968,6 +1381,19 @@
         "tdp": {
           "type": "number",
           "example": 95
+        }
+      }
+    },
+    "CadastroProcessador400CamposFaltantes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Ha campos faltantes na requisicao: socket,tdp"
         }
       }
     },
@@ -1044,6 +1470,19 @@
         }
       }
     },
+    "CadastroPlacaMae400CamposFaltantes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Ha campos faltantes na requisicao max_ram,ddr"
+        }
+      }
+    },
     "ListarPlacaMae": {
       "type": "array",
       "items": {
@@ -1109,6 +1548,32 @@
         }
       }
     },
+    "CadastroRam400CamposFaltantes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Ha campos faltando na requisicao: capacidade,ddr"
+        }
+      }
+    },
+    "CadastroRam400DdrInvalido": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Tipo de DDR da memoria 3 ou 4!"
+        }
+      }
+    },
     "ListarRam": {
       "type": "array",
       "items": {
@@ -1151,6 +1616,32 @@
         "capacidade": {
           "type": "number",
           "example": 280
+        }
+      }
+    },
+    "CadastroArmazenamento400CamposFaltantes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Ha campos faltando na requisicao: nome,capacidade"
+        }
+      }
+    },
+    "CadastroArmazenamento400TipoInvalido": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Tipo de armazenamento deve ser 'HD ou SSD'!"
         }
       }
     },
@@ -1204,6 +1695,19 @@
         "tdp": {
           "type": "number",
           "example": 300
+        }
+      }
+    },
+    "CadastroVga400CamposFaltantes": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "number",
+          "example": 400
+        },
+        "message": {
+          "type": "string",
+          "example": "Ha campos faltando na requisicao: capacidade,consumo"
         }
       }
     },
@@ -2514,6 +3018,9 @@
         }
       }
     }
+  },
+  "security": {
+    "api_key": []
   },
   "models": {
     "schemas": {

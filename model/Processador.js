@@ -15,8 +15,8 @@ Processador.init({
     },
     nome:{
         type: DataTypes.STRING(30),
-        allowNull: false
-      //  unique:"unique_nome"
+        allowNull: false,
+        unique:"nome_processador"
     },
     marca:{
         type: DataTypes.STRING(5),
@@ -37,6 +37,10 @@ Processador.init({
     tdp:{
         type:DataTypes.DECIMAL,
         allowNull: false
+    },
+    img:{
+        type:DataTypes.STRING,
+        allowNull:false
     },
     consumo_max:{
         type:DataTypes.DECIMAL,

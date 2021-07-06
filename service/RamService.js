@@ -1,12 +1,15 @@
 const ramRepository = require('../repository/RamRepository');
 const ramConstants = require('../constants/ramContants');
+const sequelizeErrors = require('../Utils/sequelizeErrors');
+const Utils = require('../Utils/utils');
 
 exports.criar = async(reqBody, callback) => {
     ramRepository.criar(reqBody.nome,
         reqBody.frequencia,
         reqBody.capacidade,
         reqBody.ddr,
-        reqBody.consumo,(err,ram)=>{
+        reqBody.consumo,
+        reqBody.img,(err,ram)=>{
 
         if(err){
             const sequelizeError = JSON.parse(JSON.stringify(err));
@@ -17,7 +20,15 @@ exports.criar = async(reqBody, callback) => {
                     status:400,
                     message:`Ha campos faltando na requisicao: ${camposFaltantes}`
                 })
-            }else if(sequelizeError && sequelizeError.name === "SequelizeValidationError"){
+            }else if(sequelizeError && sequelizeError.name === "SequelizeUniqueConstraintError"){
+                const errors = sequelizeErrors.uniqueConstraintErrorRam(sequelizeError.errors);
+                const error = {
+                    status:422,
+                    message:"Dado já cadastrado em outra Memoria Ram!",
+                    dado:errors.toString()
+                }
+                callback(error,null);
+             }else if(sequelizeError && sequelizeError.name === "SequelizeValidationError"){
                 const error = {
                     status:400,
                     message:sequelizeError.errors[0].message,

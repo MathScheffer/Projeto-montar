@@ -14,7 +14,8 @@ PlacaMae.init({
     },
     nome:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique:"nome_placa"
     },
     socket:{
         type:DataTypes.STRING,
@@ -30,6 +31,10 @@ PlacaMae.init({
     },
     ddr:{
         type:DataTypes.INTEGER(4),
+        allowNull:false
+    },
+    img:{
+        type:DataTypes.STRING,
         allowNull:false
     },
     consumo:{

@@ -3,7 +3,7 @@ const sequelize = conexao.sequelize;
 
 const PlacaMae = require('../model/PlacaMae');
 
-exports.criar = async(nome, socket, frequencia_max_ram, max_ram, ddr, callback) => {
+exports.criar = async(nome, socket, frequencia_max_ram, max_ram, ddr, img, callback) => {
     await sequelize.sync({alter:true})
     try{
         const placaMae = await PlacaMae.create({
@@ -11,7 +11,8 @@ exports.criar = async(nome, socket, frequencia_max_ram, max_ram, ddr, callback) 
             socket:socket,
             frequencia_max_ram:frequencia_max_ram,
             max_ram:max_ram,
-            ddr:ddr
+            ddr:ddr,
+            img:img
         })
         callback(null,placaMae)
     }catch(err){

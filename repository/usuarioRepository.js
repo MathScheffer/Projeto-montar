@@ -4,7 +4,8 @@ const sequelize = Conexao.sequelize;
 const Usuario = require('../model/Usuario');
 
 exports.criar = async(username,nome,email,senha,permissions,callback) => {
-    await sequelize.sync();
+    
+    await sequelize.sync({ alter: true });
 
     try{
         const teste = await Usuario.create({
@@ -21,6 +22,7 @@ exports.criar = async(username,nome,email,senha,permissions,callback) => {
 }
 
 exports.listar = async(callback) => {
+    sequelize.sync({alter:true})
     try{
         const listaUsuarios = await Usuario.findAll({attributes:["id","nome","username","email"]});
         callback(null,listaUsuarios);
@@ -30,16 +32,18 @@ exports.listar = async(callback) => {
 }
 
 exports.usuarioPorNome = async(nome,callback) => {
+    let usuarioVazio = true;
     try{
         const usuario = await Usuario.findOne({
             where:{
                 nome:nome
             }
         })
-
+        if(usuario.id)
+            usuarioVazio = false;
         callback(null,usuario)
     }catch(err){
-        callback(err,null)
+       usuarioVazio ? callback({status:404},null) : callback(err,null)
     }
 }
 

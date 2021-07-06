@@ -3,16 +3,22 @@ const computadorRepository = require('../repository/Computador');
 const computadorConstants = require('../constants/computadorContants');
 const Utils = require('../Utils/utils');
 const sequelizeErrors = require('../Utils/sequelizeErrors');
+
 const { Processador,/* , Computador */ 
 PlacaMae,
 Ram,
 Armazenamento,
 Vga,
 Fonte} = require('../model');
-const Computador = require('../model/Computador')
+const Computador = require('../model/Computador');
+const { ProcessadorService } = require('./index');
+const fetchProcessador = require('../service/ProcessadorService')
+
+
 
 exports.criar = (reqBody,callback) => {
-    computadorRepository.criar(reqBody.UsuarioId,
+    computadorRepository.criar(
+        reqBody.UsuarioId,
         reqBody.ProcessadorId,
         reqBody.PlacaMaeId,
         reqBody.RamId,
@@ -38,7 +44,6 @@ exports.criar = (reqBody,callback) => {
                 }
                 callback(error,null)
             }else{
-                console.log()
                 error = {
                     status:500,
                     message:"Houve um erro interno no servidor!",
@@ -52,6 +57,9 @@ exports.criar = (reqBody,callback) => {
     })
 };
 
+/**
+ * Fazer diminuir 1 na quantidade
+ */
 exports.adicionarProcessador = async(id,callback) => {
     try{
         let finalMessage = {};
@@ -59,38 +67,33 @@ exports.adicionarProcessador = async(id,callback) => {
             where:{
                 id:id
             }
+        })           
+        const placasMae = await PlacaMae.findAll({
+            where:{
+                socket:processador.socket
+            }
         })
-
-        if(processador){            
-            const placasMae = await PlacaMae.findAll({
-                where:{
-                    socket:processador.socket
-                }
-            })
-            if(placasMae){
-                Computador.integradorMontagem.set("Processador",processador);
-                finalMessage = {
-                    status:201,
-                    processador: processador,
-                    computador_agora:Utils.computadorAgora()
-                }
-            }else{
-                finalMessage = {
-                    status:422,
-                    message:"Placa mae nao compativel com este processador!"
-                }
+        if(placasMae){
+            Computador.integradorRequisicaoQuantidades.set("Processador",1);
+            Computador.integradorMontagem.set("Processador",processador);
+            finalMessage = {
+                status:201,
+                processador: processador,
+                computador_agora:Utils.computadorAgora()
             }
         }else{
             finalMessage = {
                 status:422,
-                message:`Processador indisponivel!`
+                message:"Placa mae nao compativel com este processador!"
             }
         }
+        
         finalMessage.status == 201 ? callback(null,finalMessage) : callback(finalMessage,null);
     }catch(err){
         const error = {
             status:500,
-            message:"Erro interno no servidor!"
+            message:"Erro interno no servidor!",
+            error:err
         }
         callback(error,null);
     }
@@ -307,6 +310,7 @@ exports.adicionarFonte = async(id,callback) => {
     }
 } 
 exports.adicionarComputador = async(userId,callback) => {
+
     const processador = Utils.computadorAgoraMap().get('Processador');
     const placaMae = Utils.computadorAgoraMap().get('PlacaMae');
     const ram = Utils.computadorAgoraMap().get('Ram');
@@ -320,8 +324,8 @@ exports.adicionarComputador = async(userId,callback) => {
         placaMae.id,
         ram.id,
         armazenamento.id,
-        vga.id
-        ,fonte.id,(err,computador) =>{
+        vga.id,
+        fonte.id,(err,computador) =>{
         
         if(err){
             if(arrComponentes.find(obj => obj === undefined)){
@@ -333,16 +337,49 @@ exports.adicionarComputador = async(userId,callback) => {
             }else{
                 const error = {
                     status:500,
-                    message:"Erro interno no servidor!"
+                    message:"Erro interno no servidor!",
+                    error:err
                 };
                 callback(error,null);
             }
         }else{
-            callback(null,{
-                status:201,
-                computador:computador,
-                computador_montado: Utils.computadorAgora()
-            })  
+            
+
+            if(Computador.integradorHardwareFaltante.size > 0) {
+                const error = {
+                    status:422,
+                    message:"Ha hardwares faltando no estoque!",
+                    hardwares:Computador.integradorToJson(Computador.integradorHardwareFaltante)
+                }
+                callback(error,null)
+            }else{
+                callback(null,{
+                    status:201,
+                    computador:computador,
+                    computador_montado: Utils.computadorAgora()
+                })  
+            }
         }
     })
+}
+
+async function atualizarQuantidadeHardware(nomeHardware,id){
+    if(nomeHardware === "processador"){
+        const quantidadeDesejada = Computador.integradorRequisicaoQuantidades.get("Processador");
+        let qtdAtual = (await fetchProcessador({"id":id},["quantidade"])).quantidade;
+        qtdAtual = qtdAtual - quantidadeDesejada;
+        console.log("QUANTIDADE ATUAL:",qtdAtual)
+        if(qtdAtual > 0){
+            await ProcessadorService.atualizarQuantidade((qtdAtual),id);
+        }else if(qtdAtual == 0){
+            await ProcessadorService.atualizarQuantidade((qtdAtual),id);
+            Computador.integradorHardwareFaltante.set(nomeHardware,
+                {"quantidade":0}); 
+        }else{
+            Computador.integradorHardwareFaltante.set(nomeHardware,
+                {"quantidade":qtdAtual}); 
+        }
+            
+    }
+    
 }

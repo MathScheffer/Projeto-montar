@@ -3,7 +3,7 @@ const sequelize = conexao.sequelize;
 
 const Vga = require('../model/Vga');
 
-exports.criar = async(nome, capacidade, tdp, consumo_max, callback) => {
+exports.criar = async(nome, capacidade, tdp, consumo_max, img, callback) => {
     await sequelize.sync({alter:true});
 
     try{
@@ -11,7 +11,8 @@ exports.criar = async(nome, capacidade, tdp, consumo_max, callback) => {
             nome:nome,
             capacidade:capacidade,
             tdp:tdp,
-            consumo_max:consumo_max
+            consumo_max:consumo_max,
+            img:img
         })
         callback(null,vga);
     }catch(err){

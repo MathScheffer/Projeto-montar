@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\":\"teste.1\",\r\n    \"senha\":\"1123\"\r\n}",
+							"raw": "{\r\n    \"username\":\"teste.1\",\r\n    \"senha\":\"123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -283,7 +283,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/api/usuarios/18",
+							"raw": "http://localhost:3000/api/usuarios/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -292,7 +292,7 @@
 							"path": [
 								"api",
 								"usuarios",
-								"18"
+								"5"
 							]
 						}
 					},
@@ -316,7 +316,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"TEAM GROUP T-FORCE RGB 8GB\",\r\n    \"frequencia\":3600,\r\n    \"capacidade\":8,\r\n    \"ddr\":4\r\n}",
+							"raw": "{\r\n  \"nome\": \"TEAM GROUP T-FORCE RGB 8GB\",\r\n  \"frequencia\": 3600,\r\n  \"capacidade\": 8,\r\n  \"ddr\": 4\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -378,7 +378,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"INTEL CORE I7-10700KF\",\r\n    \"marca\":\"Intel\",\r\n    \"frequencia\":3.8,\r\n    \"frequencia_max\":5.1,\r\n    \"socket\":\"LGA1200\",\r\n    \"tdp\":95\r\n}",
+							"raw": "{\r\n    \"nome\":\"INTEL CORE I7-10700KF\",\r\n    \"marca\":\"Intel\",\r\n    \"frequencia\":3.8,\r\n    \"frequencia_max\":5.1,\r\n    \"socket\":\"LGA1200\",\r\n    \"tdp\":95,\r\n    \"quantidade\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -440,7 +440,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"Asus TUF Gaming Z490-Plus\",\r\n    \"socket\":\"LGA1200\",\r\n    \"frequencia_max_ram\":4800,\r\n    \"max_ram\":128,\r\n    \"ddr\":4\r\n}",
+							"raw": "{\r\n    \"nome\":\"Asus TUF Gaming Z490-Plus\",\r\n    \"socket\":\"LGA1200\",\r\n    \"frequencia_max_ram\":4800,\r\n    \"max_ram\":128,\r\n    \"ddr\":4,\r\n    \"quantidade\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -501,7 +501,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"tipo\":\"SSD\",\r\n    \"nome\":\"WD GREEN SN350\",\r\n    \"capacidade\":280\r\n}",
+							"raw": "{\r\n    \"tipo\":\"SSD\",\r\n    \"nome\":\"WD GREEN SN350\",\r\n    \"capacidade\":280,\r\n    \"quantidade\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -562,7 +562,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"nome\":\"AMD Radeon RX 6800 XT\",\r\n    \"capacidade\":16,\r\n    \"tdp\":300\r\n}",
+							"raw": "{\r\n    \"nome\":\"AMD Radeon RX 6800 XT\",\r\n    \"capacidade\":16,\r\n    \"tdp\":300,\r\n    \"quantidade\":1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -756,7 +756,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"id\":2\r\n}",
+									"raw": "{\r\n    \"id\":1\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -966,6 +966,41 @@
 						"api",
 						"usuarios",
 						"teste2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Adicionar Computador/armazenamento",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-auth-token",
+						"value": "{{server}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ComputadorId\":1,\r\n    \"ArmazenamentoId\":1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{server}}/computador/adicionar/armazenamento/teste",
+					"host": [
+						"{{server}}"
+					],
+					"path": [
+						"computador",
+						"adicionar",
+						"armazenamento",
+						"teste"
 					]
 				}
 			},

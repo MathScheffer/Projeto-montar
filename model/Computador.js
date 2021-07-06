@@ -7,10 +7,21 @@ class Computador extends Model {
     static relation = async(Model) => {
         return Computador.belongsTo(Model);
     }
+    //as chaves dos integradores, em caso de haver dois nomes, separá-los por um "_"!
     static integradorMontagem = new Map();
-
+    static integradorRequisicaoQuantidades = new Map();
+    static integradorHardwareFaltante = new Map();
+    static integradorToJson = (integrador) => {
+        let json = {}
+        this.integradorRequisicaoQuantidades.forEach((value,key) => {
+            json[key] = value;
+        })
+        return json;
+    }
+    static relationHasMany = async(Model) => {
+        return Computador.hasMany(Model);
+    }
 }
-
 
 Computador.init({
     id:{
@@ -45,14 +56,14 @@ Computador.init({
             model:Ram,
             key:'id'
         }
-    },
+    }, 
     ArmazenamentoId:{
         type:DataTypes.INTEGER,
         references:{
             model:Armazenamento,
             key:'id'
         }
-    },
+    }, 
     FonteId: {
         type:DataTypes.INTEGER,
         references:{

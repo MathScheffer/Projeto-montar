@@ -19,27 +19,55 @@ exports.criar = async(req,res) => {
     //#swagger.description = 'Endpoint para criar um usuario.'
 
 
-    await sequelize.sync({ alter: true });
     /* #swagger.parameters[] = {
-        in: "body", 
-        name:"body",
+            in: "body", 
+            name:"body",
+            schema: {
+            $ref: "#/definitions/CadastroUsuario", 
+            },
+            required: true, 
+            description: "Body do Usuario", 
+        } */
+        /*#swagger.parameters["x-auth-token"] = {
+            in: "header",
+            required: true,
+            definitions: "header"
+        } */
+        /* #swagger.responses[200] = {
         schema: {
-          $ref: "#/definitions/CadastroUsuario", 
+            $ref: "#/definitions/CadastroUsuarioResponse"
         },
-        required: true, 
-        description: "Body do Usuario", 
+            description:"Cadastro de usuarios"
+        } */
+        /*#swagger.responses[422] = {
+            schema:{
+                $ref: "#definitions/CadastroUsuario422CamposUnicos"
+            },
+            description:"Ao tentar cadastrar um usuario com um nome, username ou email já existentes, lança o erro, mostrando o primeiro campo inserido que deveria ser único"
+        } */
+        /*#swagger.responses[400] = {
+            description: "Ao informar um body com campos faltando, retorna o erro mostrando, na mensagem, os campos faltantes",
+            schema:{
+                $ref: "#definitions/CadastroUsuario400CamposFaltando"
+            }
+        } */
+        /*#swagger.responses[400] = {
+            description: "Ao tentar cadastrar usuario com o campo permission invalido, é retornado um erro informando como o campo deve ser enviado",
+            schema:{
+                $ref: "#definitions/CadastroUsuario400PermisionsInvalida"
+            }
+        } */
+        /*#swagger.responses[500] = {
+            schema:{
+                $ref:"#definitions/ErroInterno"
+            }
         } */
     usuarioService.criar(req.body,(err, rows) => {
 
         if(err){
             res.status(err.status).json(err);
         }else{
-                /* #swagger.responses[200] = {
-        schema: {
-            $ref: "#/definitions/CadastroUsuarioResponse"
-        },
-        description:"Listagem de usuarios"
-    } */
+
             res.json(rows);
         }
     })
@@ -48,19 +76,27 @@ exports.criar = async(req,res) => {
 exports.listar = (req, res) => {
     //#swagger.tags = ['Usuario']
     //#swagger.description = 'Endpoint para obter todos os usuarios.'
+    /*#swagger.parameters["x-auth-token"] = {
+        in: "header",
+        required: true,
+        definitions: "header"
+    } */
+        /* #swagger.responses[200] = {
+        schema: {
+            $ref: "#/definitions/Usuarios"
+        },
+        description:"Listagem de usuarios"
+    } */
+    /*#swagger.responses[404] = {
 
+    } */
     usuarioService.listar((err, rows) => {
         if(err){
             res.status(err.status).json({
                 Erro: err.message
             })
         }else{
-    /* #swagger.responses[200] = {
-        schema: {
-            $ref: "#/definitions/Usuarios"
-        },
-        description:"Listagem de usuarios"
-    } */
+
             res.json(rows)
         }
     });
@@ -69,6 +105,11 @@ exports.listar = (req, res) => {
 exports.usuarioPorNome = async(req,res) => {
     //#swagger.tags = ['Usuario']
     //#swagger.description = 'Endpoint para obter um usuario por nome.'
+    /*#swagger.parameters["x-auth-token"] = {
+        in: "header",
+        required: true,
+        definitions: "header"
+    } */
     /* #swagger.parameters['nome'] = {
         in: "query", 
         schema: {
@@ -78,14 +119,22 @@ exports.usuarioPorNome = async(req,res) => {
         description: "A single todo id", 
         } */
     const nomeUsuario = req.query.nome;
-
+    /* #swagger.responses[200] = { 
+        schema: { $ref: "#/definitions/UsuarioPorNome" },
+        description: 'Usuário encontrado.' 
+    } */
+    /*#swagger.responses[404] = {
+        schema: {
+            $ref: "#definitions/UsuarioPorNome404"
+        }
+    } */
+    /*#swagger.responses[500] = {
+        schema: {
+            $ref: "#definitions/ErroInterno"
+        }
+    } */
     usuarioService.usuarioPorNome(nomeUsuario, (err, usuario) => {
         if(err){
-            /* 
-                #swagger.responses[200] = { 
-               schema: { $ref: "#/definitions/UsuarioPorNome" },
-               description: 'Usuário encontrado.' 
-        } */
             res.status(err.status).json(err);
         }else{
             res.status(usuario.status).json(usuario);
@@ -110,14 +159,19 @@ const fetchUsers = async(param,value) => {
 exports.atualizar = async(req,res) => {
     //#swagger.tags=["Usuario"]
     //#swagger.description = 'Atualizar um usuario'
+    /*#swagger.parameters["x-auth-token"] = {
+        in: "header",
+        required: true,
+        definitions: "header"
+    } */
     const body = req.body;
         /* #swagger.parameters['id'] = {
-        in: "query", 
-        schema: {
-          $ref: "#/models/schemas/id", 
-        },
-        required: true, 
-        description: "Id do usuario desejado", 
+            in: "query", 
+            schema: {
+            $ref: "#/models/schemas/id", 
+            },
+            required: true, 
+            description: "Id do usuario desejado", 
         } */
     const id = req.params.id;
             /* #swagger.parameters = {
@@ -138,6 +192,23 @@ exports.atualizar = async(req,res) => {
                     },
                 }
             } */
+            /*#swagger.responses[400] = {
+                description: "Enviar entradas que não são validas retorna um erro informando as mesmas",
+                schema: {
+                    $ref: "#definitions/AtualizarUsuario400EntradasInvalidas"
+                }
+            } */
+            /*#swagger.responses[500] = {
+                description: "Quando ocorre algum problema na atualização dos dados",
+                schema:{
+                    $ref: "#definitions/AtualizarUsuario500ProblemasNaAtualizacao"
+                }
+            } */
+            /*#swagger.responses[500] = {
+                schema: {
+                    $ref: "#definitions/ErroInterno"
+                }
+            } */
             res.status(err.status).json(err);
         }else{
             res.json(usuarioAtualizado)
@@ -148,6 +219,11 @@ exports.atualizar = async(req,res) => {
 exports.apagar = async(req,res) => {
      //#swagger.tags = ['Usuario']
     //#swagger.description = 'Endpoint para deletar um usuario por nome.'
+        /*#swagger.parameters["x-auth-token"] = {
+        in: "header",
+        required: true,
+        definitions: "header"
+    } */
     /* #swagger.parameters['id'] = {
         in: "query", 
         schema: {
@@ -156,17 +232,28 @@ exports.apagar = async(req,res) => {
         required: true, 
         description: "Id do usuario a ser deletado.", 
         } */
+        /*#swagger.responses[200] = {
+            schema: {
+                $ref: "#/definitions/ApagarUsuario200"
+            },
+            description:"Usuario deletado!"
+        }*/ 
+        /*#swagger.responses[404] = {
+            description: "Ocorre ao tentar deletar um usuario inexistente!",
+            schema: {
+                $ref: "#definitions/ApagarUsuario404UsuarioNaoExiste"
+            }
+        } */
+        /*#swagger.responses[500] = {
+            schema: {
+                $ref: "#definitions/ErroInterno"
+            }
+        } */
     const id = req.params.id;
     usuarioService.apagar(id, (err,usuarioApagado) => {
         if(err){
             res.status(err.status).json(err)
         }else{
-            /*#swagger.responses[200] = {
-                schema: {
-                    $ref: "#/definitions/UsuarioDeletado"
-                },
-                description:"Usuario deletado!"
-            }*/ 
             res.json(usuarioApagado)
         }
     })

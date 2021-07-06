@@ -11,15 +11,33 @@ exports.criar = async(req,res) => {
           $ref: "#definitions/CadastroVga", 
         }
     }*/
+    /* #swagger.parameters[] = {
+        in: "body",
+        name: "body",
+        schema: {
+            $ref: "#definitions/CadastroProcessador"
+        }
+    }*/
+    /*#swagger.responses[200] = {
+        schema: {
+            $ref: "#models/schemas/Vga"
+        }
+    } */
+    /*#swagger.responses[400] = {
+        definitions: "Ao tentar cadastrar Vga com falta de campos, lança o erro, mostrando os campos faltantes na mensagem",
+        schema: {
+            $ref: "#definitions/CadastroVga400CamposFaltantes"
+        }
+    } */
+    /*#swagger.responses[500] => {
+        schema: {
+            $ref: "#definitions/ErroInterno"
+        }
+    } */
     vgaService.criar(reqBody,(err,vga) => {
         if(err){
             res.status(err.status).json(err);
         }else{
-            /*#swagger.responses[200] = {
-                schema: {
-                    $ref: "#models/schemas/Vga"
-                }
-            } */
             res.json(vga)
         }
     })
@@ -28,15 +46,20 @@ exports.criar = async(req,res) => {
 exports.listar = async(req,res) => {
     //#swagger.tags = ["Vga"]
     //#swagger.description = "Listar Vga"
-    vgaService.listar((err,vgas) => {
-        if(err){
-            res.status(err.status).json(err);
-        }else{
-                /*#swagger.responses[200] = {
+    /*#swagger.responses[200] = {
         schema: {
             $ref: "#definitions/ListarVga"
         }
     }*/
+    /*#swagger.responses[500] => {
+        schema: {
+            $ref: "#definitions/ErroInterno"
+        }
+    } */
+    vgaService.listar((err,vgas) => {
+        if(err){
+            res.status(err.status).json(err);
+        }else{
             res.json(vgas);
         }
     })

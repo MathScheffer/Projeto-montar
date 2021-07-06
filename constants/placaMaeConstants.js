@@ -1,1 +1,1 @@
-exports.ENTRADAS_VALIDAS = ["nome","socket","frequencia_max_ram","max_ram","ddr"];
+exports.ENTRADAS_VALIDAS = ["nome","socket","frequencia_max_ram","max_ram","ddr","img"];

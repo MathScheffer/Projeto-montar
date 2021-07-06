@@ -3,7 +3,9 @@ const config = require('../config/conexaodb');
 const sequelize = config.sequelize;
 
 class Ram extends Model {
-
+    static relationHasMany = async(Model) => {
+        return Ram.hasMany(Model);
+    }
 }
 
 Ram.init({
@@ -14,7 +16,8 @@ Ram.init({
     },
     nome:{
         type:DataTypes.STRING,
-        allowNull:false
+        allowNull:false,
+        unique: "nome_ram"
     },
     frequencia:{
         type:DataTypes.INTEGER,
@@ -33,6 +36,10 @@ Ram.init({
                 msg:"Tipo de DDR da memoria 3 ou 4!"
             }
         }
+    },
+    img:{
+        type:DataTypes.STRING,
+        allowNull:false
     },
     consumo:{
         type:DataTypes.DECIMAL,
